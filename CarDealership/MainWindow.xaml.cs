@@ -15,7 +15,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
 
-//made a small change
 namespace CarDealership
 {
     /// <summary>
@@ -28,9 +27,9 @@ namespace CarDealership
         public MainWindow()
         {
             InitializeComponent();        
-            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";
-            cn = new OleDbConnection(ConnectionString);
-            cn.Open();
+           // string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";
+           // cn = new OleDbConnection(ConnectionString);
+           // cn.Open();
         }
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
