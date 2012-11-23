@@ -43,6 +43,12 @@
                 <Button Content="Manage Management" Height="25" HorizontalAlignment="Right" Margin="0,200,100,0" Name="button6" VerticalAlignment="Top" Width="125" />
             </Grid>
         </TabItem>
+        <TabItem Header="Remove/Modify" Name="tabItem1">
+            <Grid>
+                <Button Content="Remove" Height="25" HorizontalAlignment="Left" Margin="100,50,0,0" Name="button7" VerticalAlignment="Top" Width="125" Click="Remove_Click" />
+                <Button Content="Modify" Height="25" HorizontalAlignment="Right" Margin="100,50,100,0" Name="button8" VerticalAlignment="Top" Width="125" Click="Modify_Click" />
+            </Grid>
+        </TabItem>
         <TabItem Header="Make Sale" Name="Sale">
             <Grid>
                 <TextBox Height="25" HorizontalAlignment="Left" Margin="25,25,0,0" Name="EmployeeText" VerticalAlignment="Top" Width="120" />

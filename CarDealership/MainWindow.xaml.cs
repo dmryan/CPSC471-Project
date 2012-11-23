@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using System.Configuration;
 using System.Data;
 using System.Data.OleDb;
-
+// now includes remove/modify
 namespace CarDealership
 {
     /// <summary>
@@ -147,6 +147,16 @@ namespace CarDealership
                 ((AddTires)SecondWindow).Show();
                 ((AddTires)SecondWindow).Activate();
             }
+        }
+
+        private void Remove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Modify_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
