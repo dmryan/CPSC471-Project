@@ -27,9 +27,17 @@ namespace CarDealership
         public MainWindow()
         {
             InitializeComponent();        
-           // string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";
-           // cn = new OleDbConnection(ConnectionString);
-           // cn.Open();
+            /*string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";*/
+            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
+            cn = new OleDbConnection(ConnectionString);
+            try
+            {
+                cn.Open();
+            }
+            catch (OleDbException ex)
+            {
+                Console.WriteLine("Error Opening Database");
+            }
         }
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {

@@ -31,9 +31,9 @@ namespace CarDealership
             InitializeComponent();
         }
 
-        private void AddEmployeeSubmit_Click(object sender, RoutedEventArgs e)
+        private void AddCustomerSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string EID = IDText.GetLineText(0);
+            string PID = IDText.GetLineText(0);
             string Name = NameText.GetLineText(0);
             string Phone = PhoneText.GetLineText(0);
             string Address = AddressText.GetLineText(0);
@@ -41,6 +41,33 @@ namespace CarDealership
             string Type = TypeText.GetLineText(0);
 
             //sql statement
+            OleDbCommand insertPerson = cn.CreateCommand();
+            OleDbCommand insertCustomer = cn.CreateCommand();
+
+            insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
+            insertCustomer.CommandText = "INSERT INTO Customer(PID, Type) VALUES (@PID, @Type)";
+
+            insertPerson.Parameters.AddWithValue("@ID", PID);
+            insertPerson.Parameters.AddWithValue("@PersonName", Name);
+            insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+            insertPerson.Parameters.AddWithValue("@Address", Address);
+            insertPerson.Parameters.AddWithValue("@Sex", Sex);
+
+            insertCustomer.Parameters.AddWithValue("@ID", PID);
+            insertCustomer.Parameters.AddWithValue("@Type", Type);
+
+            try
+            {
+                insertPerson.ExecuteNonQuery();
+                insertCustomer.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.Show();
+                Error.Activate();
+                Console.WriteLine(ex.Message);
+            }
 
             Parent.SecondWindow = null;
             this.Close();
