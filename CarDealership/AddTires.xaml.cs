@@ -25,6 +25,7 @@ namespace CarDealership
         private OleDbConnection cn;
         private MainWindow Parent;
         private bool noError;
+
         public AddTires(MainWindow p, OleDbConnection c)
         {
             cn = c;
@@ -48,7 +49,7 @@ namespace CarDealership
             OleDbCommand insertTire = cn.CreateCommand();
 
             insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
-            insertTire.CommandText = "INSERT INTO Type(SerialNumber, Type, Size) VALUES (@SerialNumber, @Type, @Size)";
+            insertTire.CommandText = "INSERT INTO Tire(SerialNumber, Type, TireSize) VALUES (@SerialNumber, @Type, @TireSize)";
 
             insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
             insertPart.Parameters.AddWithValue("@VIN", VIN);
@@ -57,7 +58,7 @@ namespace CarDealership
 
             insertTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
             insertTire.Parameters.AddWithValue("@Type", Type);
-            insertTire.Parameters.AddWithValue("@Size", Size);
+            insertTire.Parameters.AddWithValue("@TireSize", Size);
 
             try
             {
