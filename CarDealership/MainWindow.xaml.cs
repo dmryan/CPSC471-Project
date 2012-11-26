@@ -27,7 +27,7 @@ namespace CarDealership
         public MainWindow()
         {
             InitializeComponent();        
-            /*string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";*/
+            //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";
             string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
             cn = new OleDbConnection(ConnectionString);
             try
@@ -36,90 +36,59 @@ namespace CarDealership
             }
             catch (OleDbException ex)
             {
-                Console.WriteLine("Error Opening Database");
+                SecondWindow = new ErrorWindow(ex.Message);
+                ((ErrorWindow)SecondWindow).ShowDialog();
             }
         }
         private void AddCustomer_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 SecondWindow = new AddCustomer(this, cn);
-                ((AddCustomer)SecondWindow).Show();  
-                ((AddCustomer)SecondWindow).Activate();
-            }
+                ((AddCustomer)SecondWindow).ShowDialog();  
         }
         private void AddEmployee_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 SecondWindow = new AddEmployee(this, cn);
-                ((AddEmployee)SecondWindow).Show();
-                ((AddEmployee)SecondWindow).Activate();
-            }
+                ((AddEmployee)SecondWindow).ShowDialog();
         }
 
         private void AddCarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 bool used = false;
                 SecondWindow = new AddCar(this, cn, used);
-                ((AddCar)SecondWindow).Show();
-                ((AddCar)SecondWindow).Activate();
-            }
+                ((AddCar)SecondWindow).ShowDialog();
         }
 
         private void AddTruckButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 bool used = false;
                 SecondWindow = new AddTruck(this, cn, used);
-                ((AddTruck)SecondWindow).Show();
-                ((AddTruck)SecondWindow).Activate();
-            }
+                ((AddTruck)SecondWindow).ShowDialog();
         }
 
         private void AddUsedCarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 bool used = true;
                 SecondWindow = new AddCar(this, cn, used);
-                ((AddCar)SecondWindow).Show();
-                ((AddCar)SecondWindow).Activate();
-            }
+                ((AddCar)SecondWindow).ShowDialog();
         }
 
         private void AddUsedTruckButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 bool used = true;
                 SecondWindow = new AddTruck(this, cn, used);
-                ((AddTruck)SecondWindow).Show();
-                ((AddTruck)SecondWindow).Activate();
-            }
+                ((AddTruck)SecondWindow).ShowDialog();
         }
 
         private void AddEngineButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 SecondWindow = new AddEngine(this, cn);
-                ((AddEngine)SecondWindow).Show();
-                ((AddEngine)SecondWindow).Activate();
-            }
+                ((AddEngine)SecondWindow).ShowDialog();
         }
 
         private void AddOtherPartButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 SecondWindow = new AddPart(this, cn);
-                ((AddPart)SecondWindow).Show();
-                ((AddPart)SecondWindow).Activate();
-            }
+                ((AddPart)SecondWindow).ShowDialog();
         }
 
         private void FindPersonButton_Click(object sender, RoutedEventArgs e)
@@ -149,12 +118,8 @@ namespace CarDealership
 
         private void AddTiresButton_Click(object sender, RoutedEventArgs e)
         {
-            if (SecondWindow == null)
-            {
                 SecondWindow = new AddTires(this, cn);
-                ((AddTires)SecondWindow).Show();
-                ((AddTires)SecondWindow).Activate();
-            }
+                ((AddTires)SecondWindow).ShowDialog();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)

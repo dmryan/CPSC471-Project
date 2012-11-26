@@ -24,17 +24,19 @@ namespace CarDealership
     {
         private MainWindow Parent;
         private OleDbConnection cn;
-        public bool noError;
+        private bool noError = true;
+
         public AddCustomer(MainWindow p, OleDbConnection c)
         {
             cn = c;
             Parent = p;
-            noError = true;
             InitializeComponent();
         }
 
         private void AddCustomerSubmit_Click(object sender, RoutedEventArgs e)
         {
+            noError = true;
+
             string PID = IDText.GetLineText(0);
             string Name = NameText.GetLineText(0);
             string Phone = PhoneText.GetLineText(0);
@@ -42,7 +44,7 @@ namespace CarDealership
             string Sex = SexText.GetLineText(0);
             string Type = TypeText.GetLineText(0);
 
-            //sql statement
+            //SQL Statement
             OleDbCommand insertPerson = cn.CreateCommand();
             OleDbCommand insertCustomer = cn.CreateCommand();
 
@@ -58,28 +60,36 @@ namespace CarDealership
             insertCustomer.Parameters.AddWithValue("@ID", PID);
             insertCustomer.Parameters.AddWithValue("@Type", Type);
 
-            try
-            {
+            try {
                 insertPerson.ExecuteNonQuery();
-                insertCustomer.ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {
                 noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
-                Error.Activate();
+            }
+            if (noError)
+            {
+                try {
+                    insertCustomer.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    OleDbCommand deletePerson = cn.CreateCommand();
+                    deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + PID);
+                    deletePerson.ExecuteNonQuery();
+                    noError = false;
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
 
             if (noError)
-            {
-                Parent.SecondWindow = null;
                 this.Close();
-            }
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Parent.SecondWindow = null;
             base.OnClosing(e);
         }
     }
