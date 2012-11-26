@@ -69,6 +69,7 @@
     <Compile Include="ErrorWindow.xaml.cs">
       <DependentUpon>ErrorWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MakeSale.cs" />
     <Compile Include="VehicleHistoryReport.xaml.cs">
       <DependentUpon>VehicleHistoryReport.xaml</DependentUpon>
     </Compile>

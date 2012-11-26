@@ -37,7 +37,7 @@ namespace CarDealership
         {
             noError = true;
 
-            string PID = IDText.GetLineText(0);
+            string CID = IDText.GetLineText(0);
             string Name = NameText.GetLineText(0);
             string Phone = PhoneText.GetLineText(0);
             string Address = AddressText.GetLineText(0);
@@ -49,15 +49,15 @@ namespace CarDealership
             OleDbCommand insertCustomer = cn.CreateCommand();
 
             insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
-            insertCustomer.CommandText = "INSERT INTO Customer(PID, Type) VALUES (@PID, @Type)";
+            insertCustomer.CommandText = "INSERT INTO Customer(CID, Type) VALUES (@CID, @Type)";
 
-            insertPerson.Parameters.AddWithValue("@ID", PID);
+            insertPerson.Parameters.AddWithValue("@ID", CID);
             insertPerson.Parameters.AddWithValue("@PersonName", Name);
             insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
             insertPerson.Parameters.AddWithValue("@Address", Address);
             insertPerson.Parameters.AddWithValue("@Sex", Sex);
 
-            insertCustomer.Parameters.AddWithValue("@ID", PID);
+            insertCustomer.Parameters.AddWithValue("@CID", CID);
             insertCustomer.Parameters.AddWithValue("@Type", Type);
 
             try {
@@ -77,7 +77,7 @@ namespace CarDealership
                 catch (OleDbException ex)
                 {
                     OleDbCommand deletePerson = cn.CreateCommand();
-                    deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + PID);
+                    deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + CID);
                     deletePerson.ExecuteNonQuery();
                     noError = false;
                     ErrorWindow Error = new ErrorWindow(ex.Message);

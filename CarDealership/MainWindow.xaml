@@ -51,14 +51,14 @@
         </TabItem>
         <TabItem Header="Make Sale" Name="Sale">
             <Grid>
-                <TextBox Height="25" HorizontalAlignment="Left" Margin="25,25,0,0" Name="EmployeeText" VerticalAlignment="Top" Width="120" />
+                <TextBox Height="25" HorizontalAlignment="Left" Margin="25,25,0,0" Name="VehicleText" VerticalAlignment="Top" Width="120" />
                 <TextBox Height="25" HorizontalAlignment="Left" Margin="25,75,0,0" Name="CustomerText" VerticalAlignment="Top" Width="120" />
-                <TextBox Height="25" HorizontalAlignment="Left" Margin="25,125,0,0" Name="VehicleText" VerticalAlignment="Top" Width="120" />
+                <TextBox Height="25" HorizontalAlignment="Left" Margin="25,125,0,0" Name="EmployeeText" VerticalAlignment="Top" Width="120" />
                 <TextBox Height="25" HorizontalAlignment="Left" Margin="25,175,0,0" Name="DateText" VerticalAlignment="Top" Width="120" />
                 <TextBox Height="25" HorizontalAlignment="Left" Margin="25,225,0,0" Name="PriceText" VerticalAlignment="Top" Width="120" />
-                <Label Content="Employee ID" Height="25" HorizontalAlignment="Left" Margin="155,25,0,0" Name="label1" VerticalAlignment="Top" />
+                <Label Content="Vehicle ID" Height="25" HorizontalAlignment="Left" Margin="155,25,0,0" Name="label1" VerticalAlignment="Top" />
                 <Label Content="Customer ID" Height="25" HorizontalAlignment="Left" Margin="155,75,0,0" Name="label2" VerticalAlignment="Top" />
-                <Label Content="Vehicle ID" Height="25" HorizontalAlignment="Left" Margin="155,125,0,0" Name="label3" VerticalAlignment="Top" />
+                <Label Content="Employee ID" Height="25" HorizontalAlignment="Left" Margin="155,125,0,0" Name="label3" VerticalAlignment="Top" />
                 <Label Content="Date" Height="25" HorizontalAlignment="Left" Margin="155,175,0,0" Name="label4" VerticalAlignment="Top" />
                 <Label Content="Price" Height="25" HorizontalAlignment="Left" Margin="155,225,0,0" Name="label5" VerticalAlignment="Top" />
                 <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="409,237,0,0" Name="SubmitSaleButton" VerticalAlignment="Top" Width="75" Click="SubmitSaleButton_Click" />

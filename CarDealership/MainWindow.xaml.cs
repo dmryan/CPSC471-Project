@@ -24,6 +24,7 @@ namespace CarDealership
     {
         public Window SecondWindow = null;
         public OleDbConnection cn;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -115,7 +116,8 @@ namespace CarDealership
 
         private void SubmitSaleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            MakeSale Sale = new MakeSale(this, cn);
+            Sale.AddSale();
         }
 
         private void AddTiresButton_Click(object sender, RoutedEventArgs e)
