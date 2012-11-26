@@ -24,6 +24,8 @@ namespace CarDealership
     {
         private OleDbConnection cn;
         private MainWindow Parent;
+        private bool noError;
+
         public AddPart(MainWindow p, OleDbConnection c)
         {
             cn = c;
@@ -33,19 +35,38 @@ namespace CarDealership
 
         private void AddPart_Click(object sender, RoutedEventArgs e)
         {
+            noError = true;
+
             string SerialNumber = SerialNumberText.GetLineText(0);
             string VIN = VINText.GetLineText(0);
             string Name = NameText.GetLineText(0);
             string Manufacturer = ManufacturerText.GetLineText(0);
 
-            //sql statement
+            //SQL Statement
+            OleDbCommand insertPart = cn.CreateCommand();
 
-            Parent.SecondWindow = null;
-            this.Close();
+            insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
+
+            insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            insertPart.Parameters.AddWithValue("@VIN", VIN);
+            insertPart.Parameters.AddWithValue("@Name", Name);
+            insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+
+            try {
+                insertPart.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+
+            if (noError)
+                this.Close();
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Parent.SecondWindow = null;
             base.OnClosing(e);
         }
     }

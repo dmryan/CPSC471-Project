@@ -24,6 +24,8 @@ namespace CarDealership
     {
         private OleDbConnection cn;
         private MainWindow Parent;
+        private bool noError;
+
         public AddEngine(MainWindow p, OleDbConnection c)
         {
             cn = c;
@@ -33,6 +35,8 @@ namespace CarDealership
 
         private void AddEngine_Click(object sender, RoutedEventArgs e)
         {
+            noError = true;
+
             string SerialNumber = SerialNumberText.GetLineText(0);
             string VIN = VINText.GetLineText(0);
             string Name = NameText.GetLineText(0);
@@ -40,14 +44,52 @@ namespace CarDealership
             string HorsePower = HorsePowerText.GetLineText(0);
             string Cylinders = CylindersText.GetLineText(0);
 
-            //sql statement
+            //SQL Statement
+            OleDbCommand insertPart = cn.CreateCommand();
+            OleDbCommand insertEngine = cn.CreateCommand();
 
-            Parent.SecondWindow = null;
-            this.Close();
+            insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
+            insertEngine.CommandText = "INSERT INTO Engine(SerialNumber, HorsePower, Cylinders) VALUES (@SerialNumber, @HorsePower, @Cylinders)";
+
+            insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            insertPart.Parameters.AddWithValue("@VIN", VIN);
+            insertPart.Parameters.AddWithValue("@Name", Name);
+            insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+
+            insertEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            insertEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
+            insertEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
+
+            try {
+                insertPart.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+            if (noError)
+            {
+                try {
+                    insertEngine.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    OleDbCommand deletePart = cn.CreateCommand();
+                    deletePart.CommandText = ("DELETE FROM Part WHERE SerialNumber =" + SerialNumber);
+                    deletePart.ExecuteNonQuery();
+                    noError = false;
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+            }
+            
+            if (noError)
+                this.Close();
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Parent.SecondWindow = null;
             base.OnClosing(e);
         }
     }
