@@ -22,7 +22,7 @@ namespace CarDealership
     /// </summary>
     public partial class MainWindow : Window
     {
-        public object SecondWindow = null;
+        public Window SecondWindow = null;
         public OleDbConnection cn;
         public MainWindow()
         {

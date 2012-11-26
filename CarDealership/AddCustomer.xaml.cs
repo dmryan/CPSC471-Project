@@ -24,10 +24,12 @@ namespace CarDealership
     {
         private MainWindow Parent;
         private OleDbConnection cn;
+        public bool noError;
         public AddCustomer(MainWindow p, OleDbConnection c)
         {
             cn = c;
             Parent = p;
+            noError = true;
             InitializeComponent();
         }
 
@@ -63,14 +65,17 @@ namespace CarDealership
             }
             catch (OleDbException ex)
             {
+                noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.Show();
+                Error.ShowDialog();
                 Error.Activate();
-                Console.WriteLine(ex.Message);
             }
 
-            Parent.SecondWindow = null;
-            this.Close();
+            if (noError)
+            {
+                Parent.SecondWindow = null;
+                this.Close();
+            }
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {

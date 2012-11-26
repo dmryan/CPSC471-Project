@@ -23,5 +23,15 @@ namespace CarDealership
             InitializeComponent();
             errorBox.Text = msg;
         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
+        {
+            base.OnClosing(e);
+        }
     }
 }
