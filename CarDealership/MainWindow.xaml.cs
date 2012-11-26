@@ -26,9 +26,11 @@ namespace CarDealership
         public OleDbConnection cn;
         public MainWindow()
         {
-            InitializeComponent();        
-            //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\Contacts.accdb";
-            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
+            InitializeComponent();
+            // Make sure you use database in the Git
+            //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\CarDealershipDatabase.accdb";
+            //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
+            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\boydst\SENG_GIT\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
             cn = new OleDbConnection(ConnectionString);
             try
             {

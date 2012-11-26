@@ -24,6 +24,8 @@ namespace CarDealership
     {
         private OleDbConnection cn;
         private MainWindow Parent;
+        private bool noError;
+
         public VehicleHistoryReport(MainWindow p, OleDbConnection c)
         {
             cn = c;
@@ -33,19 +35,39 @@ namespace CarDealership
 
         private void AddVehicleHistoryReport_Click(object sender, RoutedEventArgs e)
         {
+            noError = true;
+
             string VIN = VINText.GetLineText(0);
-            string NumOwners = NumOwnersText.GetLineText(0);
-            string Mileage = MileageText.GetLineText(0);
+            string NumberOwners = NumOwnersText.GetLineText(0);
             string Rating = RatingText.GetLineText(0);
+            string Mileage = MileageText.GetLineText(0);
 
-            //sql statement
+            //SQL Statement
+            OleDbCommand insertVHR = cn.CreateCommand();
 
-            Parent.SecondWindow = null;
-            this.Close();
+            insertVHR.CommandText = "INSERT INTO VehicleHistoryReport(VIN, NumberOwners, Rating, Mileage) VALUES (@VIN, @NumberOwners, @Rating, @Mileage)";
+
+            insertVHR.Parameters.AddWithValue("@VIN", VIN);
+            insertVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
+            insertVHR.Parameters.AddWithValue("@Rating", Rating);
+            insertVHR.Parameters.AddWithValue("@Mileage", Mileage);
+
+            try
+            {
+                insertVHR.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+
+            if (noError)
+                this.Close();
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Parent.SecondWindow = null;
             base.OnClosing(e);
         }
     }

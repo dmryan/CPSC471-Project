@@ -25,6 +25,8 @@ namespace CarDealership
         private OleDbConnection cn;
         private MainWindow Parent;
         private bool used;
+        private bool noError;
+
         public AddTruck(MainWindow p, OleDbConnection c, bool u)
         {
             cn = c;
@@ -33,33 +35,75 @@ namespace CarDealership
             InitializeComponent();
         }
 
-        private void AddEmployeeSubmit_Click(object sender, RoutedEventArgs e)
+        private void AddTruckSubmit_Click(object sender, RoutedEventArgs e)
         {
+            noError = true;
+
             string VIN = VINText.GetLineText(0);
             string Model = ModelText.GetLineText(0);
-            string Year = YearText.GetLineText(0);
-            string Manufacturer = ManufacturerText.GetLineText(0);
-            string Seats = SeatsText.GetLineText(0);
+            string YearProd = YearText.GetLineText(0);
+            string Maker = ManufacturerText.GetLineText(0);
+            string NumberSeats = SeatsText.GetLineText(0);
             string Price = PriceText.GetLineText(0);
             string TowingCapacity = TowingCapText.GetLineText(0);
             bool Sold = false;
 
-            //sql statement
+            //SQL Statement
+            OleDbCommand insertVehical = cn.CreateCommand();
+            OleDbCommand insertTruck = cn.CreateCommand();
 
-            if(used == true)
-            {
-                Parent.SecondWindow = new VehicleHistoryReport(Parent, cn);
-                ((VehicleHistoryReport)Parent.SecondWindow).Show();
-                ((VehicleHistoryReport)Parent.SecondWindow).Activate();
+            insertVehical.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
+            insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
+
+            insertVehical.Parameters.AddWithValue("@VIN", VIN);
+            insertVehical.Parameters.AddWithValue("@Model", Model);
+            insertVehical.Parameters.AddWithValue("@YearProd", YearProd);
+            insertVehical.Parameters.AddWithValue("@Maker", Maker);
+            insertVehical.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+            insertVehical.Parameters.AddWithValue("@Price", Price);
+            insertVehical.Parameters.AddWithValue("@Sold", Sold);
+
+            insertTruck.Parameters.AddWithValue("@VIN", VIN);
+            insertTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
+
+            try {
+                insertVehical.ExecuteNonQuery();
             }
-            if(used == false)
-                Parent.SecondWindow = null;
-
-            this.Close();
+            catch (OleDbException ex)
+            {
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+            if (noError)
+            {
+                try {
+                    insertTruck.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    OleDbCommand deletePart = cn.CreateCommand();
+                    deletePart.CommandText = ("DELETE FROM Vehicle WHERE VIN =" + VIN);
+                    deletePart.ExecuteNonQuery();
+                    noError = false;
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+            }
+            
+            if (noError)
+            {
+                if(used == true)
+                {
+                    VehicleHistoryReport newWindow = new VehicleHistoryReport(Parent, cn);
+                    newWindow.ShowDialog();
+                }
+                this.Close();
+            }
         }
+
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
-            Parent.SecondWindow = null;
             base.OnClosing(e);
         }
     }
