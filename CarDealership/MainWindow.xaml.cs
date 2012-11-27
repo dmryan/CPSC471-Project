@@ -96,22 +96,26 @@ namespace CarDealership
 
         private void FindPersonButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Search(this, cn, "Person");
+            ((Search)SecondWindow).ShowDialog();
         }
 
         private void FindVehicleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Search(this, cn, "Vehicle");
+            ((Search)SecondWindow).ShowDialog();
         }
 
         private void FindPartButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Search(this, cn, "Part");
+            ((Search)SecondWindow).ShowDialog();
         }
 
         private void FindSaleButton_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Search(this, cn, "Sale");
+            ((Search)SecondWindow).ShowDialog();
         }
 
         private void SubmitSaleButton_Click(object sender, RoutedEventArgs e)
