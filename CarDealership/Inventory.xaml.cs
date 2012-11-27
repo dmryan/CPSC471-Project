@@ -28,7 +28,7 @@ namespace CarDealership
             InitializeComponent();
         }
 
-        private void CalculateInventory_Click(object sender, RoutedEventArgs e)
+        private void ViewCars_Click(object sender, RoutedEventArgs e)
         {
             OleDbCommand viewInventory = cn.CreateCommand();
             DataTable dt = new DataTable();
@@ -52,9 +52,34 @@ namespace CarDealership
             }
         }
 
+        private void ViewTrucks_Click(object sender, RoutedEventArgs e)
+        {
+            OleDbCommand viewInventory = cn.CreateCommand();
+            DataTable dt = new DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter();
+
+            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, TowingCapacity FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Sold = @False";
+
+            viewInventory.Parameters.AddWithValue("@False", false);
+
+            try
+            {
+                da.SelectCommand = viewInventory;
+                da.Fill(dt);
+                InventoryGrid.ItemsSource = dt.DefaultView;
+
+            }
+            catch (OleDbException ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+        }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
         }
+
+
     }
 }

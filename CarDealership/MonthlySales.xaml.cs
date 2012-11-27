@@ -45,7 +45,7 @@ namespace CarDealership
                 if (Total is DBNull || Total == "" || MonthYear == "")
                     Total = "0";
                     
-                MonthlySalesText.Text= Total.ToString();;
+                MonthlySalesText.Text= "$ " + Total.ToString();;
             }
             catch (OleDbException ex)
             {

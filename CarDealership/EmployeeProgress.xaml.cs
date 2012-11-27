@@ -11,37 +11,40 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Data.OleDb;
+using System.Data;
 
 namespace CarDealership
 {
     /// <summary>
-    /// Interaction logic for Revenue.xaml
+    /// Interaction logic for EmployeeProgress.xaml
     /// </summary>
-    public partial class Revenue : Window
+    public partial class EmployeeProgress : Window
     {
         private OleDbConnection cn;
 
-        public Revenue(OleDbConnection c)
+        public EmployeeProgress( OleDbConnection c )
         {
             cn = c;
             InitializeComponent();
         }
 
-        private void CalculateRevenue_Click(object sender, RoutedEventArgs e)
+        private void CalculateEmployeeProgress_Click(object sender, RoutedEventArgs e)
         {
-            //SQL Statement
-            OleDbCommand calculateRevenue = cn.CreateCommand();
+            OleDbCommand viewEmployeeProgress = cn.CreateCommand();
+            DataTable dt = new DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter();
 
-            calculateRevenue.CommandText = "SELECT SUM(SalePrice) FROM Sale";
+            viewEmployeeProgress.CommandText = "SELECT EID, PersonName, SUM(SalePrice) FROM Sale INNER JOIN Person ON Person.ID = Sale.EID GROUP BY EID, PersonName";
+
+            viewEmployeeProgress.Parameters.AddWithValue("@False", false);
 
             try
             {
-                Object Total = new Object();
-                Total = calculateRevenue.ExecuteScalar();
-                if (Total is DBNull || Total == "")
-                    Total = "0";
+                da.SelectCommand = viewEmployeeProgress;
+                da.Fill(dt);
+                dt.Columns[2].ColumnName = "Sale Money Earned ($)";
+                EmployeeProgressGrid.ItemsSource = dt.DefaultView;
 
-                RevenueText.Text = "$ " + Total.ToString(); ;
             }
             catch (OleDbException ex)
             {
