@@ -138,7 +138,8 @@ namespace CarDealership
 
         private void Modify_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Modify(this, cn);
+            ((Modify)SecondWindow).ShowDialog();
         }
 
         private void MonthlySalesButton_Click(object sender, RoutedEventArgs e)

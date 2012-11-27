@@ -51,7 +51,7 @@ namespace CarDealership
             {
                 Employee = false;
                 EmployeeCheck.IsChecked = false;
-
+                CustomerCheck.Visibility = Visibility.Visible;
                 string EID = PersonIDBox.GetLineText(0);
                 string Name = PersonNameBox.GetLineText(0);
                 string Phone = PersonPhoneBox.GetLineText(0);
@@ -60,19 +60,21 @@ namespace CarDealership
                 string Salary = PersonOther1Box.GetLineText(0);
                 string StartDate = PersonOther2Box.GetLineText(0);
                 string Manager = PersonOther3Box.GetLineText(0);
+                //sql
                 
             }
             else if (Customer)
             {
                 Customer = false;
                 CustomerCheck.IsChecked = false;
-
+                EmployeeCheck.Visibility = Visibility.Visible;
                 string EID = PersonIDBox.GetLineText(0);
                 string Name = PersonNameBox.GetLineText(0);
                 string Phone = PersonPhoneBox.GetLineText(0);
                 string Address = PersonAddressBox.GetLineText(0);
                 string Sex = PersonSexBox.GetLineText(0);
                 string Type = PersonOther1Box.GetLineText(0);
+                //sql
             }
         }
         private void SubmitVehicle_Click(object sender, RoutedEventArgs e)
@@ -81,7 +83,7 @@ namespace CarDealership
             {
                 Car = false;
                 CarCheck.IsChecked = false;
-
+                TruckCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
                 string Year = VehicleYearBox.GetLineText(0);
@@ -89,12 +91,13 @@ namespace CarDealership
                 string Seats = VehicleSeatsBox.GetLineText(0);
                 string Price = VehiclePriceBox.GetLineText(0);
                 string Type = VehicleOther1Box.GetLineText(0);
+                //sql
             }
             else if (Truck)
             {
                 Truck = false;
                 TruckCheck.IsChecked = false;
-
+                CarCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
                 string Year = VehicleYearBox.GetLineText(0);
@@ -102,11 +105,16 @@ namespace CarDealership
                 string Seats = VehicleSeatsBox.GetLineText(0);
                 string Price = VehiclePriceBox.GetLineText(0);
                 string TowingCapacity = VehicleOther1Box.GetLineText(0);
+                //sql
             }
         }
         private void SubmitVHR_Click(object sender, RoutedEventArgs e)
         {
-
+            string VIN = VHRVINBox.GetLineText(0);
+            string Owners = VHRPreviousOwnersBox.GetLineText(0);
+            string Rating = VHRRatingBox.GetLineText(0);
+            string Mileage = VHRMileageBox.GetLineText(0);
+            //sql
         }
         private void SubmitPart_Click(object sender, RoutedEventArgs e)
         {
@@ -114,25 +122,27 @@ namespace CarDealership
             {
                 Tires = false;
                 TiresCheck.IsChecked = false;
-
+                EngineCheck.Visibility = Visibility.Visible;
                 string SerialNumber = PartSerialNumberBox.GetLineText(0);
                 string VIN = PartVINBox.GetLineText(0);
                 string Name = PartNameBox.GetLineText(0);
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
                 string Size = PartOther1Box.GetLineText(0);
                 string Type = PartOther2Box.GetLineText(0);
+                //sql
             }
             else if (Engine)
             {
                 Engine = false;
                 EngineCheck.IsChecked = false;
-
+                TiresCheck.Visibility = Visibility.Visible;
                 string SerialNumber = PartSerialNumberBox.GetLineText(0);
                 string VIN = PartVINBox.GetLineText(0);
                 string Name = PartNameBox.GetLineText(0);
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
                 string Cylinders = PartOther1Box.GetLineText(0);
                 string HorsePower = PartOther2Box.GetLineText(0);
+                //sql
             }
             else if (Part)
             {
@@ -142,12 +152,19 @@ namespace CarDealership
                 string VIN = PartVINBox.GetLineText(0);
                 string Name = PartNameBox.GetLineText(0);
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
+                //sql
             }
         }
 
         private void EmployeeCheck_Checked(object sender, RoutedEventArgs e)
         {
             CustomerCheck.Visibility = Visibility.Collapsed;
+            PersonOther1Box.Visibility = Visibility.Visible;
+            PersonOther1Label.Visibility = Visibility.Visible;
+            PersonOther2Box.Visibility = Visibility.Visible;
+            PersonOther2Label.Visibility = Visibility.Visible;
+            PersonOther3Box.Visibility = Visibility.Visible;
+            PersonOther3Label.Visibility = Visibility.Visible;
             PersonOther1Label.Text = "Salary";
             PersonOther2Label.Text = "Start Date";
             PersonOther3Label.Text = "Manager EID";
@@ -160,10 +177,10 @@ namespace CarDealership
         private void CustomerCheck_Checked(object sender, RoutedEventArgs e)
         {
             EmployeeCheck.Visibility = Visibility.Collapsed;
-            PersonOther1Box.Visibility = Visibility.Collapsed;
-            PersonOther1Label.Visibility = Visibility.Collapsed;
             PersonOther2Box.Visibility = Visibility.Collapsed;
             PersonOther2Label.Visibility = Visibility.Collapsed;
+            PersonOther3Box.Visibility = Visibility.Collapsed;
+            PersonOther3Label.Visibility = Visibility.Collapsed;
             PersonOther1Label.Text = "Type";
             PersonOther1Box.Text = "New/Returning/Loyal";
             Customer = true;
