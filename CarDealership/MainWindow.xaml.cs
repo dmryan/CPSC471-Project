@@ -126,13 +126,14 @@ namespace CarDealership
 
         private void AddTiresButton_Click(object sender, RoutedEventArgs e)
         {
-                SecondWindow = new AddTires(this, cn);
-                ((AddTires)SecondWindow).ShowDialog();
+             SecondWindow = new AddTires(this, cn);
+             ((AddTires)SecondWindow).ShowDialog();
         }
 
         private void Remove_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Remove(this, cn);
+            ((Remove)SecondWindow).ShowDialog();
         }
 
         private void Modify_Click(object sender, RoutedEventArgs e)

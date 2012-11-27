@@ -76,6 +76,9 @@
     <Compile Include="MonthlySales.xaml.cs">
       <DependentUpon>MonthlySales.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Remove.xaml.cs">
+      <DependentUpon>Remove.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Revenue.xaml.cs">
       <DependentUpon>Revenue.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="MonthlySales.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Remove.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

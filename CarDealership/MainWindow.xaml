@@ -37,10 +37,8 @@
             <Grid>
                 <Button Content="Inventory" Height="25" HorizontalAlignment="Left" Margin="100,50,0,0" Name="InventoryButton" VerticalAlignment="Top" Width="125" Click="InventoryButton_Click" />
                 <Button Content="Monthly Sales" Height="25" HorizontalAlignment="Left" Margin="100,125,0,0" Name="MonthlySalesButton" VerticalAlignment="Top" Width="125" Click="MonthlySalesButton_Click" />
-                <Button Content="Employee Progress" Height="25" HorizontalAlignment="Left" Margin="100,200,0,0" Name="button3" VerticalAlignment="Top" Width="125" />
+                <Button Content="Employee Progress" Height="25" HorizontalAlignment="Left" Margin="265,125,0,0" Name="button3" VerticalAlignment="Top" Width="125" />
                 <Button Content="Revenue" Height="25" HorizontalAlignment="Right" Margin="0,50,100,0" Name="Revenue" VerticalAlignment="Top" Width="125" Click="Revenue_Click" />
-                <Button Content="Change Salary" Height="25" HorizontalAlignment="Right" Margin="0,125,100,0" Name="ChangeSalaryButton" VerticalAlignment="Top" Width="125" />
-                <Button Content="Manage Management" Height="25" HorizontalAlignment="Right" Margin="0,200,100,0" Name="button6" VerticalAlignment="Top" Width="125" />
             </Grid>
         </TabItem>
         <TabItem Header="Remove/Modify" Name="tabItem1">
