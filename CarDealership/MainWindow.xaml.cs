@@ -147,5 +147,16 @@ namespace CarDealership
             SecondWindow = new Revenue(cn);
             ((Revenue)SecondWindow).ShowDialog();
         }
+
+        private void InventoryButton_Click(object sender, RoutedEventArgs e)
+        {
+            SecondWindow = new Inventory(cn);
+            ((Inventory)SecondWindow).ShowDialog();
+        }
+
+        private void InventoryButton_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

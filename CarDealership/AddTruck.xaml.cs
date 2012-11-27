@@ -48,7 +48,7 @@ namespace CarDealership
             string TowingCapacity = TowingCapText.GetLineText(0);
             bool Sold = false;
 
-            //SQL Statement
+             //SQL Statement
             OleDbCommand insertVehical = cn.CreateCommand();
             OleDbCommand insertTruck = cn.CreateCommand();
 
