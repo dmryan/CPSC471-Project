@@ -34,7 +34,7 @@ namespace CarDealership
             DataTable dt = new DataTable();
             OleDbDataAdapter da = new OleDbDataAdapter();
 
-            viewInventory.CommandText = "SELECT * FROM Vehicle"/* INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Sold = @False"*/;
+            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, Type FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Sold = @False";
             
             viewInventory.Parameters.AddWithValue("@False", false);
 
@@ -42,7 +42,8 @@ namespace CarDealership
             {
                 da.SelectCommand = viewInventory;
                 da.Fill(dt);
-                InventoryList.ItemsSource = dt.DefaultView;
+                InventoryGrid.ItemsSource = dt.DefaultView;
+
             }
             catch (OleDbException ex)
             {

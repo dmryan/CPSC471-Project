@@ -4,6 +4,6 @@
         Title="Inventory" Height="300" Width="350">
     <Grid>
         <Button Content="Calculate" Height="25" HorizontalAlignment="Left" Margin="241,224,0,0" Name="CalculateInventory" VerticalAlignment="Top" Width="75" Click="CalculateInventory_Click" />
-        <ListView Height="173" HorizontalAlignment="Left" Margin="47,24,0,0" Name="InventoryList" VerticalAlignment="Top" Width="240" />
+        <DataGrid Height="Auto" HorizontalAlignment="Left" Name="InventoryGrid" VerticalAlignment="Top" Width="Auto" ItemsSource ="{Binding}"/>
     </Grid>
 </Window>

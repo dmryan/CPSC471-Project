@@ -30,7 +30,8 @@ namespace CarDealership
             InitializeComponent();
             // Make sure you use database in the Git
             //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\David Ryan\Documents\CarDealershipDatabase.accdb";
-            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
+            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=CarDealershipDatabase.accdb";
+            //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
             //string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\boydst\SENG_GIT\CPSC471\CPSC471-Project\CarDealershipDatabase.accdb";
             cn = new OleDbConnection(ConnectionString);
             try
@@ -158,11 +159,6 @@ namespace CarDealership
         {
             SecondWindow = new Inventory(cn);
             ((Inventory)SecondWindow).ShowDialog();
-        }
-
-        private void InventoryButton_Click_2(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
