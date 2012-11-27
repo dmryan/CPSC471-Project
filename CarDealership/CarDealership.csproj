@@ -73,6 +73,9 @@
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
     <Compile Include="MakeSale.cs" />
+    <Compile Include="Modify.xaml.cs">
+      <DependentUpon>Modify.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MonthlySales.xaml.cs">
       <DependentUpon>MonthlySales.xaml</DependentUpon>
     </Compile>
@@ -148,6 +151,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Modify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MonthlySales.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
