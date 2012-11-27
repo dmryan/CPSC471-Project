@@ -15,43 +15,39 @@ using System.Data.OleDb;
 namespace CarDealership
 {
     /// <summary>
-    /// Interaction logic for MonthlySales.xaml
+    /// Interaction logic for Revenue.xaml
     /// </summary>
-    public partial class MonthlySales : Window
+    public partial class Revenue : Window
     {
         private OleDbConnection cn;
 
-        public MonthlySales(OleDbConnection c)
+        public Revenue(OleDbConnection c)
         {
             cn = c;
             InitializeComponent();
         }
 
-        private void CalculateMonthlySales_Click(object sender, RoutedEventArgs e)
+        private void CalculateRevenue_Click(object sender, RoutedEventArgs e)
         {
-            string MonthYear = MonthYearText.GetLineText(0);
-
             //SQL Statement
-            OleDbCommand calculateMonthlySales = cn.CreateCommand();
+            OleDbCommand calculateRevenue = cn.CreateCommand();
 
-            calculateMonthlySales.CommandText = "SELECT SUM(SalePrice) FROM Sale WHERE SellDate LIKE @MonthYear";
+            calculateRevenue.CommandText = "SELECT SUM(SalePrice) FROM Sale";
 
-            calculateMonthlySales.Parameters.AddWithValue("@MonthYear", "%" + MonthYear);
-
-            try 
+            try
             {
                 Object Total = new Object();
-                Total = calculateMonthlySales.ExecuteScalar();
-                if (Total is DBNull || Total == "" || MonthYear == "")
+                Total = calculateRevenue.ExecuteScalar();
+                if (Total is DBNull || Total == "")
                     Total = "0";
-                    
-                MonthlySalesText.Text= Total.ToString();;
+
+                RevenueText.Text = Total.ToString(); ;
             }
             catch (OleDbException ex)
             {
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
-            }   
+            }
         }
 
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)

@@ -144,7 +144,8 @@ namespace CarDealership
 
         private void Revenue_Click(object sender, RoutedEventArgs e)
         {
-
+            SecondWindow = new Revenue(cn);
+            ((Revenue)SecondWindow).ShowDialog();
         }
     }
 }
