@@ -30,8 +30,10 @@ namespace CarDealership
 
             //SQL Statement
             OleDbCommand insertSale = cn.CreateCommand();
+            OleDbCommand markSale = cn.CreateCommand();
 
             insertSale.CommandText = "INSERT INTO Sale(VIN, CID, EID, SellDate, SalePrice) VALUES (@VIN, @CID, @EID, @SellDate, @SalePrice)";
+            markSale.CommandText = "UPDATE Vehicle SET Sold = ? WHERE VIN = ?";
 
             insertSale.Parameters.AddWithValue("@VIN", VIN);
             insertSale.Parameters.AddWithValue("@CID", CID);
@@ -39,8 +41,12 @@ namespace CarDealership
             insertSale.Parameters.AddWithValue("@SellDate", SellDate);
             insertSale.Parameters.AddWithValue("@SalePrice", SalePrice);
 
+            
+            markSale.Parameters.AddWithValue("@Sold", true);
+            markSale.Parameters.AddWithValue("@VIN", VIN);
             try {
                 insertSale.ExecuteNonQuery();
+                markSale.ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {

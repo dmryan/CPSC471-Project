@@ -141,5 +141,10 @@ namespace CarDealership
             SecondWindow = new MonthlySales(cn);
             ((MonthlySales)SecondWindow).ShowDialog();
         }
+
+        private void Revenue_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
