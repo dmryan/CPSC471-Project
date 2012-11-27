@@ -55,6 +55,9 @@ namespace CarDealership
             PersonCheck.IsChecked = false;
             VehicleCheck.IsChecked = false;
             PartCheck.IsChecked = false;
+            Person = false;
+            Vehicle = false;
+            Part = false;
             PersonCheck.Visibility = Visibility.Visible;
             VehicleCheck.Visibility = Visibility.Visible;
             PartCheck.Visibility = Visibility.Visible;
