@@ -37,7 +37,7 @@
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="VehicleModelLabel" Text="Model" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="VehicleYearLabel" Text="Year" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,120,0,0" Name="VehicleMakerLabel" Text="Maker" VerticalAlignment="Top" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,150,0,0" Name="VehicleSeatsLabel" Text="#Seats" VerticalAlignment="Top" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,150,0,0" Name="VehicleSeatsLabel" Text="Number of Seats" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,180,0,0" Name="VehiclePriceLabel" Text="Price" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,210,0,0" Name="VehicleOther1Label" Text="Other" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,30,0,0" Name="VINLabel" Text="VIN*" VerticalAlignment="Top" />

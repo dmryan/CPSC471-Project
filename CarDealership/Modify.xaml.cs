@@ -61,7 +61,7 @@ namespace CarDealership
                 string StartDate = PersonOther2Box.GetLineText(0);
                 string Manager = PersonOther3Box.GetLineText(0);
                
-                //sql
+                //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
                 OleDbCommand viewEmployee = cn.CreateCommand();
@@ -149,7 +149,7 @@ namespace CarDealership
                 string Sex = PersonSexBox.GetLineText(0);
                 string Type = PersonOther1Box.GetLineText(0);
 
-                //sql
+                //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
                 OleDbCommand viewCustomer = cn.CreateCommand();
@@ -192,7 +192,6 @@ namespace CarDealership
                         updatePerson.Parameters.AddWithValue("@Sex", dt.Rows[0]["Sex"].ToString());
                     updatePerson.Parameters.AddWithValue("@ID", CID);
 
-                    Console.WriteLine(Address);
                     if (Type != "")
                         updateCustomer.Parameters.AddWithValue("@Type", Type);
                     else
@@ -225,12 +224,82 @@ namespace CarDealership
                 TruckCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
-                string Year = VehicleYearBox.GetLineText(0);
+                string YearProd = VehicleYearBox.GetLineText(0);
                 string Maker = VehicleMakerBox.GetLineText(0);
-                string Seats = VehicleSeatsBox.GetLineText(0);
+                string NumberSeats = VehicleSeatsBox.GetLineText(0);
                 string Price = VehiclePriceBox.GetLineText(0);
                 string Type = VehicleOther1Box.GetLineText(0);
-                //sql
+
+                //SQL
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewCar = cn.CreateCommand();
+                OleDbCommand updateVehicle = cn.CreateCommand();
+                OleDbCommand updateCar = cn.CreateCommand();
+
+                viewCar.CommandText = "SELECT * FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Vehicle.VIN = @VIN";
+                updateVehicle.CommandText = "UPDATE Vehicle SET Model = ?, YearProd = ?, Maker = ?, NumberSeats = ?, Price = ? WHERE VIN = ?";
+                updateCar.CommandText = "UPDATE Car SET Type = ? WHERE VIN = ?";
+
+                viewCar.Parameters.AddWithValue("@VIN", VIN);
+
+                try
+                {
+                    da.SelectCommand = viewCar;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (Model != "")
+                        updateVehicle.Parameters.AddWithValue("@Model", Model);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Model", dt.Rows[0]["Model"].ToString());
+                    if (YearProd != "")
+                        updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@YearProd", dt.Rows[0]["YearProd"].ToString());
+                    if (Maker != "")
+                        updateVehicle.Parameters.AddWithValue("@Maker", Maker);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Maker", dt.Rows[0]["Maker"].ToString());
+                    if (NumberSeats != "")
+                        updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@NumberSeats", dt.Rows[0]["NumberSeats"].ToString());
+                    if (Price != "")
+                        updateVehicle.Parameters.AddWithValue("@Price", Price);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Price", dt.Rows[0]["Price"].ToString());
+                    updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+
+                    if (Type != "")
+                        updateCar.Parameters.AddWithValue("@Type", Type);
+                    else
+                        updateCar.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
+                    updateCar.Parameters.AddWithValue("@VIN", VIN);
+
+                    updateVehicle.ExecuteNonQuery();
+                    updateCar.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+
+                VINBox.Clear();
+                VehicleModelBox.Clear();
+                VehicleYearBox.Clear();
+                VehicleMakerBox.Clear();
+                VehicleSeatsBox.Clear();
+                VehiclePriceBox.Clear();
+                VehicleOther1Box.Clear();
             }
             else if (Truck)
             {
@@ -239,12 +308,82 @@ namespace CarDealership
                 CarCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
-                string Year = VehicleYearBox.GetLineText(0);
+                string YearProd = VehicleYearBox.GetLineText(0);
                 string Maker = VehicleMakerBox.GetLineText(0);
-                string Seats = VehicleSeatsBox.GetLineText(0);
+                string NumberSeats = VehicleSeatsBox.GetLineText(0);
                 string Price = VehiclePriceBox.GetLineText(0);
                 string TowingCapacity = VehicleOther1Box.GetLineText(0);
-                //sql
+                
+                //SQL
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewTruck = cn.CreateCommand();
+                OleDbCommand updateVehicle = cn.CreateCommand();
+                OleDbCommand updateTruck = cn.CreateCommand();
+
+                viewTruck.CommandText = "SELECT * FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Vehicle.VIN = @VIN";
+                updateVehicle.CommandText = "UPDATE Vehicle SET Model = ?, YearProd = ?, Maker = ?, NumberSeats = ?, Price = ? WHERE VIN = ?";
+                updateTruck.CommandText = "UPDATE Truck SET TowingCapacity = ? WHERE VIN = ?";
+
+                viewTruck.Parameters.AddWithValue("@VIN", VIN);
+
+                try
+                {
+                    da.SelectCommand = viewTruck;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (Model != "")
+                        updateVehicle.Parameters.AddWithValue("@Model", Model);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Model", dt.Rows[0]["Model"].ToString());
+                    if (YearProd != "")
+                        updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@YearProd", dt.Rows[0]["YearProd"].ToString());
+                    if (Maker != "")
+                        updateVehicle.Parameters.AddWithValue("@Maker", Maker);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Maker", dt.Rows[0]["Maker"].ToString());
+                    if (NumberSeats != "")
+                        updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@NumberSeats", dt.Rows[0]["NumberSeats"].ToString());
+                    if (Price != "")
+                        updateVehicle.Parameters.AddWithValue("@Price", Price);
+                    else
+                        updateVehicle.Parameters.AddWithValue("@Price", dt.Rows[0]["Price"].ToString());
+                    updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+
+                    if (TowingCapacity != "")
+                        updateTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
+                    else
+                        updateTruck.Parameters.AddWithValue("@TowingCapacity", dt.Rows[0]["TowingCapacity"].ToString());
+                    updateTruck.Parameters.AddWithValue("@VIN", VIN);
+
+                    updateVehicle.ExecuteNonQuery();
+                    updateTruck.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+
+                VINBox.Clear();
+                VehicleModelBox.Clear();
+                VehicleYearBox.Clear();
+                VehicleMakerBox.Clear();
+                VehicleSeatsBox.Clear();
+                VehiclePriceBox.Clear();
+                VehicleOther1Box.Clear();
             }
         }
         private void SubmitVHR_Click(object sender, RoutedEventArgs e)
@@ -291,7 +430,8 @@ namespace CarDealership
                 string VIN = PartVINBox.GetLineText(0);
                 string Name = PartNameBox.GetLineText(0);
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
-                //sql
+
+                //SQL
             }
         }
 
