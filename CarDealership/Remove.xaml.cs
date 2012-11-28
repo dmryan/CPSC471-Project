@@ -39,18 +39,101 @@ namespace CarDealership
 
         private void RemoveButton_Click(object sender, RoutedEventArgs e)
         {
+            int KeyNum = 0;
             string Num = IDText.GetLineText(0);
+            try
+            {
+                KeyNum = int.Parse(Num);
+            }
+            catch (Exception ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+
             if (Person)
             {
-            //sql num represents the id num
+                //sql num represents the id num
+                OleDbCommand deletePerson = cn.CreateCommand();
+                OleDbCommand deleteEmployee = cn.CreateCommand();
+                OleDbCommand deleteCustomer = cn.CreateCommand();
+
+                deletePerson.CommandText = ("DELETE FROM Person WHERE ID =" + KeyNum);
+                deleteEmployee.CommandText = ("DELETE FROM Employee WHERE EID =" + KeyNum);
+                deleteCustomer.CommandText = ("DELETE FROM Customer WHERE CID =" + KeyNum);
+
+                try
+                {
+                    deleteEmployee.ExecuteNonQuery();
+                    deleteCustomer.ExecuteNonQuery();
+                    deletePerson.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else if (Vehicle)
             {
                 //sql num represents the id num
+                OleDbCommand deleteVehicle = cn.CreateCommand();
+                OleDbCommand deleteVHR = cn.CreateCommand();
+                OleDbCommand deleteSale = cn.CreateCommand();
+                OleDbCommand deletePart = cn.CreateCommand();
+                OleDbCommand deleteEngine = cn.CreateCommand();
+                OleDbCommand deleteTire = cn.CreateCommand();
+                OleDbCommand deleteCar = cn.CreateCommand();
+                OleDbCommand deleteTruck = cn.CreateCommand();
+
+                deleteVHR.CommandText = ("DELETE FROM VehicleHistoryReport WHERE VIN =" + KeyNum);
+                deleteVehicle.CommandText = ("DELETE FROM Vehicle WHERE VIN =" + KeyNum);
+                deleteSale.CommandText = ("DELETE FROM Sale WHERE VIN =" + KeyNum);
+                deletePart.CommandText = ("DELETE FROM Part WHERE VIN =" + KeyNum);
+                deleteEngine.CommandText = ("DELETE FROM Engine WHERE SerialNumber =" + KeyNum);
+                deleteTire.CommandText = ("DELETE FROM Tire WHERE SerialNumber =" + KeyNum);
+                deleteCar.CommandText = ("DELETE FROM Car WHERE VIN =" + KeyNum);
+                deleteTruck.CommandText = ("DELETE FROM Truck WHERE VIN =" + KeyNum);
+
+                try
+                {
+                    deleteCar.ExecuteNonQuery();
+                    deleteTruck.ExecuteNonQuery();
+                    deleteEngine.ExecuteNonQuery();
+                    deleteTire.ExecuteNonQuery();
+                    deleteSale.ExecuteNonQuery();
+                    deletePart.ExecuteNonQuery();
+                    deleteVHR.ExecuteNonQuery();
+                    deleteVehicle.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else if (Part)
             {
                 //sql num represents the id num
+                OleDbCommand deletePart = cn.CreateCommand();
+                OleDbCommand deleteEngine = cn.CreateCommand();
+                OleDbCommand deleteTire = cn.CreateCommand();
+
+                deletePart.CommandText = ("DELETE FROM Part WHERE SerialNumber =" + KeyNum);
+                deleteEngine.CommandText = ("DELETE FROM Engine WHERE SerialNumber =" + KeyNum);
+                deleteTire.CommandText = ("DELETE FROM Tire WHERE SerialNumber =" + KeyNum);
+
+                try
+                {
+                    deleteEngine.ExecuteNonQuery();
+                    deleteTire.ExecuteNonQuery();
+                    deletePart.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             PersonCheck.IsChecked = false;
             VehicleCheck.IsChecked = false;
@@ -74,7 +157,7 @@ namespace CarDealership
         {
             VehicleCheck.Visibility = Visibility.Collapsed;
             PartCheck.Visibility = Visibility.Collapsed;
-            TextBoxLabel.Text = "ID#";
+            TextBoxLabel.Text = "ID";
             Person = true;
         }
 
@@ -90,7 +173,7 @@ namespace CarDealership
         {
             PersonCheck.Visibility = Visibility.Collapsed;
             VehicleCheck.Visibility = Visibility.Collapsed;
-            TextBoxLabel.Text = "Serial #";
+            TextBoxLabel.Text = "Serial Number";
             Part = true;
         }
     }
