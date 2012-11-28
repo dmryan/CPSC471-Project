@@ -38,21 +38,24 @@ namespace CarDealership
             {
                 StatementBlock.Text = "Enter ID# to Find a Specific Person";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
+                label1.Content = ""; label2.Content = ""; label3.Content = "ID";
             }
             else if (type.CompareTo("Vehicle") == 0)
             {
                 StatementBlock.Text = "Enter VIN to Find a Specific Vehicle\nVehicle History Reports are Included with Used Vehicles";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
+                label1.Content = ""; label2.Content = ""; label3.Content = "VIN";
             }
             else if (type.CompareTo("Part") == 0)
             {
                 StatementBlock.Text = "Enter Serial# to Find a Specific Part";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
+                label1.Content = ""; label2.Content = ""; label3.Content = "Serial Number";
             }
             else
             {
                 StatementBlock.Text = "Enter Employee and Customer ID#s and VIN to Find a Specific Sale";
-                Parameter1.Text = "(EID)100456"; Parameter2.Text = "(CustID)105043"; Parameter3.Text = "(VIN)598786";
+                label1.Content = "Employee ID"; label2.Content = "Customer ID"; label3.Content = "VIN";
             }
         }
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -166,6 +169,28 @@ namespace CarDealership
             else
             {
                 //sql statement EID is Para1, CustID is Para2, VIN is Para3
+                OleDbCommand viewSale = cn.CreateCommand();
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+
+                viewSale.CommandText = "SELECT * FROM Sale WHERE EID = @EID AND CID = @CID AND VIN = @VIN";
+
+                viewSale.Parameters.AddWithValue("@EID", Para1);
+                viewSale.Parameters.AddWithValue("@CID", Para2);
+                viewSale.Parameters.AddWithValue("@VIN", Para3);
+
+                try
+                {
+                    da.SelectCommand = viewSale;
+                    da.Fill(dt);
+                    dt.Columns[4].ColumnName = "Sale Price ($)";
+                    ResponseBlock.ItemsSource = dt.DefaultView;
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
 
         }
