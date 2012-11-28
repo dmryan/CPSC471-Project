@@ -88,8 +88,7 @@ namespace CarDealership
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
                 }
-        
-                }
+            }
             else if (type.CompareTo("Vehicle") == 0)
             {
                 //sql statement VIN is in Para3
@@ -124,11 +123,46 @@ namespace CarDealership
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
                 }
-
             }
             else if (type.CompareTo("Part") == 0)
             {
-                //sql statement Serial# is in Para3
+
+                //sql statement VIN is in Para3
+                OleDbCommand viewPart = cn.CreateCommand();
+                OleDbCommand viewEngine = cn.CreateCommand();
+                OleDbCommand viewTire = cn.CreateCommand();
+                DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+
+                viewPart.CommandText = "SELECT * FROM Part WHERE SerialNumber = @SerialNumber";
+                viewEngine.CommandText = "SELECT * FROM Engine WHERE SerialNumber = @SerialNumber";
+                viewTire.CommandText = "SELECT * FROM Tire WHERE SerialNumber = @SerialNumber";
+
+                viewPart.Parameters.AddWithValue("@SerialNumber", Para3);
+                viewEngine.Parameters.AddWithValue("@SerialNumber", Para3);
+                viewTire.Parameters.AddWithValue("@SerialNumber", Para3);
+
+                try
+                {
+                    
+                    da.SelectCommand = viewEngine;
+                    da.Fill(dt);
+                    da.SelectCommand = viewTire;
+                    da.Fill(dt);
+                    ResponseBlock.ItemsSource = dt.DefaultView;
+                    if (ResponseBlock.Items.Count == 0)
+                    {
+                        da.SelectCommand = viewPart;
+                        da.Fill(dt2);
+                        ResponseBlock.ItemsSource = dt2.DefaultView;
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else
             {
