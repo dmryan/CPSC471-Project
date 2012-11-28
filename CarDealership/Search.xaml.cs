@@ -46,7 +46,7 @@ namespace CarDealership
             }
             else if (type.CompareTo("Part") == 0)
             {
-                StatementBlock.Text = "(1) Enter Serial# to Find a Specific Part\n(2) Perform a General Search with up to Three Criteria";
+                StatementBlock.Text = "Enter Serial# to Find a Specific Part";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
             }
             else
@@ -61,17 +61,70 @@ namespace CarDealership
             string Para2 = Parameter2.GetLineText(0);
             string Para3 = Parameter3.GetLineText(0);
 
-            string message = "Initiating " + type + " Search...\n";
-
-            ResponseBlock.AppendText(message);
-
             if (type.CompareTo("Person") == 0)
             {
                 //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
-            }
+                OleDbCommand viewCustomer = cn.CreateCommand();
+                OleDbCommand viewEmployee = cn.CreateCommand();
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+
+                viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @ID";
+                viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @ID";
+
+                viewCustomer.Parameters.AddWithValue("@ID", Para3);
+                viewEmployee.Parameters.AddWithValue("@ID", Para3);
+
+                try
+                {
+                    da.SelectCommand = viewCustomer;
+                    da.Fill(dt);
+                    da.SelectCommand = viewEmployee;
+                    da.Fill(dt);
+                    ResponseBlock.ItemsSource = dt.DefaultView;
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+        
+                }
             else if (type.CompareTo("Vehicle") == 0)
             {
                 //sql statement VIN is in Para3
+                OleDbCommand viewCar = cn.CreateCommand();
+                OleDbCommand viewTruck = cn.CreateCommand();
+                OleDbCommand viewVHR = cn.CreateCommand();
+                DataTable dt = new DataTable();
+                DataTable dt2 = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+
+                viewCar.CommandText = "SELECT Vehicle.Vin, Model, YearProd, Maker, NumberSeats, Price, Sold, Type FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Vehicle.VIN = @VIN";
+                viewTruck.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, Sold, TowingCapacity FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Vehicle.VIN = @VIN";
+                viewVHR.CommandText = "SELECT VIN, NumberOwners, Rating, Mileage FROM VehicleHistoryReport WHERE VIN = @VIN";
+
+                viewCar.Parameters.AddWithValue("@VIN", Para3);
+                viewTruck.Parameters.AddWithValue("@VIN", Para3);
+                viewVHR.Parameters.AddWithValue("@VIN", Para3);
+
+                try
+                {
+                    da.SelectCommand = viewCar;
+                    da.Fill(dt);
+                    da.SelectCommand = viewTruck;
+                    da.Fill(dt);
+                    ResponseBlock.ItemsSource = dt.DefaultView;
+                    da.SelectCommand = viewVHR;
+                    da.Fill(dt2);
+                    ResponseBlock2.ItemsSource = dt2.DefaultView;
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+
             }
             else if (type.CompareTo("Part") == 0)
             {
@@ -96,7 +149,8 @@ namespace CarDealership
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            TextRange text = new TextRange(ResponseBlock.Document.ContentStart, ResponseBlock.Document.ContentEnd); text.Text = "\n";
+            ResponseBlock.ItemsSource = null;
+            ResponseBlock2.ItemsSource = null;
         }
     }
 }

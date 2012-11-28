@@ -4,6 +4,6 @@
         Title="EmployeeProgress" Height="300" Width="350">
     <Grid>
         <Button Content="Calculate" Height="25" HorizontalAlignment="Left" Margin="241,224,0,0" Name="CalculateEmployeeProgress" VerticalAlignment="Top" Width="75" Click="CalculateEmployeeProgress_Click" />
-        <DataGrid Height="Auto" HorizontalAlignment="Left" Name="EmployeeProgressGrid" VerticalAlignment="Top" Width="Auto" ItemsSource ="{Binding}"/>
+        <DataGrid Height="200" HorizontalAlignment="Left" Name="EmployeeProgressGrid" VerticalAlignment="Top" Width="Auto" ItemsSource ="{Binding}" CanUserAddRows="False" />
     </Grid>
 </Window>

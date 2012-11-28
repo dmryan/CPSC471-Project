@@ -5,6 +5,6 @@
     <Grid>
         <Button Content="View Cars" Height="25" HorizontalAlignment="Left" Margin="241,224,0,0" Name="ViewCars" VerticalAlignment="Top" Width="75" Click="ViewCars_Click" />
         <Button Content="View Trucks" Height="25" HorizontalAlignment="Left" Margin="156,224,0,0" Name="ViewTrucks" VerticalAlignment="Top" Width="75" Click="ViewTrucks_Click" />
-        <DataGrid Height="Auto" HorizontalAlignment="Left" Name="InventoryGrid" VerticalAlignment="Top" Width="Auto" ItemsSource ="{Binding}"/>
+        <DataGrid Height="200" HorizontalAlignment="Left" Name="InventoryGrid" VerticalAlignment="Top" Width="Auto" ItemsSource ="{Binding}" CanUserAddRows="False" />
     </Grid>
 </Window>
