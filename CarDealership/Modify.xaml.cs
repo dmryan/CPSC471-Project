@@ -60,8 +60,66 @@ namespace CarDealership
                 string Salary = PersonOther1Box.GetLineText(0);
                 string StartDate = PersonOther2Box.GetLineText(0);
                 string Manager = PersonOther3Box.GetLineText(0);
+               
                 //sql
-                
+                String MgrID = "";
+                OleDbCommand foreignKey = cn.CreateCommand();
+                OleDbCommand updatePerson = cn.CreateCommand();
+                OleDbCommand updateEmployee = cn.CreateCommand();
+
+                foreignKey.CommandText = "SELECT ManagerID From Employee Where EID = @EID";
+                updatePerson.CommandText = "UPDATE Person SET PersonName = ?, PhoneNumber = ?, Address = ?, Sex = ? WHERE ID = ?";
+                updateEmployee.CommandText = "UPDATE Employee SET Salary = ?, StartDate = ?, ManagerID = ? WHERE EID = ?";
+
+                foreignKey.Parameters.AddWithValue("@EID", EID);
+
+                try
+                {
+                    Object Total = new Object();
+                    Total = foreignKey.ExecuteScalar();
+                    if (Total is DBNull)
+                        Total = "0";
+                    MgrID = Total.ToString();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+                Console.WriteLine(MgrID);
+
+                if (Name != "")
+                    updatePerson.Parameters.AddWithValue("@PersonName", Name);
+                if (Phone != "")
+                    updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                if (Address != "")
+                    updatePerson.Parameters.AddWithValue("@Address", Address);
+                if (Sex != "")
+                    updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                if (EID != "")
+                    updatePerson.Parameters.AddWithValue("@ID", EID);
+
+                if (Salary != "")
+                    updateEmployee.Parameters.AddWithValue("@Salary", Salary);
+                if (StartDate != "")
+                    updateEmployee.Parameters.AddWithValue("@StartDate", StartDate);
+                if (Manager != "")
+                    updateEmployee.Parameters.AddWithValue("@ManagerID", Manager);
+                else
+                    updateEmployee.Parameters.AddWithValue("@ManagerID", MgrID);
+                if (EID != "")
+                    updateEmployee.Parameters.AddWithValue("@EID", EID);
+
+                try
+                {
+                    updateEmployee.ExecuteNonQuery();
+                    updatePerson.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else if (Customer)
             {
@@ -168,9 +226,6 @@ namespace CarDealership
             PersonOther1Label.Text = "Salary";
             PersonOther2Label.Text = "Start Date";
             PersonOther3Label.Text = "Manager EID";
-            PersonOther1Box.Text = "40000";
-            PersonOther2Box.Text = "31/01/1999";
-            PersonOther3Box.Text = "123456";
             Employee = true;
         }
 
@@ -182,7 +237,6 @@ namespace CarDealership
             PersonOther3Box.Visibility = Visibility.Collapsed;
             PersonOther3Label.Visibility = Visibility.Collapsed;
             PersonOther1Label.Text = "Type";
-            PersonOther1Box.Text = "New/Returning/Loyal";
             Customer = true;
         }
 
@@ -190,7 +244,6 @@ namespace CarDealership
         {
             TruckCheck.Visibility = Visibility.Collapsed;
             VehicleOther1Label.Text = "Type";
-            VehicleOther1Box.Text = "Sport/Sedan/Minivan/etc";
             Car = true;
 
         }
@@ -199,7 +252,6 @@ namespace CarDealership
         {
             CarCheck.Visibility = Visibility.Collapsed;
             VehicleOther1Label.Text = "Towing Capacity (Tonnes)";
-            VehicleOther1Box.Text = "5";
             Truck = true;
         }
 
@@ -212,9 +264,7 @@ namespace CarDealership
             PartOther2Label.Visibility = Visibility.Visible;
             Engine = true;
             Part = false;
-            PartOther1Box.Text = "8";
             PartOther1Label.Text = "Cylinders";
-            PartOther2Box.Text = "350";
             PartOther2Label.Text = "HorsePower";
         }
 
@@ -227,9 +277,7 @@ namespace CarDealership
             PartOther2Label.Visibility = Visibility.Visible;
             Tires = true;
             Part = false;
-            PartOther1Box.Text = "50";
-            PartOther1Label.Text = "Size (cm)";
-            PartOther2Box.Text = "Winter/Summer/etc";
+            PartOther1Label.Text = "Size";
             PartOther2Label.Text = "Type";
         }
 

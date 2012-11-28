@@ -88,10 +88,6 @@ namespace CarDealership
 
                 deleteVHR.CommandText = ("DELETE FROM VehicleHistoryReport WHERE VIN =" + KeyNum);
                 deleteVehicle.CommandText = ("DELETE FROM Vehicle WHERE VIN =" + KeyNum);
-                deleteSale.CommandText = ("DELETE FROM Sale WHERE VIN =" + KeyNum);
-                deletePart.CommandText = ("DELETE FROM Part WHERE VIN =" + KeyNum);
-                deleteEngine.CommandText = ("DELETE FROM Engine WHERE SerialNumber =" + KeyNum);
-                deleteTire.CommandText = ("DELETE FROM Tire WHERE SerialNumber =" + KeyNum);
                 deleteCar.CommandText = ("DELETE FROM Car WHERE VIN =" + KeyNum);
                 deleteTruck.CommandText = ("DELETE FROM Truck WHERE VIN =" + KeyNum);
 
@@ -99,10 +95,6 @@ namespace CarDealership
                 {
                     deleteCar.ExecuteNonQuery();
                     deleteTruck.ExecuteNonQuery();
-                    deleteEngine.ExecuteNonQuery();
-                    deleteTire.ExecuteNonQuery();
-                    deleteSale.ExecuteNonQuery();
-                    deletePart.ExecuteNonQuery();
                     deleteVHR.ExecuteNonQuery();
                     deleteVehicle.ExecuteNonQuery();
                 }

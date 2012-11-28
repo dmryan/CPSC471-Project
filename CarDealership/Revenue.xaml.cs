@@ -41,7 +41,7 @@ namespace CarDealership
                 if (Total is DBNull || Total == "")
                     Total = "0";
 
-                RevenueText.Text = "$ " + Total.ToString(); ;
+                RevenueText.Text = "$ " + Total.ToString();
             }
             catch (OleDbException ex)
             {
