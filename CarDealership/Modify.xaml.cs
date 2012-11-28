@@ -127,19 +127,93 @@ namespace CarDealership
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
                 }
+
+                PersonIDBox.Clear();
+                PersonNameBox.Clear();
+                PersonPhoneBox.Clear();
+                PersonAddressBox.Clear();
+                PersonSexBox.Clear();
+                PersonOther1Box.Clear();
+                PersonOther2Box.Clear();
+                PersonOther3Box.Clear();
             }
             else if (Customer)
             {
                 Customer = false;
                 CustomerCheck.IsChecked = false;
                 EmployeeCheck.Visibility = Visibility.Visible;
-                string EID = PersonIDBox.GetLineText(0);
+                string CID = PersonIDBox.GetLineText(0);
                 string Name = PersonNameBox.GetLineText(0);
                 string Phone = PersonPhoneBox.GetLineText(0);
                 string Address = PersonAddressBox.GetLineText(0);
                 string Sex = PersonSexBox.GetLineText(0);
                 string Type = PersonOther1Box.GetLineText(0);
+
                 //sql
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewCustomer = cn.CreateCommand();
+                OleDbCommand updatePerson = cn.CreateCommand();
+                OleDbCommand updateCustomer = cn.CreateCommand();
+
+                viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @CID";
+                updatePerson.CommandText = "UPDATE Person SET PersonName = ?, PhoneNumber = ?, Address = ?, Sex = ? WHERE ID = ?";
+                updateCustomer.CommandText = "UPDATE Customer SET Type = ? WHERE CID = ?";
+
+                viewCustomer.Parameters.AddWithValue("@CID", CID);
+
+                try
+                {
+                    da.SelectCommand = viewCustomer;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (Name != "")
+                        updatePerson.Parameters.AddWithValue("@PersonName", Name);
+                    else
+                        updatePerson.Parameters.AddWithValue("@PersonName", dt.Rows[0]["PersonName"].ToString());
+                    if (Phone != "")
+                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                    else
+                        updatePerson.Parameters.AddWithValue("@PhoneNumber", dt.Rows[0]["PhoneNumber"].ToString());
+                    if (Address != "")
+                        updatePerson.Parameters.AddWithValue("@Address", Address);
+                    else
+                        updatePerson.Parameters.AddWithValue("@Address", dt.Rows[0]["Address"].ToString());
+                    if (Sex != "")
+                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                    else
+                        updatePerson.Parameters.AddWithValue("@Sex", dt.Rows[0]["Sex"].ToString());
+                    updatePerson.Parameters.AddWithValue("@ID", CID);
+
+                    Console.WriteLine(Address);
+                    if (Type != "")
+                        updateCustomer.Parameters.AddWithValue("@Type", Type);
+                    else
+                        updateCustomer.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
+                    updateCustomer.Parameters.AddWithValue("@CID", CID);
+
+                    updatePerson.ExecuteNonQuery();
+                    updateCustomer.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
+
+                PersonIDBox.Clear();
+                PersonNameBox.Clear();
+                PersonPhoneBox.Clear();
+                PersonAddressBox.Clear();
+                PersonSexBox.Clear();
+                PersonOther1Box.Clear();
             }
         }
         private void SubmitVehicle_Click(object sender, RoutedEventArgs e)
