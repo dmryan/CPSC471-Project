@@ -62,58 +62,65 @@ namespace CarDealership
                 string Manager = PersonOther3Box.GetLineText(0);
                
                 //sql
-                String MgrID = "";
-                OleDbCommand foreignKey = cn.CreateCommand();
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewEmployee = cn.CreateCommand();
                 OleDbCommand updatePerson = cn.CreateCommand();
                 OleDbCommand updateEmployee = cn.CreateCommand();
 
-                foreignKey.CommandText = "SELECT ManagerID From Employee Where EID = @EID";
+                viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @EID";
                 updatePerson.CommandText = "UPDATE Person SET PersonName = ?, PhoneNumber = ?, Address = ?, Sex = ? WHERE ID = ?";
                 updateEmployee.CommandText = "UPDATE Employee SET Salary = ?, StartDate = ?, ManagerID = ? WHERE EID = ?";
 
-                foreignKey.Parameters.AddWithValue("@EID", EID);
+                viewEmployee.Parameters.AddWithValue("@EID", EID);
 
                 try
                 {
-                    Object Total = new Object();
-                    Total = foreignKey.ExecuteScalar();
-                    if (Total is DBNull)
-                        Total = "0";
-                    MgrID = Total.ToString();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
-                Console.WriteLine(MgrID);
+                    da.SelectCommand = viewEmployee;
+                    da.Fill(dt);
 
-                if (Name != "")
-                    updatePerson.Parameters.AddWithValue("@PersonName", Name);
-                if (Phone != "")
-                    updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-                if (Address != "")
-                    updatePerson.Parameters.AddWithValue("@Address", Address);
-                if (Sex != "")
-                    updatePerson.Parameters.AddWithValue("@Sex", Sex);
-                if (EID != "")
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (Name != "")
+                        updatePerson.Parameters.AddWithValue("@PersonName", Name);
+                    else
+                        updatePerson.Parameters.AddWithValue("@PersonName", dt.Rows[0]["PersonName"].ToString());
+                    if (Phone != "")
+                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                    else
+                        updatePerson.Parameters.AddWithValue("@PhoneNumber", dt.Rows[0]["PhoneNumber"].ToString());
+                    if (Address != "")
+                        updatePerson.Parameters.AddWithValue("@Address", Address);
+                    else
+                        updatePerson.Parameters.AddWithValue("@Address", dt.Rows[0]["Address"].ToString());
+                    if (Sex != "")
+                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                    else
+                        updatePerson.Parameters.AddWithValue("@Sex", dt.Rows[0]["Sex"].ToString());
                     updatePerson.Parameters.AddWithValue("@ID", EID);
 
-                if (Salary != "")
-                    updateEmployee.Parameters.AddWithValue("@Salary", Salary);
-                if (StartDate != "")
-                    updateEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-                if (Manager != "")
-                    updateEmployee.Parameters.AddWithValue("@ManagerID", Manager);
-                else
-                    updateEmployee.Parameters.AddWithValue("@ManagerID", MgrID);
-                if (EID != "")
+                    Console.WriteLine(Address);
+                    if (Salary != "")
+                        updateEmployee.Parameters.AddWithValue("@Salary", Salary);
+                    else
+                        updateEmployee.Parameters.AddWithValue("@Salary", dt.Rows[0]["Salary"].ToString());
+                    if (StartDate != "")
+                        updateEmployee.Parameters.AddWithValue("@StartDate", StartDate);
+                    else
+                        updateEmployee.Parameters.AddWithValue("@StartDate", dt.Rows[0]["StartDate"].ToString());
+                    if (Manager != "")
+                        updateEmployee.Parameters.AddWithValue("@ManagerID", Manager);
+                    else
+                        updateEmployee.Parameters.AddWithValue("@ManagerID", dt.Rows[0]["ManagerID"].ToString());
                     updateEmployee.Parameters.AddWithValue("@EID", EID);
 
-                try
-                {
-                    updateEmployee.ExecuteNonQuery();
                     updatePerson.ExecuteNonQuery();
+                    updateEmployee.ExecuteNonQuery();
                 }
                 catch (OleDbException ex)
                 {

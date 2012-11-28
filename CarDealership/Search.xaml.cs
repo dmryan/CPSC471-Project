@@ -29,7 +29,7 @@ namespace CarDealership
         private string type;
 
         public Search(MainWindow p, OleDbConnection c, string t)
-        {
+        {       
             cn = c;
             Parent = p;
             type = t;
