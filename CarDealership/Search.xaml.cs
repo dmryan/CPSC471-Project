@@ -135,9 +135,9 @@ namespace CarDealership
                 DataTable dt2 = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
 
-                viewPart.CommandText = "SELECT * FROM Part WHERE SerialNumber = @SerialNumber";
-                viewEngine.CommandText = "SELECT * FROM Engine WHERE SerialNumber = @SerialNumber";
-                viewTire.CommandText = "SELECT * FROM Tire WHERE SerialNumber = @SerialNumber";
+                viewPart.CommandText = "SELECT * FROM Part WHERE Part.SerialNumber = @SerialNumber";
+                viewEngine.CommandText = "SELECT Part.SerialNumber, VIN, PartName, Manufacturer, HorsePower, Cylinders FROM Part INNER JOIN Engine ON Part.SerialNumber = Engine.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
+                viewTire.CommandText = "SELECT Part.SerialNumber, VIN, PartName, Manufacturer, Type, TireSize FROM Part INNER JOIN Tire ON Part.SerialNumber = Tire.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
 
                 viewPart.Parameters.AddWithValue("@SerialNumber", Para3);
                 viewEngine.Parameters.AddWithValue("@SerialNumber", Para3);
@@ -145,7 +145,6 @@ namespace CarDealership
 
                 try
                 {
-                    
                     da.SelectCommand = viewEngine;
                     da.Fill(dt);
                     da.SelectCommand = viewTire;
