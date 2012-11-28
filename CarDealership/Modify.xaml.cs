@@ -389,10 +389,62 @@ namespace CarDealership
         private void SubmitVHR_Click(object sender, RoutedEventArgs e)
         {
             string VIN = VHRVINBox.GetLineText(0);
-            string Owners = VHRPreviousOwnersBox.GetLineText(0);
+            string NumberOwners = VHRPreviousOwnersBox.GetLineText(0);
             string Rating = VHRRatingBox.GetLineText(0);
             string Mileage = VHRMileageBox.GetLineText(0);
-            //sql
+
+            //SQL
+            DataTable dt = new DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter();
+            OleDbCommand viewVHR = cn.CreateCommand();
+            OleDbCommand updateVHR = cn.CreateCommand();
+
+            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VIN = @VIN";
+            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VIN = ?";
+
+            viewVHR.Parameters.AddWithValue("@VIN", VIN);
+           
+            try
+            {
+                da.SelectCommand = viewVHR;
+                da.Fill(dt);
+ 
+                if (dt.Rows.Count == 0)
+                {
+                    ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                    Error.ShowDialog();
+                    return;
+                }
+
+                if (NumberOwners != "")
+                    updateVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
+                else
+                    updateVHR.Parameters.AddWithValue("@NumberOwners", dt.Rows[0]["NumberOwners"].ToString());
+                if (Rating != "")
+                    updateVHR.Parameters.AddWithValue("@Rating", Rating);
+                else
+                    updateVHR.Parameters.AddWithValue("@Rating", dt.Rows[0]["Rating"].ToString());
+                if (Mileage != "")
+                    updateVHR.Parameters.AddWithValue("@Mileage", Mileage);
+                else
+                    updateVHR.Parameters.AddWithValue("@Mileage", dt.Rows[0]["Mileage"].ToString());
+                updateVHR.Parameters.AddWithValue("@VIN", VIN);
+Console.WriteLine("HERE");
+                updateVHR.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+
+            VINBox.Clear();
+            VehicleModelBox.Clear();
+            VehicleYearBox.Clear();
+            VehicleMakerBox.Clear();
+            VehicleSeatsBox.Clear();
+            VehiclePriceBox.Clear();
+            VehicleOther1Box.Clear();
         }
         private void SubmitPart_Click(object sender, RoutedEventArgs e)
         {
@@ -407,7 +459,8 @@ namespace CarDealership
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
                 string Size = PartOther1Box.GetLineText(0);
                 string Type = PartOther2Box.GetLineText(0);
-                //sql
+
+                //SQL
             }
             else if (Engine)
             {
