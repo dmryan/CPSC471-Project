@@ -71,101 +71,141 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewEmployee = cn.CreateCommand();
                 OleDbCommand updatePerson = cn.CreateCommand();
                 OleDbCommand updateEmployee = cn.CreateCommand();
+                OleDbCommand selectEmployee = cn.CreateCommand();
 
-                viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @EID";
-                updatePerson.CommandText = "UPDATE Person SET PersonName = ?, PhoneNumber = ?, Address = ?, Sex = ? WHERE ID = ?";
-                updateEmployee.CommandText = "UPDATE Employee SET Salary = ?, StartDate = ?, ManagerID = ? WHERE EID = ?";
+                selectEmployee.CommandText = "SELECT EID FROM Employee WHERE EID = @EID";
+                selectEmployee.Parameters.AddWithValue("@EID", EID);
 
-                viewEmployee.Parameters.AddWithValue("@EID", EID);
-                if (Name.CompareTo("") != 0)
+                if (EID.CompareTo("") == 0 || selectEmployee.ExecuteScalar() == null)
                 {
-                    try
-                    {
-                        updatePerson.CommandText = "UPDATE Person SET PersonName = ? WHERE ID = ?";
-                        updatePerson.Parameters.AddWithValue("@PersonName", Name);
-                        updatePerson.Parameters.AddWithValue("@ID", EID);
-                        
-                        updatePerson.ExecuteNonQuery();
-                    }
-                    catch (OleDbException ex)
-                    {
-                        ErrorWindow Error = new ErrorWindow(ex.Message);
-                        Error.Title = "Name Field Error";
-                        Error.ShowDialog();
-                    }
-                } 
-                if (Phone.CompareTo("") != 0)
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid EID");
+                    Error.Title = "EID Field Error";
+                    Error.ShowDialog();
+                }
+                else
                 {
-                    try
+                    if (Name.CompareTo("") != 0)
                     {
-                        updatePerson.CommandText = "UPDATE Person SET PhoneNumber = ? WHERE ID = ?";
-                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-                        updatePerson.Parameters.AddWithValue("@ID", EID);
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET PersonName = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@PersonName", Name);
+                            updatePerson.Parameters.AddWithValue("@ID", EID);
                         
-                        updatePerson.ExecuteNonQuery();
-                    }
-                    catch (OleDbException ex)
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Name Field Error";
+                            Error.ShowDialog();
+                        }
+                    } 
+                    if (Phone.CompareTo("") != 0)
                     {
-                        ErrorWindow Error = new ErrorWindow(ex.Message);
-                        Error.Title = "Phone Field Error";
-                        Error.ShowDialog();
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET PhoneNumber = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                            updatePerson.Parameters.AddWithValue("@ID", EID);
+                        
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Phone Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Address.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET Address = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@Address", Address);
+                            updatePerson.Parameters.AddWithValue("@ID", EID);
+                        
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Address Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Sex.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET Sex = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                            updatePerson.Parameters.AddWithValue("@ID", EID);
+
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Sex Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Salary.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateEmployee.CommandText = "UPDATE Employee SET Salary = ? WHERE EID = ?";
+                            updateEmployee.Parameters.AddWithValue("@Salary", Salary);
+                            updateEmployee.Parameters.AddWithValue("@EID", EID);
+
+                            updateEmployee.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Salary Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (StartDate.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateEmployee.CommandText = "UPDATE Employee SET StartDate = ? WHERE EID = ?";
+                            updateEmployee.Parameters.AddWithValue("@StartDate", StartDate);
+                            updateEmployee.Parameters.AddWithValue("@EID", EID);
+
+                            updateEmployee.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Start Date Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Manager.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateEmployee.CommandText = "UPDATE Employee SET ManagerID = ? WHERE EID = ?";
+                            updateEmployee.Parameters.AddWithValue("@ManagerID", Manager);
+                            updateEmployee.Parameters.AddWithValue("@EID", EID);
+
+                            updateEmployee.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Manager Field Error";
+                            Error.ShowDialog();
+                        }
                     }
                 }
-                if (Address.CompareTo("") != 0)
-                {
-                    try
-                    {
-                        updatePerson.CommandText = "UPDATE Person SET Address = ? WHERE ID = ?";
-                        updatePerson.Parameters.AddWithValue("@Address", Address);
-                        updatePerson.Parameters.AddWithValue("@ID", EID);
-                        
-                        updatePerson.ExecuteNonQuery();
-                    }
-                    catch (OleDbException ex)
-                    {
-                        ErrorWindow Error = new ErrorWindow(ex.Message);
-                        Error.Title = "Address Field Error";
-                        Error.ShowDialog();
-                    }
-                }
-                if (Sex.CompareTo("") != 0)
-                {
-                    try
-                    {
-                        updatePerson.CommandText = "UPDATE Person SET Sex = ? WHERE ID = ?";
-                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
-                        updatePerson.Parameters.AddWithValue("@ID", EID);
-
-                        updatePerson.ExecuteNonQuery();
-                    }
-                    catch (OleDbException ex)
-                    {
-                        ErrorWindow Error = new ErrorWindow(ex.Message);
-                        Error.Title = "Sex Field Error";
-                        Error.ShowDialog();
-                    }
-                }
-                if (Salary.CompareTo("") != 0)
-                {
-                    try
-                    {
-                        updatePerson.CommandText = "UPDATE Employee SET Salary = ? WHERE EID = ?";
-                        updatePerson.Parameters.AddWithValue("@Salary", Salary);
-                        updatePerson.Parameters.AddWithValue("@EID", EID);
-                        
-                        updatePerson.ExecuteNonQuery();
-                    }
-                    catch (OleDbException ex)
-                    {
-                        ErrorWindow Error = new ErrorWindow(ex.Message);
-                        Error.Title = "Salary Field Error";
-                        Error.ShowDialog();
-                    }
-                }
-
 
                 PersonIDBox.Clear();
                 PersonNameBox.Clear();
@@ -198,60 +238,106 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewCustomer = cn.CreateCommand();
                 OleDbCommand updatePerson = cn.CreateCommand();
                 OleDbCommand updateCustomer = cn.CreateCommand();
+                OleDbCommand selectCustomer = cn.CreateCommand();
 
-                viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @CID";
-                updatePerson.CommandText = "UPDATE Person SET PersonName = ?, PhoneNumber = ?, Address = ?, Sex = ? WHERE ID = ?";
-                updateCustomer.CommandText = "UPDATE Customer SET Type = ? WHERE CID = ?";
+                selectCustomer.CommandText = "SELECT CID FROM Customer WHERE CID = @CID";
+                selectCustomer.Parameters.AddWithValue("@CID", CID);
 
-                viewCustomer.Parameters.AddWithValue("@CID", CID);
-
-                try
+                if (CID.CompareTo("") == 0 || selectCustomer.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewCustomer;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (Name != "")
-                        updatePerson.Parameters.AddWithValue("@PersonName", Name);
-                    else
-                        updatePerson.Parameters.AddWithValue("@PersonName", dt.Rows[0]["PersonName"].ToString());
-                    if (Phone != "")
-                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-                    else
-                        updatePerson.Parameters.AddWithValue("@PhoneNumber", dt.Rows[0]["PhoneNumber"].ToString());
-                    if (Address != "")
-                        updatePerson.Parameters.AddWithValue("@Address", Address);
-                    else
-                        updatePerson.Parameters.AddWithValue("@Address", dt.Rows[0]["Address"].ToString());
-                    if (Sex != "")
-                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
-                    else
-                        updatePerson.Parameters.AddWithValue("@Sex", dt.Rows[0]["Sex"].ToString());
-                    updatePerson.Parameters.AddWithValue("@ID", CID);
-
-                    if (Type != "")
-                        updateCustomer.Parameters.AddWithValue("@Type", Type);
-                    else
-                        updateCustomer.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
-                    updateCustomer.Parameters.AddWithValue("@CID", CID);
-
-                    updatePerson.ExecuteNonQuery();
-                    updateCustomer.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid CID");
+                    Error.Title = "CID Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (Name.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET PersonName = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@PersonName", Name);
+                            updatePerson.Parameters.AddWithValue("@ID", CID);
+
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Name Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Phone.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET PhoneNumber = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                            updatePerson.Parameters.AddWithValue("@ID", CID);
+
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Phone Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Address.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET Address = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@Address", Address);
+                            updatePerson.Parameters.AddWithValue("@ID", CID);
+
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Address Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Sex.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePerson.CommandText = "UPDATE Person SET Sex = ? WHERE ID = ?";
+                            updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                            updatePerson.Parameters.AddWithValue("@ID", CID);
+
+                            updatePerson.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Sex Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Type.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateCustomer.CommandText = "UPDATE Customer SET Type = ? WHERE CID = ?";
+                            updateCustomer.Parameters.AddWithValue("@Type", Type);
+                            updateCustomer.Parameters.AddWithValue("@CID", CID);
+
+                            updateCustomer.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Salary Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 PersonIDBox.Clear();
@@ -283,65 +369,123 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewCar = cn.CreateCommand();
                 OleDbCommand updateVehicle = cn.CreateCommand();
                 OleDbCommand updateCar = cn.CreateCommand();
+                OleDbCommand selectCar = cn.CreateCommand();
 
-                viewCar.CommandText = "SELECT * FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Vehicle.VIN = @VIN";
-                updateVehicle.CommandText = "UPDATE Vehicle SET Model = ?, YearProd = ?, Maker = ?, NumberSeats = ?, Price = ? WHERE VIN = ?";
-                updateCar.CommandText = "UPDATE Car SET Type = ? WHERE VIN = ?";
+                selectCar.CommandText = "SELECT VIN FROM Car WHERE VIN = @VIN";
+                selectCar.Parameters.AddWithValue("@VIN", VIN);
 
-                viewCar.Parameters.AddWithValue("@VIN", VIN);
-
-                try
+                if (VIN.CompareTo("") == 0 || selectCar.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewCar;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (Model != "")
-                        updateVehicle.Parameters.AddWithValue("@Model", Model);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Model", dt.Rows[0]["Model"].ToString());
-                    if (YearProd != "")
-                        updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@YearProd", dt.Rows[0]["YearProd"].ToString());
-                    if (Maker != "")
-                        updateVehicle.Parameters.AddWithValue("@Maker", Maker);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Maker", dt.Rows[0]["Maker"].ToString());
-                    if (NumberSeats != "")
-                        updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@NumberSeats", dt.Rows[0]["NumberSeats"].ToString());
-                    if (Price != "")
-                        updateVehicle.Parameters.AddWithValue("@Price", Price);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Price", dt.Rows[0]["Price"].ToString());
-                    updateVehicle.Parameters.AddWithValue("@VIN", VIN);
-
-
-                    if (Type != "")
-                        updateCar.Parameters.AddWithValue("@Type", Type);
-                    else
-                        updateCar.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
-                    updateCar.Parameters.AddWithValue("@VIN", VIN);
-
-                    updateVehicle.ExecuteNonQuery();
-                    updateCar.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid VIN");
+                    Error.Title = "VIN Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (Model.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Model = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Model", Model);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Model Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (YearProd.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET YearProd = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Year Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Maker.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Maker = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Maker", Maker);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Maker Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (NumberSeats.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET NumberSeats = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Number of Seats Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Price.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Price = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Price", Price);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Price Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Type.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateCar.CommandText = "UPDATE Car SET Type = ? WHERE VIN = ?";
+                            updateCar.Parameters.AddWithValue("@Type", Type);
+                            updateCar.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateCar.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Type Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 VINBox.Clear();
@@ -369,67 +513,126 @@ namespace CarDealership
                 string TowingCapacity = VehicleOther1Box.GetLineText(0);
                 
                 //SQL
+                //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewTruck = cn.CreateCommand();
                 OleDbCommand updateVehicle = cn.CreateCommand();
                 OleDbCommand updateTruck = cn.CreateCommand();
+                OleDbCommand selectTruck = cn.CreateCommand();
 
-                viewTruck.CommandText = "SELECT * FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Vehicle.VIN = @VIN";
-                updateVehicle.CommandText = "UPDATE Vehicle SET Model = ?, YearProd = ?, Maker = ?, NumberSeats = ?, Price = ? WHERE VIN = ?";
-                updateTruck.CommandText = "UPDATE Truck SET TowingCapacity = ? WHERE VIN = ?";
+                selectTruck.CommandText = "SELECT VIN FROM Truck WHERE VIN = @VIN";
+                selectTruck.Parameters.AddWithValue("@VIN", VIN);
 
-                viewTruck.Parameters.AddWithValue("@VIN", VIN);
-
-                try
+                if (VIN.CompareTo("") == 0 || selectTruck.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewTruck;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (Model != "")
-                        updateVehicle.Parameters.AddWithValue("@Model", Model);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Model", dt.Rows[0]["Model"].ToString());
-                    if (YearProd != "")
-                        updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@YearProd", dt.Rows[0]["YearProd"].ToString());
-                    if (Maker != "")
-                        updateVehicle.Parameters.AddWithValue("@Maker", Maker);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Maker", dt.Rows[0]["Maker"].ToString());
-                    if (NumberSeats != "")
-                        updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@NumberSeats", dt.Rows[0]["NumberSeats"].ToString());
-                    if (Price != "")
-                        updateVehicle.Parameters.AddWithValue("@Price", Price);
-                    else
-                        updateVehicle.Parameters.AddWithValue("@Price", dt.Rows[0]["Price"].ToString());
-                    updateVehicle.Parameters.AddWithValue("@VIN", VIN);
-
-
-                    if (TowingCapacity != "")
-                        updateTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
-                    else
-                        updateTruck.Parameters.AddWithValue("@TowingCapacity", dt.Rows[0]["TowingCapacity"].ToString());
-                    updateTruck.Parameters.AddWithValue("@VIN", VIN);
-
-                    updateVehicle.ExecuteNonQuery();
-                    updateTruck.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid VIN");
+                    Error.Title = "VIN Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (Model.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Model = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Model", Model);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Model Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (YearProd.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET YearProd = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@YearProd", YearProd);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Year Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Maker.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Maker = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Maker", Maker);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Maker Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (NumberSeats.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET NumberSeats = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Number of Seats Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Price.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateVehicle.CommandText = "UPDATE Vehicle SET Price = ? WHERE VIN = ?";
+                            updateVehicle.Parameters.AddWithValue("@Price", Price);
+                            updateVehicle.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateVehicle.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Price Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (TowingCapacity.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateTruck.CommandText = "UPDATE Truck SET TowingCapacity = ? WHERE VIN = ?";
+                            updateTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
+                            updateTruck.Parameters.AddWithValue("@VIN", VIN);
+
+                            updateTruck.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "TowingCapacity Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 VINBox.Clear();
@@ -457,47 +660,71 @@ namespace CarDealership
             //SQL
             DataTable dt = new DataTable();
             OleDbDataAdapter da = new OleDbDataAdapter();
-            OleDbCommand viewVHR = cn.CreateCommand();
             OleDbCommand updateVHR = cn.CreateCommand();
+            OleDbCommand selectVHR = cn.CreateCommand();
 
-            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VIN = @VIN";
-            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VIN = ?";
+            selectVHR.CommandText = "SELECT VIN FROM VehicleHistoryReport WHERE VIN = @VIN";
+            selectVHR.Parameters.AddWithValue("@VIN", VIN);
 
-            viewVHR.Parameters.AddWithValue("@VIN", VIN);
-           
-            try
+            if (VIN.CompareTo("") == 0 || selectVHR.ExecuteScalar() == null)
             {
-                da.SelectCommand = viewVHR;
-                da.Fill(dt);
- 
-                if (dt.Rows.Count == 0)
-                {
-                    ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                    Error.ShowDialog();
-                    return;
-                }
-
-                if (NumberOwners != "")
-                    updateVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
-                else
-                    updateVHR.Parameters.AddWithValue("@NumberOwners", dt.Rows[0]["NumberOwners"].ToString());
-                if (Rating != "")
-                    updateVHR.Parameters.AddWithValue("@Rating", Rating);
-                else
-                    updateVHR.Parameters.AddWithValue("@Rating", dt.Rows[0]["Rating"].ToString());
-                if (Mileage != "")
-                    updateVHR.Parameters.AddWithValue("@Mileage", Mileage);
-                else
-                    updateVHR.Parameters.AddWithValue("@Mileage", dt.Rows[0]["Mileage"].ToString());
-                updateVHR.Parameters.AddWithValue("@VIN", VIN);
-
-                updateVHR.ExecuteNonQuery();
-            }
-            catch (OleDbException ex)
-            {
-                ErrorWindow Error = new ErrorWindow(ex.Message);
+                ErrorWindow Error = new ErrorWindow("Please enter a valid VIN");
+                Error.Title = "VIN Field Error";
                 Error.ShowDialog();
-                return;
+            }
+            else
+            {
+                if (NumberOwners.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ? WHERE VIN = ?";
+                        updateVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
+                        updateVHR.Parameters.AddWithValue("@VIN", VIN);
+
+                        updateVHR.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Number of Owners Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                if (Rating.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updateVHR.CommandText = "UPDATE VehicleHistoryReport SET Rating = ? WHERE VIN = ?";
+                        updateVHR.Parameters.AddWithValue("@Rating", Rating);
+                        updateVHR.Parameters.AddWithValue("@VIN", VIN);
+
+                        updateVHR.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Rating Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                if (Mileage.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updateVHR.CommandText = "UPDATE VehicleHistoryReport SET Mileage = ? WHERE VIN = ?";
+                        updateVHR.Parameters.AddWithValue("@Mileage", Mileage);
+                        updateVHR.Parameters.AddWithValue("@VIN", VIN);
+
+                        updateVHR.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Mileage Field Error";
+                        Error.ShowDialog();
+                    }
+                }
             }
 
             VHRVINBox.Clear();
@@ -519,60 +746,106 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewTire = cn.CreateCommand();
                 OleDbCommand updatePart = cn.CreateCommand();
                 OleDbCommand updateTire = cn.CreateCommand();
+                OleDbCommand selectTire = cn.CreateCommand();
 
-                viewTire.CommandText = "SELECT * FROM Part INNER JOIN Tire ON Part.SerialNumber = Tire.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
-                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
-                updateTire.CommandText = "UPDATE Tire SET Type = ?, TireSize = ? WHERE SerialNumber = ?";
+                selectTire.CommandText = "SELECT SerialNumber FROM Tire WHERE SerialNumber = @SerialNumber";
+                selectTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                viewTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                try
+                if (VIN.CompareTo("") == 0 || selectTire.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewTire;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (VIN != "")
-                        updatePart.Parameters.AddWithValue("@VIN", VIN);
-                    else
-                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
-                    if (PartName != "")
-                        updatePart.Parameters.AddWithValue("@PartName", PartName);
-                    else
-                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
-                    if (Manufacturer != "")
-                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-                    else
-                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
-                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                    if (Type != "")
-                        updateTire.Parameters.AddWithValue("@Type", Type);
-                    else
-                        updateTire.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
-                    if (TireSize != "")
-                        updateTire.Parameters.AddWithValue("@TireSize", TireSize);
-                    else
-                        updateTire.Parameters.AddWithValue("@TireSize", dt.Rows[0]["TireSize"].ToString());
-                    updateTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                    updatePart.ExecuteNonQuery();
-                    updateTire.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
+                    Error.Title = "Serial# Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (VIN.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET VIN = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@VIN", VIN);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "VIN Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (PartName.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET PartName = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@PartName", PartName);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "PartName Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Manufacturer.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET Manufacturer = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Manufacturer Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Type.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateTire.CommandText = "UPDATE Tire SET Type = ? WHERE SerialNumber = ?";
+                            updateTire.Parameters.AddWithValue("@NumberSeats", Type);
+                            updateTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updateTire.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Type Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (TireSize.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateTire.CommandText = "UPDATE Tire SET TireSize = ? WHERE SerialNumber = ?";
+                            updateTire.Parameters.AddWithValue("@TireSize", TireSize);
+                            updateTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updateTire.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Size Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 PartSerialNumberBox.Clear();
@@ -603,60 +876,106 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewEngine = cn.CreateCommand();
                 OleDbCommand updatePart = cn.CreateCommand();
                 OleDbCommand updateEngine = cn.CreateCommand();
+                OleDbCommand selectEngine = cn.CreateCommand();
 
-                viewEngine.CommandText = "SELECT * FROM Part INNER JOIN Engine ON Part.SerialNumber = Engine.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
-                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
-                updateEngine.CommandText = "UPDATE Engine SET HorsePower = ?, Cylinders = ? WHERE SerialNumber = ?";
+                selectEngine.CommandText = "SELECT SerialNumber FROM Engine WHERE SerialNumber = @SerialNumber";
+                selectEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                viewEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                try
+                if (VIN.CompareTo("") == 0 || selectEngine.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewEngine;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (VIN != "")
-                        updatePart.Parameters.AddWithValue("@VIN", VIN);
-                    else
-                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
-                    if (PartName != "")
-                        updatePart.Parameters.AddWithValue("@PartName", PartName);
-                    else
-                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
-                    if (Manufacturer != "")
-                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-                    else
-                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
-                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                    if (HorsePower != "")
-                        updateEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
-                    else
-                        updateEngine.Parameters.AddWithValue("@HorsePower", dt.Rows[0]["HorsePower"].ToString());
-                    if (Cylinders != "")
-                        updateEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
-                    else
-                        updateEngine.Parameters.AddWithValue("@Cylinders", dt.Rows[0]["Cylinders"].ToString());
-                    updateEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                    updatePart.ExecuteNonQuery();
-                    updateEngine.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
+                    Error.Title = "Serial# Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (VIN.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET VIN = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@VIN", VIN);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "VIN Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (PartName.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET PartName = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@PartName", PartName);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "PartName Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Manufacturer.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET Manufacturer = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Manufacturer Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Cylinders.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateEngine.CommandText = "UPDATE Engine SET Cylinders = ? WHERE SerialNumber = ?";
+                            updateEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
+                            updateEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updateEngine.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Cylinders Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (HorsePower.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updateEngine.CommandText = "UPDATE Engine SET HorsePower = ? WHERE SerialNumber = ?";
+                            updateEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
+                            updateEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updateEngine.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "HorsePower Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 PartSerialNumberBox.Clear();
@@ -685,68 +1004,71 @@ namespace CarDealership
                 //SQL
                 DataTable dt = new DataTable();
                 OleDbDataAdapter da = new OleDbDataAdapter();
-                OleDbCommand viewPart = cn.CreateCommand();
                 OleDbCommand updatePart = cn.CreateCommand();
-                OleDbCommand selectTire = cn.CreateCommand();
-                OleDbCommand selectEngine = cn.CreateCommand();
+                OleDbCommand selectPart = cn.CreateCommand();
 
-                viewPart.CommandText = "SELECT VIN, PartName, Manufacturer FROM Part, Engine, Tire WHERE Part.SerialNumber = @SerialNumber";
-                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
-                selectTire.CommandText = "SELECT SerialNumber FROM Tire WHERE SerialNumber = @SerialNumber";
-                selectEngine.CommandText = "SELECT SerialNumber FROM Engine WHERE SerialNumber = @SerialNumber";
+                selectPart.CommandText = "SELECT SerialNumber FROM Part WHERE SerialNumber = @SerialNumber";
+                selectPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                viewPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-                selectTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-                selectEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                Object temp = selectEngine.ExecuteScalar();
-                if( temp == null || temp is DBNull)
-                    Console.WriteLine("HEER");
-                else
-                    Console.WriteLine(temp.ToString());
-
-                try
+                if (VIN.CompareTo("") == 0 || selectPart.ExecuteScalar() == null)
                 {
-                    da.SelectCommand = viewPart;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (selectEngine.ExecuteScalar() == null && selectTire.ExecuteScalar() == null )
-                        ;
-                    else
-                    {
-                        ErrorWindow Error = new ErrorWindow("Part is of type Engine or Tire. Retry by selecting the specific part you wish to modify.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (VIN != "")
-                        updatePart.Parameters.AddWithValue("@VIN", VIN);
-                    else
-                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
-                    if (PartName != "")
-                        updatePart.Parameters.AddWithValue("@PartName", PartName);
-                    else
-                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
-                    if (Manufacturer != "")
-                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-                    else
-                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
-                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-
-                    updatePart.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
+                    Error.Title = "Serial# Field Error";
                     Error.ShowDialog();
-                    return;
+                }
+                else
+                {
+                    if (VIN.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET VIN = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@VIN", VIN);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "VIN Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (PartName.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET PartName = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@PartName", PartName);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "PartName Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
+                    if (Manufacturer.CompareTo("") != 0)
+                    {
+                        try
+                        {
+                            updatePart.CommandText = "UPDATE Part SET Manufacturer = ? WHERE SerialNumber = ?";
+                            updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                            updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                            updatePart.ExecuteNonQuery();
+                        }
+                        catch (OleDbException ex)
+                        {
+                            ErrorWindow Error = new ErrorWindow(ex.Message);
+                            Error.Title = "Manufacturer Field Error";
+                            Error.ShowDialog();
+                        }
+                    }
                 }
 
                 PartSerialNumberBox.Clear();
@@ -760,7 +1082,6 @@ namespace CarDealership
                 EngineCheck.Visibility = Visibility.Visible;
             }
         }
-
         private void EmployeeCheck_Checked(object sender, RoutedEventArgs e)
         {
             CustomerCheck.Visibility = Visibility.Collapsed;
@@ -775,7 +1096,6 @@ namespace CarDealership
             PersonOther3Label.Text = "Manager EID";
             Employee = true;
         }
-
         private void CustomerCheck_Checked(object sender, RoutedEventArgs e)
         {
             EmployeeCheck.Visibility = Visibility.Collapsed;
@@ -784,7 +1104,6 @@ namespace CarDealership
             PersonOther1Label.Text = "Type";
             Customer = true;
         }
-
         private void CarCheck_Checked(object sender, RoutedEventArgs e)
         {
             TruckCheck.Visibility = Visibility.Collapsed;
@@ -794,7 +1113,6 @@ namespace CarDealership
             Car = true;
 
         }
-
         private void TruckCheck_Checked(object sender, RoutedEventArgs e)
         {
             CarCheck.Visibility = Visibility.Collapsed;
@@ -803,7 +1121,6 @@ namespace CarDealership
             VehicleOther1Label.Text = "Towing Capacity (Tonnes)";
             Truck = true;
         }
-
         private void EngineCheck_Checked(object sender, RoutedEventArgs e)
         {
             TiresCheck.Visibility = Visibility.Collapsed;
@@ -816,7 +1133,6 @@ namespace CarDealership
             PartOther1Label.Text = "Cylinders";
             PartOther2Label.Text = "HorsePower";
         }
-
         private void TiresCheck_Checked(object sender, RoutedEventArgs e)
         {
             EngineCheck.Visibility = Visibility.Collapsed;
@@ -829,14 +1145,12 @@ namespace CarDealership
             PartOther1Label.Text = "Size";
             PartOther2Label.Text = "Type";
         }
-
         private void OtherPartCheck_Checked(object sender, RoutedEventArgs e)
         {
             EngineCheck.Visibility = Visibility.Collapsed;
             TiresCheck.Visibility = Visibility.Collapsed;
             Part = true;
         }
-
         private void EmployeeCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             CustomerCheck.Visibility = Visibility.Visible;
@@ -848,7 +1162,6 @@ namespace CarDealership
             PersonOther3Label.Visibility = Visibility.Collapsed;
             Employee = false;
         }
-
         private void CustomerCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             EmployeeCheck.Visibility = Visibility.Visible;
@@ -856,7 +1169,6 @@ namespace CarDealership
             PersonOther1Label.Visibility = Visibility.Collapsed;
             Customer = false;
         }
-
         private void CarCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             TruckCheck.Visibility = Visibility.Visible;
@@ -865,7 +1177,6 @@ namespace CarDealership
             Car = false;
 
         }
-
         private void TruckCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             CarCheck.Visibility = Visibility.Visible;
@@ -873,7 +1184,6 @@ namespace CarDealership
             VehicleOther1Label.Visibility = Visibility.Collapsed;
             Truck = false;
         }
-
         private void EngineCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             TiresCheck.Visibility = Visibility.Visible;
@@ -884,7 +1194,6 @@ namespace CarDealership
             PartOther2Label.Visibility = Visibility.Collapsed;
             Engine = false;
         }
-
         private void TiresCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             EngineCheck.Visibility = Visibility.Visible;
@@ -895,7 +1204,6 @@ namespace CarDealership
             PartOther2Label.Visibility = Visibility.Collapsed;
             Tires = false;
         }
-
         private void OtherPartCheck_Unchecked(object sender, RoutedEventArgs e)
         {
             EngineCheck.Visibility = Visibility.Visible;
