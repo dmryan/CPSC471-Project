@@ -49,9 +49,16 @@ namespace CarDealership
             //SQL Statement
             OleDbCommand insertPerson = cn.CreateCommand();
             OleDbCommand insertEmployee = cn.CreateCommand();
+            OleDbCommand selectEmployee = cn.CreateCommand();
 
             insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
             insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
+            selectEmployee.CommandText = "SELECT EID FROM Employee WHERE EID = @ManagerID";
+
+            if(ManagerID == "")
+                selectEmployee.Parameters.AddWithValue("@ManagerID", -99999);
+            else
+                selectEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
 
             insertPerson.Parameters.AddWithValue("@ID", EID);
             insertPerson.Parameters.AddWithValue("@PersonName", Name);
@@ -62,7 +69,16 @@ namespace CarDealership
             insertEmployee.Parameters.AddWithValue("@EID", EID);
             insertEmployee.Parameters.AddWithValue("@Salary", Salary);
             insertEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-            insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
+            if (selectEmployee.ExecuteScalar() == null && ManagerID != "")
+            {
+                ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                Error.ShowDialog();
+                return;
+            }
+            else if( ManagerID != "" )
+                insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
+            else
+                selectEmployee.Parameters.AddWithValue("@ManagerID", -1);
 
             try {
                 insertPerson.ExecuteNonQuery();
