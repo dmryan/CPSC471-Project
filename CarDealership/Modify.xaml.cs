@@ -39,6 +39,16 @@ namespace CarDealership
             cn = c;
             Parent = p;
             InitializeComponent();
+            PersonOther1Box.Visibility = Visibility.Collapsed;
+            PersonOther1Label.Visibility = Visibility.Collapsed;
+            PersonOther2Box.Visibility = Visibility.Collapsed;
+            PersonOther2Label.Visibility = Visibility.Collapsed;
+            PersonOther3Box.Visibility = Visibility.Collapsed;
+            PersonOther3Label.Visibility = Visibility.Collapsed;
+
+            VehicleOther1Box.Visibility = Visibility.Collapsed;
+            VehicleOther1Label.Visibility = Visibility.Collapsed;
+
             PartOther1Box.Visibility = Visibility.Collapsed;
             PartOther1Label.Visibility = Visibility.Collapsed;
             PartOther2Box.Visibility = Visibility.Collapsed;
@@ -49,9 +59,6 @@ namespace CarDealership
         {
             if (Employee)
             {
-                Employee = false;
-                EmployeeCheck.IsChecked = false;
-                CustomerCheck.Visibility = Visibility.Visible;
                 string EID = PersonIDBox.GetLineText(0);
                 string Name = PersonNameBox.GetLineText(0);
                 string Phone = PersonPhoneBox.GetLineText(0);
@@ -126,6 +133,7 @@ namespace CarDealership
                 {
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
+                    return;
                 }
 
                 PersonIDBox.Clear();
@@ -136,12 +144,19 @@ namespace CarDealership
                 PersonOther1Box.Clear();
                 PersonOther2Box.Clear();
                 PersonOther3Box.Clear();
+                
+                Employee = false;
+                EmployeeCheck.IsChecked = false;
+                CustomerCheck.Visibility = Visibility.Visible;
+                PersonOther1Box.Visibility = Visibility.Collapsed;
+                PersonOther1Label.Visibility = Visibility.Collapsed;
+                PersonOther2Box.Visibility = Visibility.Collapsed;
+                PersonOther2Label.Visibility = Visibility.Collapsed;
+                PersonOther3Box.Visibility = Visibility.Collapsed;
+                PersonOther3Label.Visibility = Visibility.Collapsed;
             }
             else if (Customer)
             {
-                Customer = false;
-                CustomerCheck.IsChecked = false;
-                EmployeeCheck.Visibility = Visibility.Visible;
                 string CID = PersonIDBox.GetLineText(0);
                 string Name = PersonNameBox.GetLineText(0);
                 string Phone = PersonPhoneBox.GetLineText(0);
@@ -205,6 +220,7 @@ namespace CarDealership
                 {
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
+                    return;
                 }
 
                 PersonIDBox.Clear();
@@ -213,15 +229,18 @@ namespace CarDealership
                 PersonAddressBox.Clear();
                 PersonSexBox.Clear();
                 PersonOther1Box.Clear();
+
+                Customer = false;
+                CustomerCheck.IsChecked = false;
+                EmployeeCheck.Visibility = Visibility.Visible;
+                PersonOther1Box.Visibility = Visibility.Collapsed;
+                PersonOther1Label.Visibility = Visibility.Collapsed;
             }
         }
         private void SubmitVehicle_Click(object sender, RoutedEventArgs e)
         {
             if (Car)
             {
-                Car = false;
-                CarCheck.IsChecked = false;
-                TruckCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
                 string YearProd = VehicleYearBox.GetLineText(0);
@@ -291,6 +310,7 @@ namespace CarDealership
                 {
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
+                    return;
                 }
 
                 VINBox.Clear();
@@ -300,12 +320,15 @@ namespace CarDealership
                 VehicleSeatsBox.Clear();
                 VehiclePriceBox.Clear();
                 VehicleOther1Box.Clear();
+
+                Car = false;
+                CarCheck.IsChecked = false;
+                TruckCheck.Visibility = Visibility.Visible;
+                VehicleOther1Box.Visibility = Visibility.Collapsed;
+                VehicleOther1Label.Visibility = Visibility.Collapsed;
             }
             else if (Truck)
             {
-                Truck = false;
-                TruckCheck.IsChecked = false;
-                CarCheck.Visibility = Visibility.Visible;
                 string VIN = VINBox.GetLineText(0);
                 string Model = VehicleModelBox.GetLineText(0);
                 string YearProd = VehicleYearBox.GetLineText(0);
@@ -375,6 +398,7 @@ namespace CarDealership
                 {
                     ErrorWindow Error = new ErrorWindow(ex.Message);
                     Error.ShowDialog();
+                    return;
                 }
 
                 VINBox.Clear();
@@ -384,6 +408,12 @@ namespace CarDealership
                 VehicleSeatsBox.Clear();
                 VehiclePriceBox.Clear();
                 VehicleOther1Box.Clear();
+
+                Truck = false;
+                TruckCheck.IsChecked = false;
+                CarCheck.Visibility = Visibility.Visible;
+                VehicleOther1Box.Visibility = Visibility.Collapsed;
+                VehicleOther1Label.Visibility = Visibility.Collapsed;
             }
         }
         private void SubmitVHR_Click(object sender, RoutedEventArgs e)
@@ -399,8 +429,8 @@ namespace CarDealership
             OleDbCommand viewVHR = cn.CreateCommand();
             OleDbCommand updateVHR = cn.CreateCommand();
 
-            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VIN = @VIN";
-            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VIN = ?";
+            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VehicleHistoryReport.VIN = @VIN";
+            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VehicleHistoryReport.VIN = ?";
 
             viewVHR.Parameters.AddWithValue("@VIN", VIN);
            
@@ -429,38 +459,105 @@ namespace CarDealership
                 else
                     updateVHR.Parameters.AddWithValue("@Mileage", dt.Rows[0]["Mileage"].ToString());
                 updateVHR.Parameters.AddWithValue("@VIN", VIN);
-Console.WriteLine("HERE");
+
                 updateVHR.ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
+                return;
             }
 
-            VINBox.Clear();
-            VehicleModelBox.Clear();
-            VehicleYearBox.Clear();
-            VehicleMakerBox.Clear();
-            VehicleSeatsBox.Clear();
-            VehiclePriceBox.Clear();
-            VehicleOther1Box.Clear();
+            VHRVINBox.Clear();
+            VHRPreviousOwnersBox.Clear();
+            VHRRatingBox.Clear();
+            VHRMileageBox.Clear();
         }
         private void SubmitPart_Click(object sender, RoutedEventArgs e)
         {
             if (Tires)
             {
+                string SerialNumber = PartSerialNumberBox.GetLineText(0);
+                string VIN = PartVINBox.GetLineText(0);
+                string PartName = PartNameBox.GetLineText(0);
+                string Manufacturer = PartManufacturerBox.GetLineText(0);
+                string Type = PartOther2Box.GetLineText(0);
+                string TireSize = PartOther1Box.GetLineText(0);
+                
+                //SQL
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewTire = cn.CreateCommand();
+                OleDbCommand updatePart = cn.CreateCommand();
+                OleDbCommand updateTire = cn.CreateCommand();
+
+                viewTire.CommandText = "SELECT * FROM Part INNER JOIN Tire ON Part.SerialNumber = Tire.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
+                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE Part.SerialNumber = ?";
+                updateTire.CommandText = "UPDATE Tire SET Type = ?, TireSize = ? WHERE Tire.SerialNumber = ?";
+
+                viewTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                try
+                {
+                    da.SelectCommand = viewTire;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (VIN != "")
+                        updatePart.Parameters.AddWithValue("@VIN", VIN);
+                    else
+                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
+                    if (PartName != "")
+                        updatePart.Parameters.AddWithValue("@PartName", PartName);
+                    else
+                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
+                    if (Manufacturer != "")
+                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                    else
+                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
+                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                    if (Type != "")
+                        updateTire.Parameters.AddWithValue("@Type", Type);
+                    else
+                        updateTire.Parameters.AddWithValue("@Type", dt.Rows[0]["Type"].ToString());
+                    if (TireSize != "")
+                        updateTire.Parameters.AddWithValue("@TireSize", TireSize);
+                    else
+                        updateTire.Parameters.AddWithValue("@TireSize", dt.Rows[0]["TireSize"].ToString());
+                    updateTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                    updatePart.ExecuteNonQuery();
+                    updateTire.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                    return;
+                }
+
+                PartSerialNumberBox.Clear();
+                PartVINBox.Clear();
+                PartNameBox.Clear();
+                PartManufacturerBox.Clear();
+                PartOther1Box.Clear();
+                PartOther2Box.Clear();
+
                 Tires = false;
                 TiresCheck.IsChecked = false;
                 EngineCheck.Visibility = Visibility.Visible;
-                string SerialNumber = PartSerialNumberBox.GetLineText(0);
-                string VIN = PartVINBox.GetLineText(0);
-                string Name = PartNameBox.GetLineText(0);
-                string Manufacturer = PartManufacturerBox.GetLineText(0);
-                string Size = PartOther1Box.GetLineText(0);
-                string Type = PartOther2Box.GetLineText(0);
-
-                //SQL
+                PartOther1Box.Visibility = Visibility.Collapsed;
+                PartOther1Label.Visibility = Visibility.Collapsed;
+                PartOther2Box.Visibility = Visibility.Collapsed;
+                PartOther2Label.Visibility = Visibility.Collapsed;
             }
             else if (Engine)
             {
@@ -506,10 +603,8 @@ Console.WriteLine("HERE");
         private void CustomerCheck_Checked(object sender, RoutedEventArgs e)
         {
             EmployeeCheck.Visibility = Visibility.Collapsed;
-            PersonOther2Box.Visibility = Visibility.Collapsed;
-            PersonOther2Label.Visibility = Visibility.Collapsed;
-            PersonOther3Box.Visibility = Visibility.Collapsed;
-            PersonOther3Label.Visibility = Visibility.Collapsed;
+            PersonOther1Box.Visibility = Visibility.Visible;
+            PersonOther1Label.Visibility = Visibility.Visible;
             PersonOther1Label.Text = "Type";
             Customer = true;
         }
@@ -517,6 +612,8 @@ Console.WriteLine("HERE");
         private void CarCheck_Checked(object sender, RoutedEventArgs e)
         {
             TruckCheck.Visibility = Visibility.Collapsed;
+            VehicleOther1Box.Visibility = Visibility.Visible;
+            VehicleOther1Label.Visibility = Visibility.Visible;
             VehicleOther1Label.Text = "Type";
             Car = true;
 
@@ -525,6 +622,8 @@ Console.WriteLine("HERE");
         private void TruckCheck_Checked(object sender, RoutedEventArgs e)
         {
             CarCheck.Visibility = Visibility.Collapsed;
+            VehicleOther1Box.Visibility = Visibility.Visible;
+            VehicleOther1Label.Visibility = Visibility.Visible;
             VehicleOther1Label.Text = "Towing Capacity (Tonnes)";
             Truck = true;
         }

@@ -55,7 +55,7 @@
             <TabItem Header="Vehicle History Report" Name="tabItem3">
                 <Grid>
                     <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="337,298,0,0" Name="SubmitVHR" VerticalAlignment="Top" Width="75" Click="SubmitVHR_Click" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="VHRPreviousOwnersLabel" Text="#Previous Owners" VerticalAlignment="Top" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="VHRPreviousOwnersLabel" Text="Number of Previous Owners" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="VHRRatingLabel" Text="Rating out of 10" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,120,0,0" Name="VHRMileageLabel" Text="Mileage" VerticalAlignment="Top" />
 
