@@ -34,6 +34,8 @@ namespace CarDealership
             Parent = p;
             type = t;
             InitializeComponent();
+            ResponseBlock.Visibility = Visibility.Collapsed;
+            ResponseBlock2.Visibility = Visibility.Collapsed;
             if (type.CompareTo("Person") == 0)
             {
                 StatementBlock.Text = "Enter ID# to Find a Specific Person";
@@ -66,6 +68,7 @@ namespace CarDealership
 
             if (type.CompareTo("Person") == 0)
             {
+                ResponseBlock.Visibility = Visibility.Visible;
                 //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
                 OleDbCommand viewCustomer = cn.CreateCommand();
                 OleDbCommand viewEmployee = cn.CreateCommand();
@@ -94,6 +97,8 @@ namespace CarDealership
             }
             else if (type.CompareTo("Vehicle") == 0)
             {
+                ResponseBlock.Visibility = Visibility.Visible;
+                ResponseBlock2.Visibility = Visibility.Visible;
                 //sql statement VIN is in Para3
                 OleDbCommand viewCar = cn.CreateCommand();
                 OleDbCommand viewTruck = cn.CreateCommand();
@@ -129,7 +134,7 @@ namespace CarDealership
             }
             else if (type.CompareTo("Part") == 0)
             {
-
+                ResponseBlock.Visibility = Visibility.Visible;
                 //sql statement VIN is in Para3
                 OleDbCommand viewPart = cn.CreateCommand();
                 OleDbCommand viewEngine = cn.CreateCommand();
@@ -168,6 +173,7 @@ namespace CarDealership
             }
             else
             {
+                ResponseBlock.Visibility = Visibility.Visible;
                 //sql statement EID is Para1, CustID is Para2, VIN is Para3
                 OleDbCommand viewSale = cn.CreateCommand();
                 DataTable dt = new DataTable();
@@ -209,6 +215,8 @@ namespace CarDealership
         {
             ResponseBlock.ItemsSource = null;
             ResponseBlock2.ItemsSource = null;
+            ResponseBlock.Visibility = Visibility.Collapsed;
+            ResponseBlock2.Visibility = Visibility.Collapsed;
         }
     }
 }
