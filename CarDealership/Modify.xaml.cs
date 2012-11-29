@@ -429,8 +429,8 @@ namespace CarDealership
             OleDbCommand viewVHR = cn.CreateCommand();
             OleDbCommand updateVHR = cn.CreateCommand();
 
-            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VehicleHistoryReport.VIN = @VIN";
-            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VehicleHistoryReport.VIN = ?";
+            viewVHR.CommandText = "SELECT * FROM VehicleHistoryReport WHERE VIN = @VIN";
+            updateVHR.CommandText = "UPDATE VehicleHistoryReport SET NumberOwners = ?, Rating = ?, Mileage = ? WHERE VIN = ?";
 
             viewVHR.Parameters.AddWithValue("@VIN", VIN);
            
@@ -493,8 +493,8 @@ namespace CarDealership
                 OleDbCommand updateTire = cn.CreateCommand();
 
                 viewTire.CommandText = "SELECT * FROM Part INNER JOIN Tire ON Part.SerialNumber = Tire.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
-                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE Part.SerialNumber = ?";
-                updateTire.CommandText = "UPDATE Tire SET Type = ?, TireSize = ? WHERE Tire.SerialNumber = ?";
+                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
+                updateTire.CommandText = "UPDATE Tire SET Type = ?, TireSize = ? WHERE SerialNumber = ?";
 
                 viewTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
@@ -554,6 +554,7 @@ namespace CarDealership
                 Tires = false;
                 TiresCheck.IsChecked = false;
                 EngineCheck.Visibility = Visibility.Visible;
+                OtherPartCheck.Visibility = Visibility.Visible;
                 PartOther1Box.Visibility = Visibility.Collapsed;
                 PartOther1Label.Visibility = Visibility.Collapsed;
                 PartOther2Box.Visibility = Visibility.Collapsed;
@@ -561,27 +562,171 @@ namespace CarDealership
             }
             else if (Engine)
             {
+                string SerialNumber = PartSerialNumberBox.GetLineText(0);
+                string VIN = PartVINBox.GetLineText(0);
+                string PartName = PartNameBox.GetLineText(0);
+                string Manufacturer = PartManufacturerBox.GetLineText(0);
+                string HorsePower = PartOther2Box.GetLineText(0);
+                string Cylinders = PartOther1Box.GetLineText(0);
+                
+                //SQL
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewEngine = cn.CreateCommand();
+                OleDbCommand updatePart = cn.CreateCommand();
+                OleDbCommand updateEngine = cn.CreateCommand();
+
+                viewEngine.CommandText = "SELECT * FROM Part INNER JOIN Engine ON Part.SerialNumber = Engine.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
+                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
+                updateEngine.CommandText = "UPDATE Engine SET HorsePower = ?, Cylinders = ? WHERE SerialNumber = ?";
+
+                viewEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                try
+                {
+                    da.SelectCommand = viewEngine;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (VIN != "")
+                        updatePart.Parameters.AddWithValue("@VIN", VIN);
+                    else
+                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
+                    if (PartName != "")
+                        updatePart.Parameters.AddWithValue("@PartName", PartName);
+                    else
+                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
+                    if (Manufacturer != "")
+                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                    else
+                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
+                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                    if (HorsePower != "")
+                        updateEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
+                    else
+                        updateEngine.Parameters.AddWithValue("@HorsePower", dt.Rows[0]["HorsePower"].ToString());
+                    if (Cylinders != "")
+                        updateEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
+                    else
+                        updateEngine.Parameters.AddWithValue("@Cylinders", dt.Rows[0]["Cylinders"].ToString());
+                    updateEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                    updatePart.ExecuteNonQuery();
+                    updateEngine.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                    return;
+                }
+
+                PartSerialNumberBox.Clear();
+                PartVINBox.Clear();
+                PartNameBox.Clear();
+                PartManufacturerBox.Clear();
+                PartOther1Box.Clear();
+                PartOther2Box.Clear();
+
                 Engine = false;
                 EngineCheck.IsChecked = false;
                 TiresCheck.Visibility = Visibility.Visible;
-                string SerialNumber = PartSerialNumberBox.GetLineText(0);
-                string VIN = PartVINBox.GetLineText(0);
-                string Name = PartNameBox.GetLineText(0);
-                string Manufacturer = PartManufacturerBox.GetLineText(0);
-                string Cylinders = PartOther1Box.GetLineText(0);
-                string HorsePower = PartOther2Box.GetLineText(0);
-                //sql
+                OtherPartCheck.Visibility = Visibility.Visible;
+                PartOther1Box.Visibility = Visibility.Collapsed;
+                PartOther1Label.Visibility = Visibility.Collapsed;
+                PartOther2Box.Visibility = Visibility.Collapsed;
+                PartOther2Label.Visibility = Visibility.Collapsed;
             }
             else if (Part)
             {
-                Part = false;
-
                 string SerialNumber = PartSerialNumberBox.GetLineText(0);
                 string VIN = PartVINBox.GetLineText(0);
-                string Name = PartNameBox.GetLineText(0);
+                string PartName = PartNameBox.GetLineText(0);
                 string Manufacturer = PartManufacturerBox.GetLineText(0);
 
                 //SQL
+                DataTable dt = new DataTable();
+                OleDbDataAdapter da = new OleDbDataAdapter();
+                OleDbCommand viewPart = cn.CreateCommand();
+                OleDbCommand updatePart = cn.CreateCommand();
+                OleDbCommand selectTire = cn.CreateCommand();
+                OleDbCommand selectEngine = cn.CreateCommand();
+
+                viewPart.CommandText = "SELECT VIN, PartName, Manufacturer FROM Part, Engine, Tire WHERE Part.SerialNumber = @SerialNumber";
+                updatePart.CommandText = "UPDATE Part SET VIN = ?, PartName = ?, Manufacturer = ? WHERE SerialNumber = ?";
+                selectTire.CommandText = "SELECT SerialNumber FROM Tire WHERE SerialNumber = @SerialNumber";
+                selectEngine.CommandText = "SELECT SerialNumber FROM Engine WHERE SerialNumber = @SerialNumber";
+
+                viewPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+                selectTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+                selectEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                Object temp = selectEngine.ExecuteScalar();
+                if( temp == null || temp is DBNull)
+                    Console.WriteLine("HEER");
+                else
+                    Console.WriteLine(temp.ToString());
+
+                try
+                {
+                    da.SelectCommand = viewPart;
+                    da.Fill(dt);
+
+                    if (dt.Rows.Count == 0)
+                    {
+                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (selectEngine.ExecuteScalar() == null && selectTire.ExecuteScalar() == null )
+                        ;
+                    else
+                    {
+                        ErrorWindow Error = new ErrorWindow("Part is of type Engine or Tire. Retry by selecting the specific part you wish to modify.");
+                        Error.ShowDialog();
+                        return;
+                    }
+
+                    if (VIN != "")
+                        updatePart.Parameters.AddWithValue("@VIN", VIN);
+                    else
+                        updatePart.Parameters.AddWithValue("@VIN", dt.Rows[0]["VIN"].ToString());
+                    if (PartName != "")
+                        updatePart.Parameters.AddWithValue("@PartName", PartName);
+                    else
+                        updatePart.Parameters.AddWithValue("@PartName", dt.Rows[0]["PartName"].ToString());
+                    if (Manufacturer != "")
+                        updatePart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+                    else
+                        updatePart.Parameters.AddWithValue("@Manufacturer", dt.Rows[0]["Manufacturer"].ToString());
+                    updatePart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+
+                    updatePart.ExecuteNonQuery();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                    return;
+                }
+
+                PartSerialNumberBox.Clear();
+                PartVINBox.Clear();
+                PartNameBox.Clear();
+                PartManufacturerBox.Clear();
+
+                Part = false;
+                OtherPartCheck.IsChecked = false;
+                TiresCheck.Visibility = Visibility.Visible;
+                EngineCheck.Visibility = Visibility.Visible;
             }
         }
 
@@ -631,12 +776,12 @@ namespace CarDealership
         private void EngineCheck_Checked(object sender, RoutedEventArgs e)
         {
             TiresCheck.Visibility = Visibility.Collapsed;
+            OtherPartCheck.Visibility = Visibility.Collapsed;
             PartOther1Box.Visibility = Visibility.Visible;
             PartOther1Label.Visibility = Visibility.Visible;
             PartOther2Box.Visibility = Visibility.Visible;
             PartOther2Label.Visibility = Visibility.Visible;
             Engine = true;
-            Part = false;
             PartOther1Label.Text = "Cylinders";
             PartOther2Label.Text = "HorsePower";
         }
@@ -644,15 +789,87 @@ namespace CarDealership
         private void TiresCheck_Checked(object sender, RoutedEventArgs e)
         {
             EngineCheck.Visibility = Visibility.Collapsed;
+            OtherPartCheck.Visibility = Visibility.Collapsed;
             PartOther1Box.Visibility = Visibility.Visible;
             PartOther1Label.Visibility = Visibility.Visible;
             PartOther2Box.Visibility = Visibility.Visible;
             PartOther2Label.Visibility = Visibility.Visible;
             Tires = true;
-            Part = false;
             PartOther1Label.Text = "Size";
             PartOther2Label.Text = "Type";
         }
 
+        private void OtherPartCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            EngineCheck.Visibility = Visibility.Collapsed;
+            TiresCheck.Visibility = Visibility.Collapsed;
+            Part = true;
+        }
+
+        private void EmployeeCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CustomerCheck.Visibility = Visibility.Visible;
+            PersonOther1Box.Visibility = Visibility.Collapsed;
+            PersonOther1Label.Visibility = Visibility.Collapsed;
+            PersonOther2Box.Visibility = Visibility.Collapsed;
+            PersonOther2Label.Visibility = Visibility.Collapsed;
+            PersonOther3Box.Visibility = Visibility.Collapsed;
+            PersonOther3Label.Visibility = Visibility.Collapsed;
+            Employee = false;
+        }
+
+        private void CustomerCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            EmployeeCheck.Visibility = Visibility.Visible;
+            PersonOther1Box.Visibility = Visibility.Collapsed;
+            PersonOther1Label.Visibility = Visibility.Collapsed;
+            Customer = false;
+        }
+
+        private void CarCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TruckCheck.Visibility = Visibility.Visible;
+            VehicleOther1Box.Visibility = Visibility.Collapsed;
+            VehicleOther1Label.Visibility = Visibility.Collapsed;
+            Car = false;
+
+        }
+
+        private void TruckCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            CarCheck.Visibility = Visibility.Visible;
+            VehicleOther1Box.Visibility = Visibility.Collapsed;
+            VehicleOther1Label.Visibility = Visibility.Collapsed;
+            Truck = false;
+        }
+
+        private void EngineCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            TiresCheck.Visibility = Visibility.Visible;
+            OtherPartCheck.Visibility = Visibility.Visible;
+            PartOther1Box.Visibility = Visibility.Collapsed;
+            PartOther1Label.Visibility = Visibility.Collapsed;
+            PartOther2Box.Visibility = Visibility.Collapsed;
+            PartOther2Label.Visibility = Visibility.Collapsed;
+            Engine = false;
+        }
+
+        private void TiresCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            EngineCheck.Visibility = Visibility.Visible;
+            OtherPartCheck.Visibility = Visibility.Visible;
+            PartOther1Box.Visibility = Visibility.Collapsed;
+            PartOther1Label.Visibility = Visibility.Collapsed;
+            PartOther2Box.Visibility = Visibility.Collapsed;
+            PartOther2Label.Visibility = Visibility.Collapsed;
+            Tires = false;
+        }
+
+        private void OtherPartCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            EngineCheck.Visibility = Visibility.Visible;
+            TiresCheck.Visibility = Visibility.Visible;
+            Part = false;
+        }
     }
 }

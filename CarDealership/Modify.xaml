@@ -6,8 +6,8 @@
         <TabControl Height="361" HorizontalAlignment="Left" Name="tabControl1" VerticalAlignment="Top" Width="428">
             <TabItem Header="Person" Name="tabItem1">
                 <Grid Height="333" Width="421">
-                    <CheckBox Content="Employee" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="EmployeeCheck" VerticalAlignment="Top" Checked="EmployeeCheck_Checked" />
-                    <CheckBox Content="Customer" Height="16" HorizontalAlignment="Left" Margin="81,6,0,0" Name="CustomerCheck" VerticalAlignment="Top" Checked="CustomerCheck_Checked" />
+                    <CheckBox Content="Employee" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="EmployeeCheck" VerticalAlignment="Top" Checked="EmployeeCheck_Checked" Unchecked="EmployeeCheck_Unchecked"/>
+                    <CheckBox Content="Customer" Height="16" HorizontalAlignment="Left" Margin="81,6,0,0" Name="CustomerCheck" VerticalAlignment="Top" Checked="CustomerCheck_Checked" Unchecked="CustomerCheck_Unchecked"/>
                     <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="340,302,0,0" Name="SubmitPerson" VerticalAlignment="Top" Width="75" Click="SubmitPerson_Click" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="PersonNameLabel" Text="Name" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="PersonPhoneLabel" Text="Phone#" VerticalAlignment="Top" />
@@ -31,8 +31,8 @@
             </TabItem>
             <TabItem Header="Vehicle" Name="tabItem2">
                 <Grid>
-                    <CheckBox Content="Car" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="CarCheck" VerticalAlignment="Top" Checked="CarCheck_Checked" />
-                    <CheckBox Content="Truck" Height="16" HorizontalAlignment="Left" Margin="47,6,0,0" Name="TruckCheck" VerticalAlignment="Top" Checked="TruckCheck_Checked" />
+                    <CheckBox Content="Car" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="CarCheck" VerticalAlignment="Top" Checked="CarCheck_Checked" Unchecked="CarCheck_Unchecked" />
+                    <CheckBox Content="Truck" Height="16" HorizontalAlignment="Left" Margin="47,6,0,0" Name="TruckCheck" VerticalAlignment="Top" Checked="TruckCheck_Checked" Unchecked="TruckCheck_Unchecked" />
                     <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="337,298,0,0" Name="SubmitVehicle" VerticalAlignment="Top" Width="75" Click="SubmitVehicle_Click" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="VehicleModelLabel" Text="Model" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="VehicleYearLabel" Text="Year" VerticalAlignment="Top" />
@@ -70,8 +70,9 @@
             </TabItem>
             <TabItem Header="Part" Name="tabItem4">
                 <Grid>
-                    <CheckBox Content="Engine" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="EngineCheck" VerticalAlignment="Top" Checked="EngineCheck_Checked" />
-                    <CheckBox Content="Tires" Height="16" HorizontalAlignment="Left" Margin="65,6,0,0" Name="TiresCheck" VerticalAlignment="Top" Checked="TiresCheck_Checked" />
+                    <CheckBox Content="Engine" Height="16" HorizontalAlignment="Left" Margin="6,6,0,0" Name="EngineCheck" VerticalAlignment="Top" Checked="EngineCheck_Checked" Unchecked="EngineCheck_Unchecked" />
+                    <CheckBox Content="Tires" Height="16" HorizontalAlignment="Left" Margin="65,6,0,0" Name="TiresCheck" VerticalAlignment="Top" Checked="TiresCheck_Checked" Unchecked="TiresCheck_Unchecked" />
+                    <CheckBox Content="Other Part" Height="16" HorizontalAlignment="Left" Margin="125,6,0,0" Name="OtherPartCheck" VerticalAlignment="Top" Checked="OtherPartCheck_Checked" Unchecked="OtherPartCheck_Unchecked" />
                     <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="337,298,0,0" Name="SubmitPart" VerticalAlignment="Top" Width="75" Click="SubmitPart_Click" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="PartVINLabel" Text="VIN" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="PartNameLabel" Text="Name" VerticalAlignment="Top" />
