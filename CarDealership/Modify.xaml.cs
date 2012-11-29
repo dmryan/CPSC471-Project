@@ -80,61 +80,92 @@ namespace CarDealership
                 updateEmployee.CommandText = "UPDATE Employee SET Salary = ?, StartDate = ?, ManagerID = ? WHERE EID = ?";
 
                 viewEmployee.Parameters.AddWithValue("@EID", EID);
-
-                try
+                if (Name.CompareTo("") != 0)
                 {
-                    da.SelectCommand = viewEmployee;
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count == 0)
+                    try
                     {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
-
-                    if (Name != "")
+                        updatePerson.CommandText = "UPDATE Person SET PersonName = ? WHERE ID = ?";
                         updatePerson.Parameters.AddWithValue("@PersonName", Name);
-                    else
-                        updatePerson.Parameters.AddWithValue("@PersonName", dt.Rows[0]["PersonName"].ToString());
-                    if (Phone != "")
-                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-                    else
-                        updatePerson.Parameters.AddWithValue("@PhoneNumber", dt.Rows[0]["PhoneNumber"].ToString());
-                    if (Address != "")
-                        updatePerson.Parameters.AddWithValue("@Address", Address);
-                    else
-                        updatePerson.Parameters.AddWithValue("@Address", dt.Rows[0]["Address"].ToString());
-                    if (Sex != "")
-                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
-                    else
-                        updatePerson.Parameters.AddWithValue("@Sex", dt.Rows[0]["Sex"].ToString());
-                    updatePerson.Parameters.AddWithValue("@ID", EID);
-
-                    Console.WriteLine(Address);
-                    if (Salary != "")
-                        updateEmployee.Parameters.AddWithValue("@Salary", Salary);
-                    else
-                        updateEmployee.Parameters.AddWithValue("@Salary", dt.Rows[0]["Salary"].ToString());
-                    if (StartDate != "")
-                        updateEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-                    else
-                        updateEmployee.Parameters.AddWithValue("@StartDate", dt.Rows[0]["StartDate"].ToString());
-                    if (Manager != "")
-                        updateEmployee.Parameters.AddWithValue("@ManagerID", Manager);
-                    else
-                        updateEmployee.Parameters.AddWithValue("@ManagerID", dt.Rows[0]["ManagerID"].ToString());
-                    updateEmployee.Parameters.AddWithValue("@EID", EID);
-
-                    updatePerson.ExecuteNonQuery();
-                    updateEmployee.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
+                        updatePerson.Parameters.AddWithValue("@ID", EID);
+                        
+                        updatePerson.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Name Field Error";
+                        Error.ShowDialog();
+                    }
+                } 
+                if (Phone.CompareTo("") != 0)
                 {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                    return;
+                    try
+                    {
+                        updatePerson.CommandText = "UPDATE Person SET PhoneNumber = ? WHERE ID = ?";
+                        updatePerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+                        updatePerson.Parameters.AddWithValue("@ID", EID);
+                        
+                        updatePerson.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Phone Field Error";
+                        Error.ShowDialog();
+                    }
                 }
+                if (Address.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updatePerson.CommandText = "UPDATE Person SET Address = ? WHERE ID = ?";
+                        updatePerson.Parameters.AddWithValue("@Address", Address);
+                        updatePerson.Parameters.AddWithValue("@ID", EID);
+                        
+                        updatePerson.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Address Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                if (Sex.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updatePerson.CommandText = "UPDATE Person SET Sex = ? WHERE ID = ?";
+                        updatePerson.Parameters.AddWithValue("@Sex", Sex);
+                        updatePerson.Parameters.AddWithValue("@ID", EID);
+
+                        updatePerson.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Sex Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                if (Salary.CompareTo("") != 0)
+                {
+                    try
+                    {
+                        updatePerson.CommandText = "UPDATE Employee SET Salary = ? WHERE EID = ?";
+                        updatePerson.Parameters.AddWithValue("@Salary", Salary);
+                        updatePerson.Parameters.AddWithValue("@EID", EID);
+                        
+                        updatePerson.ExecuteNonQuery();
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.Title = "Salary Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+
 
                 PersonIDBox.Clear();
                 PersonNameBox.Clear();

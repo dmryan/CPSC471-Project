@@ -55,8 +55,8 @@ namespace CarDealership
             insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
             selectEmployee.CommandText = "SELECT EID FROM Employee WHERE EID = @ManagerID";
 
-            if(ManagerID == "")
-                selectEmployee.Parameters.AddWithValue("@ManagerID", -99999);
+            if(ManagerID.CompareTo("") == 0)
+                selectEmployee.Parameters.AddWithValue("@ManagerID", -99);
             else
                 selectEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
 
@@ -69,13 +69,13 @@ namespace CarDealership
             insertEmployee.Parameters.AddWithValue("@EID", EID);
             insertEmployee.Parameters.AddWithValue("@Salary", Salary);
             insertEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-            if (selectEmployee.ExecuteScalar() == null && ManagerID != "")
+            if (selectEmployee.ExecuteScalar() == null && ManagerID.CompareTo("") != 0)
             {
                 ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
                 Error.ShowDialog();
                 return;
             }
-            else if( ManagerID != "" )
+            else if (ManagerID.CompareTo("") != 0)
                 insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
             else
                 selectEmployee.Parameters.AddWithValue("@ManagerID", -1);
