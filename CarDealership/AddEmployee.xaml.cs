@@ -49,38 +49,60 @@ namespace CarDealership
             //SQL Statement
             OleDbCommand insertPerson = cn.CreateCommand();
             OleDbCommand insertEmployee = cn.CreateCommand();
-            OleDbCommand selectEmployee = cn.CreateCommand();
 
-            insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
-            insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
-            selectEmployee.CommandText = "SELECT EID FROM Employee WHERE EID = @ManagerID";
+            //insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
+            string person1 = "INSERT INTO Person(ID";
+            string person2 = " Values (@ID";
+            string employee1 = "INSERT INTO Employee(EID";
+            string employee2 = " VALUES (@EID";
+            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
-            if(ManagerID.CompareTo("") == 0)
-                selectEmployee.Parameters.AddWithValue("@ManagerID", -99);
-            else
-                selectEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
-
-            insertPerson.Parameters.AddWithValue("@ID", EID);
-            insertPerson.Parameters.AddWithValue("@PersonName", Name);
-            insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-            insertPerson.Parameters.AddWithValue("@Address", Address);
-            insertPerson.Parameters.AddWithValue("@Sex", Sex);
-
-            insertEmployee.Parameters.AddWithValue("@EID", EID);
-            insertEmployee.Parameters.AddWithValue("@Salary", Salary);
-            insertEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-            if (selectEmployee.ExecuteScalar() == null && ManagerID.CompareTo("") != 0)
+            if (Name.CompareTo("") != 0)
             {
-                ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                Error.ShowDialog();
-                return;
+                person1 += ", PersonName";
+                person2 += ", @PersonName";
             }
-            else if (ManagerID.CompareTo("") != 0)
-                insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
-            else
-                selectEmployee.Parameters.AddWithValue("@ManagerID", -1);
-
-            try {
+            if (Phone.CompareTo("") != 0)
+            {
+                person1 += ", PhoneNumber";
+                person2 += ", @PhoneNumber";
+            }
+            if (Address.CompareTo("") != 0)
+            {
+                person1 += ", Address";
+                person2 += ", @Address";
+            }
+            if (Sex.CompareTo("") != 0)
+            {
+                person1 += ", Sex";
+                person2 += ", @Sex";
+            }
+            insertPerson.CommandText = person1;
+            insertPerson.CommandText += ")";
+            insertPerson.CommandText += person2;
+            insertPerson.CommandText += ")";
+            if (EID.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@ID", EID);
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@PersonName", Name);
+            }
+            if (Phone.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+            }
+            if (Address.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@Address", Address);
+            }
+            if (Sex.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@Sex", Sex);
+            }
+            try
+            {
                 insertPerson.ExecuteNonQuery();
             }
             catch (OleDbException ex)
@@ -89,22 +111,55 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            if (noError)
+            ///////////////////////////////////////////////////////////////////////
+            if (Salary.CompareTo("") != 0)
             {
-                try {
-                    insertEmployee.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    OleDbCommand deletePerson = cn.CreateCommand();
-                    deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + EID);
-                    deletePerson.ExecuteNonQuery();
-                    noError = false;
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                employee1 += ", Salary";
+                employee2 += ", @Salary";
             }
-
+            if (StartDate.CompareTo("") != 0)
+            {
+                employee1 += ", StartDate";
+                employee2 += ", @StartDate";
+            }
+            if (ManagerID.CompareTo("") != 0)
+            {
+                employee1 += ", ManagerID";
+                employee2 += ", @ManagerID";
+            }
+            insertEmployee.CommandText = employee1;
+            insertEmployee.CommandText += ")";
+            insertEmployee.CommandText += employee2;
+            insertEmployee.CommandText += ")";
+            if (EID.CompareTo("") != 0)
+            {
+                insertEmployee.Parameters.AddWithValue("@EID", EID);
+            }
+            if (Salary.CompareTo("") != 0)
+            {
+                insertEmployee.Parameters.AddWithValue("@Salary", Salary);
+            }
+            if (StartDate.CompareTo("") != 0)
+            {
+                insertEmployee.Parameters.AddWithValue("@StartDate", StartDate);
+            }
+            if (ManagerID.CompareTo("") != 0)
+            {
+                insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
+            }
+            try
+            {
+                insertEmployee.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deletePerson = cn.CreateCommand();
+                deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + EID);
+                deletePerson.ExecuteNonQuery();
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
             if (noError)
                 this.Close();
         }

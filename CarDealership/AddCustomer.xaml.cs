@@ -45,22 +45,63 @@ namespace CarDealership
             string Type = TypeText.GetLineText(0);
 
             //SQL Statement
+            //SQL Statement
             OleDbCommand insertPerson = cn.CreateCommand();
             OleDbCommand insertCustomer = cn.CreateCommand();
 
-            insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
-            insertCustomer.CommandText = "INSERT INTO Customer(CID, Type) VALUES (@CID, @Type)";
+            //insertPerson.CommandText = "INSERT INTO Person(ID, PersonName, PhoneNumber, Address, Sex) VALUES (@ID, @PersonName, @PeronsNumber, @Address, @Sex)";
+            string person1 = "INSERT INTO Person(ID";
+            string person2 = " Values (@ID";
+            string customer1 = "INSERT INTO Customer(CID";
+            string customer2 = " VALUES (@CID";
+            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
-            insertPerson.Parameters.AddWithValue("@ID", CID);
-            insertPerson.Parameters.AddWithValue("@PersonName", Name);
-            insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
-            insertPerson.Parameters.AddWithValue("@Address", Address);
-            insertPerson.Parameters.AddWithValue("@Sex", Sex);
-
-            insertCustomer.Parameters.AddWithValue("@CID", CID);
-            insertCustomer.Parameters.AddWithValue("@Type", Type);
-
-            try {
+            if (Name.CompareTo("") != 0)
+            {
+                person1 += ", PersonName";
+                person2 += ", @PersonName";
+            }
+            if (Phone.CompareTo("") != 0)
+            {
+                person1 += ", PhoneNumber";
+                person2 += ", @PhoneNumber";
+            }
+            if (Address.CompareTo("") != 0)
+            {
+                person1 += ", Address";
+                person2 += ", @Address";
+            }
+            if (Sex.CompareTo("") != 0)
+            {
+                person1 += ", Sex";
+                person2 += ", @Sex";
+            }
+            insertPerson.CommandText = person1;
+            insertPerson.CommandText += ")";
+            insertPerson.CommandText += person2;
+            insertPerson.CommandText += ")";
+            if (CID.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@ID", CID);
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@PersonName", Name);
+            }
+            if (Phone.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@PhoneNumber", Phone);
+            }
+            if (Address.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@Address", Address);
+            }
+            if (Sex.CompareTo("") != 0)
+            {
+                insertPerson.Parameters.AddWithValue("@Sex", Sex);
+            }
+            try
+            {
                 insertPerson.ExecuteNonQuery();
             }
             catch (OleDbException ex)
@@ -69,22 +110,37 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            if (noError)
+            ///////////////////////////////////////////////////////////////////////
+            if (Type.CompareTo("") != 0)
             {
-                try {
-                    insertCustomer.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    OleDbCommand deletePerson = cn.CreateCommand();
-                    deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + CID);
-                    deletePerson.ExecuteNonQuery();
-                    noError = false;
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                customer1 += ", Type";
+                customer2 += ", @Type";
             }
-
+            insertCustomer.CommandText = customer1;
+            insertCustomer.CommandText += ")";
+            insertCustomer.CommandText += customer2;
+            insertCustomer.CommandText += ")";
+            if (CID.CompareTo("") != 0)
+            {
+                insertCustomer.Parameters.AddWithValue("@EID", CID);
+            }
+            if (Type.CompareTo("") != 0)
+            {
+                insertCustomer.Parameters.AddWithValue("@Type", Type);
+            }
+            try
+            {
+                insertCustomer.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deletePerson = cn.CreateCommand();
+                deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + CID);
+                deletePerson.ExecuteNonQuery();
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
             if (noError)
                 this.Close();
         }

@@ -45,13 +45,45 @@ namespace CarDealership
             //SQL Statement
             OleDbCommand insertVHR = cn.CreateCommand();
 
-            insertVHR.CommandText = "INSERT INTO VehicleHistoryReport(VIN, NumberOwners, Rating, Mileage) VALUES (@VIN, @NumberOwners, @Rating, @Mileage)";
+            string VHR1 = "INSERT INTO VehicleHistoryReport(VIN";
+            string VHR2 = " VALUES (@VIN";
 
-            insertVHR.Parameters.AddWithValue("@VIN", VIN);
-            insertVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
-            insertVHR.Parameters.AddWithValue("@Rating", Rating);
-            insertVHR.Parameters.AddWithValue("@Mileage", Mileage);
+            if (NumberOwners.CompareTo("") != 0)
+            {
+                VHR1 += ", NumberOwners";
+                VHR2 += ", @NumberOwners";
+            }
+            if (Rating.CompareTo("") != 0)
+            {
+                VHR1 += ", Rating";
+                VHR2 += ", @Rating";
+            }
+            if (Mileage.CompareTo("") != 0)
+            {
+                VHR1 += ", Mileage";
+                VHR2 += ", @Mileage";
+            }
 
+            insertVHR.CommandText = VHR1;
+            insertVHR.CommandText += ")";
+            insertVHR.CommandText += VHR2;
+            insertVHR.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertVHR.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (NumberOwners.CompareTo("") != 0)
+            {
+                insertVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
+            }
+            if (Rating.CompareTo("") != 0)
+            {
+                insertVHR.Parameters.AddWithValue("@Rating", Rating);
+            }
+            if (Mileage.CompareTo("") != 0)
+            {
+                insertVHR.Parameters.AddWithValue("@Mileage", Mileage);
+            }
             try
             {
                 insertVHR.ExecuteNonQuery();
@@ -62,7 +94,6 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-
             if (noError)
                 this.Close();
         }

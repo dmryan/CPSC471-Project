@@ -49,25 +49,77 @@ namespace CarDealership
             bool Sold = false;
 
              //SQL Statement
-            OleDbCommand insertVehical = cn.CreateCommand();
+            OleDbCommand insertVehicle = cn.CreateCommand();
             OleDbCommand insertTruck = cn.CreateCommand();
 
-            insertVehical.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
-            insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
+           // insertVehicle.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
+            //insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
 
-            insertVehical.Parameters.AddWithValue("@VIN", VIN);
-            insertVehical.Parameters.AddWithValue("@Model", Model);
-            insertVehical.Parameters.AddWithValue("@YearProd", YearProd);
-            insertVehical.Parameters.AddWithValue("@Maker", Maker);
-            insertVehical.Parameters.AddWithValue("@NumberSeats", NumberSeats);
-            insertVehical.Parameters.AddWithValue("@Price", Price);
-            insertVehical.Parameters.AddWithValue("@Sold", Sold);
+            string vehicle1 = "INSERT INTO Vehicle(VIN";
+            string vehicle2 = " Values (@VIN";
+            string truck1 = "INSERT INTO Truck(VIN";
+            string truck2 = " VALUES (@VIN";
+            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
-            insertTruck.Parameters.AddWithValue("@VIN", VIN);
-            insertTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
-
-            try {
-                insertVehical.ExecuteNonQuery();
+            if (Model.CompareTo("") != 0)
+            {
+                vehicle1 += ", Model";
+                vehicle2 += ", @Model";
+            }
+            if (YearProd.CompareTo("") != 0)
+            {
+                vehicle1 += ", YearProd";
+                vehicle2 += ", @YearProd";
+            }
+            if (Maker.CompareTo("") != 0)
+            {
+                vehicle1 += ", Maker";
+                vehicle2 += ", @Maker";
+            }
+            if (NumberSeats.CompareTo("") != 0)
+            {
+                vehicle1 += ", NumberSeats";
+                vehicle2 += ", @NumberSeats";
+            }
+            if (Price.CompareTo("") != 0)
+            {
+                vehicle1 += ", Price";
+                vehicle2 += ", @Price";
+            }
+            insertVehicle.CommandText = vehicle1;
+            insertVehicle.CommandText += ", Sold";
+            insertVehicle.CommandText += ")";
+            insertVehicle.CommandText += vehicle2;
+            insertVehicle.CommandText += ", @Sold";
+            insertVehicle.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (Model.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@Model", Model);
+            }
+            if (YearProd.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@YearProd", YearProd);
+            }
+            if (Maker.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@Maker", Maker);
+            }
+            if (NumberSeats.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
+            }
+            if (Price.CompareTo("") != 0)
+            {
+                insertVehicle.Parameters.AddWithValue("@Price", Price);
+            }
+            insertVehicle.Parameters.AddWithValue("@Sold", Sold);
+            try
+            {
+                insertVehicle.ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {
@@ -75,33 +127,40 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            if (noError)
+            ///////////////////////////////////////////////////////////////////////
+            if (TowingCapacity.CompareTo("") != 0)
             {
-                try {
-                    insertTruck.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    OleDbCommand deletePart = cn.CreateCommand();
-                    deletePart.CommandText = ("DELETE FROM Vehicle WHERE VIN =" + VIN);
-                    deletePart.ExecuteNonQuery();
-                    noError = false;
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                truck1 += ", TowingCapacity";
+                truck2 += ", @TowingCapacity";
             }
-            
-            if (noError)
+            insertTruck.CommandText = truck1;
+            insertTruck.CommandText += ")";
+            insertTruck.CommandText += truck2;
+            insertTruck.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
             {
-                if(used == true)
-                {
-                    VehicleHistoryReport newWindow = new VehicleHistoryReport(Parent, cn);
-                    newWindow.ShowDialog();
-                }
+                insertTruck.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (TowingCapacity.CompareTo("") != 0)
+            {
+                insertTruck.Parameters.AddWithValue("@TowingCapacity", TowingCapacity);
+            }
+            try
+            {
+                insertTruck.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deleteVehicle = cn.CreateCommand();
+                deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + VIN);
+                deleteVehicle.ExecuteNonQuery();
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
+            if (noError)
                 this.Close();
-            }
         }
-
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
             base.OnClosing(e);
