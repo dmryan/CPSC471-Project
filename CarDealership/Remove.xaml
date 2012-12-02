@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Remove" Height="300" Width="350">
     <Grid>
-        <CheckBox Content="Person" Height="16" HorizontalAlignment="Left" Margin="20,50,0,0" Name="PersonCheck" VerticalAlignment="Top" Checked="PersonCheck_Checked" />
-        <CheckBox Content="Vehicle" Height="16" HorizontalAlignment="Left" Margin="20,80,0,0" Name="VehicleCheck" VerticalAlignment="Top" Checked="VehicleCheck_Checked" />
-        <CheckBox Content="Part" Height="16" HorizontalAlignment="Left" Margin="20,110,0,0" Name="PartCheck" VerticalAlignment="Top" Checked="PartCheck_Checked" />
+        <CheckBox Content="Person" Height="16" HorizontalAlignment="Left" Margin="20,50,0,0" Name="PersonCheck" VerticalAlignment="Top" Checked="PersonCheck_Checked" Unchecked="PersonCheck_Unchecked" />
+        <CheckBox Content="Vehicle" Height="16" HorizontalAlignment="Left" Margin="20,80,0,0" Name="VehicleCheck" VerticalAlignment="Top" Checked="VehicleCheck_Checked" Unchecked="VehicleCheck_Unchecked" />
+        <CheckBox Content="Part" Height="16" HorizontalAlignment="Left" Margin="20,110,0,0" Name="PartCheck" VerticalAlignment="Top" Checked="PartCheck_Checked" Unchecked="PartCheck_Unchecked" />
         <TextBlock Height="25" HorizontalAlignment="Left" Margin="20,20,0,0" Name="textBlock1" Text="Select What Type to Remove" VerticalAlignment="Top" />
         <TextBox Height="25" Margin="12,162,196,0" Name="IDText" VerticalAlignment="Top" />
         <TextBlock Height="25" HorizontalAlignment="Left" Margin="147,162,0,0" Name="TextBoxLabel" Text="     " VerticalAlignment="Top" Width="129" />

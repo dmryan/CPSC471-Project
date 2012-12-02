@@ -212,5 +212,29 @@ namespace CarDealership
             TextBoxLabel.Text = "Serial Number";
             Part = true;
         }
+
+        private void PersonCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            VehicleCheck.Visibility = Visibility.Visible;
+            PartCheck.Visibility = Visibility.Visible;
+            TextBoxLabel.Text = "";
+            Person = false;
+        }
+
+        private void VehicleCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PersonCheck.Visibility = Visibility.Visible;
+            PartCheck.Visibility = Visibility.Visible;
+            TextBoxLabel.Text = "";
+            Vehicle = false;
+        }
+
+        private void PartCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PersonCheck.Visibility = Visibility.Visible;
+            VehicleCheck.Visibility = Visibility.Visible;
+            TextBoxLabel.Text = "";
+            Part = false;
+        }
     }
 }
