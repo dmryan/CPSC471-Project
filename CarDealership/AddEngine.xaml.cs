@@ -48,19 +48,53 @@ namespace CarDealership
             OleDbCommand insertPart = cn.CreateCommand();
             OleDbCommand insertEngine = cn.CreateCommand();
 
-            insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
-            insertEngine.CommandText = "INSERT INTO Engine(SerialNumber, HorsePower, Cylinders) VALUES (@SerialNumber, @HorsePower, @Cylinders)";
+            // insertVehicle.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
+            //insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
 
-            insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            insertPart.Parameters.AddWithValue("@VIN", VIN);
-            insertPart.Parameters.AddWithValue("@Name", Name);
-            insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            string Part1 = "INSERT INTO Part(SerialNumber";
+            string Part2 = " Values (@SerialNumber";
+            string engine1 = "INSERT INTO Engine(SerialNumber";
+            string engine2 = " VALUES (@SerialNumber";
+            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
-            insertEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            insertEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
-            insertEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
+            if (VIN.CompareTo("") != 0)
+            {
+                Part1 += ", VIN";
+                Part2 += ", @VIN";
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                Part1 += ", Name";
+                Part2 += ", @Name";
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                Part1 += ", Manufacturer";
+                Part2 += ", @Manufacturer";
+            }
 
-            try {
+            insertPart.CommandText = Part1;
+            insertPart.CommandText += ")";
+            insertPart.CommandText += Part2;
+            insertPart.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            }
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Name", Name);
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            }
+            try
+            {
                 insertPart.ExecuteNonQuery();
             }
             catch (OleDbException ex)
@@ -69,22 +103,46 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            if (noError)
+            ///////////////////////////////////////////////////////////////////////
+            if (Cylinders.CompareTo("") != 0)
             {
-                try {
-                    insertEngine.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    OleDbCommand deletePart = cn.CreateCommand();
-                    deletePart.CommandText = ("DELETE FROM Part WHERE SerialNumber =" + SerialNumber);
-                    deletePart.ExecuteNonQuery();
-                    noError = false;
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                engine1 += ", Cylinders";
+                engine2 += ", @Cylinders";
             }
-            
+            if (HorsePower.CompareTo("") != 0)
+            {
+                engine1 += ", HorsePower";
+                engine2 += ", @HorsePower";
+            }
+            insertEngine.CommandText = engine1;
+            insertEngine.CommandText += ")";
+            insertEngine.CommandText += engine2;
+            insertEngine.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            }
+            if (Cylinders.CompareTo("") != 0)
+            {
+                insertEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
+            }
+            if (HorsePower.CompareTo("") != 0)
+            {
+                insertEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
+            }
+            try
+            {
+                insertEngine.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deleteVehicle = cn.CreateCommand();
+                deleteVehicle.CommandText = ("DELETE FROM PART WHERE SerialNumber =" + SerialNumber);
+                deleteVehicle.ExecuteNonQuery();
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
             if (noError)
                 this.Close();
         }

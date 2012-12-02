@@ -46,20 +46,53 @@ namespace CarDealership
 
             //SQL Statement
             OleDbCommand insertPart = cn.CreateCommand();
-            OleDbCommand insertTire = cn.CreateCommand();
+            OleDbCommand insertTires = cn.CreateCommand();
 
-            insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
-            insertTire.CommandText = "INSERT INTO Tire(SerialNumber, Type, TireSize) VALUES (@SerialNumber, @Type, @TireSize)";
+            // insertVehicle.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
+            //insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
 
-            insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            insertPart.Parameters.AddWithValue("@VIN", VIN);
-            insertPart.Parameters.AddWithValue("@Name", Name);
-            insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            string Part1 = "INSERT INTO Part(SerialNumber";
+            string Part2 = " Values (@SerialNumber";
+            string tires1 = "INSERT INTO Tire(SerialNumber";
+            string tires2 = " VALUES (@SerialNumber";
+            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
-            insertTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            insertTire.Parameters.AddWithValue("@Type", Type);
-            insertTire.Parameters.AddWithValue("@TireSize", Size);
+            if (VIN.CompareTo("") != 0)
+            {
+                Part1 += ", VIN";
+                Part2 += ", @VIN";
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                Part1 += ", Name";
+                Part2 += ", @Name";
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                Part1 += ", Manufacturer";
+                Part2 += ", @Manufacturer";
+            }
 
+            insertPart.CommandText = Part1;
+            insertPart.CommandText += ")";
+            insertPart.CommandText += Part2;
+            insertPart.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            }
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Name", Name);
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            }
             try
             {
                 insertPart.ExecuteNonQuery();
@@ -70,23 +103,46 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            if (noError)
+            ///////////////////////////////////////////////////////////////////////
+            if (Type.CompareTo("") != 0)
             {
-                try
-                {
-                    insertTire.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    OleDbCommand deletePart = cn.CreateCommand();
-                    deletePart.CommandText = ("DELETE FROM Part WHERE SerialNumber =" + SerialNumber);
-                    deletePart.ExecuteNonQuery();
-                    noError = false;
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                tires1 += ", Type";
+                tires2 += ", @Type";
             }
-
+            if (Size.CompareTo("") != 0)
+            {
+                tires1 += ", Size";
+                tires2 += ", @Size";
+            }
+            insertTires.CommandText = tires1;
+            insertTires.CommandText += ")";
+            insertTires.CommandText += tires2;
+            insertTires.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertTires.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            }
+            if (Type.CompareTo("") != 0)
+            {
+                insertTires.Parameters.AddWithValue("@Type", Type);
+            }
+            if (Size.CompareTo("") != 0)
+            {
+                insertTires.Parameters.AddWithValue("@Size", Size);
+            }
+            try
+            {
+                insertTires.ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deleteVehicle = cn.CreateCommand();
+                deleteVehicle.CommandText = ("DELETE FROM PART WHERE SerialNumber =" + SerialNumber);
+                deleteVehicle.ExecuteNonQuery();
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
             if (noError)
                 this.Close();
         }

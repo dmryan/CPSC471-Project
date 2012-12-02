@@ -45,14 +45,47 @@ namespace CarDealership
             //SQL Statement
             OleDbCommand insertPart = cn.CreateCommand();
 
-            insertPart.CommandText = "INSERT INTO Part(SerialNumber, VIN, PartName, Manufacturer) VALUES (@SerialNumber, @VIN, @Name, @Manufacturer)";
+            string Part1 = "INSERT INTO Part(SerialNumber";
+            string Part2 = " VALUES (@SerialNumber";
 
-            insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            insertPart.Parameters.AddWithValue("@VIN", VIN);
-            insertPart.Parameters.AddWithValue("@Name", Name);
-            insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            if (VIN.CompareTo("") != 0)
+            {
+                Part1 += ", VIN";
+                Part2 += ", @VIN";
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                Part1 += ", Name";
+                Part2 += ", @Name";
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                Part1 += ", Manufacturer";
+                Part2 += ", @Manufacturer";
+            }
 
-            try {
+            insertPart.CommandText = Part1;
+            insertPart.CommandText += ")";
+            insertPart.CommandText += Part2;
+            insertPart.CommandText += ")";
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
+            }
+            if (VIN.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@VIN", VIN);
+            }
+            if (Name.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Name", Name);
+            }
+            if (Manufacturer.CompareTo("") != 0)
+            {
+                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
+            }
+            try
+            {
                 insertPart.ExecuteNonQuery();
             }
             catch (OleDbException ex)
@@ -61,7 +94,6 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-
             if (noError)
                 this.Close();
         }
