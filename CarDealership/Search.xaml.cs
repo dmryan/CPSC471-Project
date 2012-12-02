@@ -27,6 +27,8 @@ namespace CarDealership
         private bool used;
         private bool noError;
         private string type;
+        bool PersonName = false;
+        bool PersonID = false;
 
         public Search(MainWindow p, OleDbConnection c, string t)
         {       
@@ -40,24 +42,28 @@ namespace CarDealership
             {
                 StatementBlock.Text = "Enter ID# to Find a Specific Person";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
-                label1.Content = ""; label2.Content = ""; label3.Content = "ID";
+                label1.Content = ""; label2.Content = ""; label3.Content = "";
+                NameCheck.Visibility = Visibility.Visible; IDCheck.Visibility = Visibility.Visible; 
             }
             else if (type.CompareTo("Vehicle") == 0)
             {
                 StatementBlock.Text = "Enter VIN to Find a Specific Vehicle\nVehicle History Reports are Included with Used Vehicles";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
                 label1.Content = ""; label2.Content = ""; label3.Content = "VIN";
+                NameCheck.Visibility = Visibility.Collapsed; IDCheck.Visibility = Visibility.Collapsed; 
             }
             else if (type.CompareTo("Part") == 0)
             {
                 StatementBlock.Text = "Enter Serial# to Find a Specific Part";
                 Parameter1.Visibility = Visibility.Collapsed; Parameter2.Visibility = Visibility.Collapsed;
                 label1.Content = ""; label2.Content = ""; label3.Content = "Serial Number";
+                NameCheck.Visibility = Visibility.Collapsed; IDCheck.Visibility = Visibility.Collapsed; 
             }
             else
             {
                 StatementBlock.Text = "Enter Employee and Customer ID#s and VIN to Find a Specific Sale";
                 label1.Content = "Employee ID"; label2.Content = "Customer ID"; label3.Content = "VIN";
+                NameCheck.Visibility = Visibility.Collapsed; IDCheck.Visibility = Visibility.Collapsed; 
             }
         }
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -68,31 +74,63 @@ namespace CarDealership
 
             if (type.CompareTo("Person") == 0)
             {
-                ResponseBlock.Visibility = Visibility.Visible;
-                //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
-                OleDbCommand viewCustomer = cn.CreateCommand();
-                OleDbCommand viewEmployee = cn.CreateCommand();
-                DataTable dt = new DataTable();
-                OleDbDataAdapter da = new OleDbDataAdapter();
-
-                viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @ID";
-                viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @ID";
-
-                viewCustomer.Parameters.AddWithValue("@ID", Para3);
-                viewEmployee.Parameters.AddWithValue("@ID", Para3);
-
-                try
+                if (PersonID)
                 {
-                    da.SelectCommand = viewCustomer;
-                    da.Fill(dt);
-                    da.SelectCommand = viewEmployee;
-                    da.Fill(dt);
-                    ResponseBlock.ItemsSource = dt.DefaultView;
+                    ResponseBlock.Visibility = Visibility.Visible;
+                    //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
+                    OleDbCommand viewCustomer = cn.CreateCommand();
+                    OleDbCommand viewEmployee = cn.CreateCommand();
+                    DataTable dt = new DataTable();
+                    OleDbDataAdapter da = new OleDbDataAdapter();
+
+                    viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @ID";
+                    viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @ID";
+
+                    viewCustomer.Parameters.AddWithValue("@ID", Para3);
+                    viewEmployee.Parameters.AddWithValue("@ID", Para3);
+
+                    try
+                    {
+                        da.SelectCommand = viewCustomer;
+                        da.Fill(dt);
+                        da.SelectCommand = viewEmployee;
+                        da.Fill(dt);
+                        ResponseBlock.ItemsSource = dt.DefaultView;
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.ShowDialog();
+                    }
                 }
-                catch (OleDbException ex)
+                if (PersonName)
                 {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
+                    ResponseBlock.Visibility = Visibility.Visible;
+                    //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
+                    OleDbCommand viewCustomer = cn.CreateCommand();
+                    OleDbCommand viewEmployee = cn.CreateCommand();
+                    DataTable dt = new DataTable();
+                    OleDbDataAdapter da = new OleDbDataAdapter();
+
+                    viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE PersonName = @Name";
+                    viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE PersonName = @Name";
+
+                    viewCustomer.Parameters.AddWithValue("@Name", Para3);
+                    viewEmployee.Parameters.AddWithValue("@Name", Para3);
+
+                    try
+                    {
+                        da.SelectCommand = viewCustomer;
+                        da.Fill(dt);
+                        da.SelectCommand = viewEmployee;
+                        da.Fill(dt);
+                        ResponseBlock.ItemsSource = dt.DefaultView;
+                    }
+                    catch (OleDbException ex)
+                    {
+                        ErrorWindow Error = new ErrorWindow(ex.Message);
+                        Error.ShowDialog();
+                    }
                 }
             }
             else if (type.CompareTo("Vehicle") == 0)
@@ -217,6 +255,34 @@ namespace CarDealership
             ResponseBlock2.ItemsSource = null;
             ResponseBlock.Visibility = Visibility.Collapsed;
             ResponseBlock2.Visibility = Visibility.Collapsed;
+        }
+
+        private void IDCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            PersonID = true;
+            label3.Content = "ID";
+            NameCheck.Visibility = Visibility.Collapsed;  
+        }
+
+        private void NameCheck_Checked(object sender, RoutedEventArgs e)
+        {
+            PersonName = true;
+            label3.Content = "Name";
+            IDCheck.Visibility = Visibility.Collapsed;
+        }
+
+        private void IDCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PersonID = false;
+            label3.Content = "";
+            NameCheck.Visibility = Visibility.Visible;
+        }
+
+        private void NameCheck_Unchecked(object sender, RoutedEventArgs e)
+        {
+            PersonName = false;
+            label3.Content = "";
+            IDCheck.Visibility = Visibility.Visible;
         }
     }
 }
