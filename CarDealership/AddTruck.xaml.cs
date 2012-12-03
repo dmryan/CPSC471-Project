@@ -24,6 +24,7 @@ namespace CarDealership
     {
         private OleDbConnection cn;
         private MainWindow Parent;
+        private VehicleHistoryReport R;
         private bool used;
         private bool noError;
 
@@ -159,7 +160,14 @@ namespace CarDealership
                 Error.ShowDialog();
             }
             if (noError)
+            {
+                if (used)
+                {
+                    R = new VehicleHistoryReport(Parent, cn);
+                    R.Show();
+                }
                 this.Close();
+            }
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
