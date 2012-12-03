@@ -163,5 +163,11 @@ namespace CarDealership
             SecondWindow = new EmployeeProgress(cn);
             ((EmployeeProgress)SecondWindow).ShowDialog();
         }
+
+        private void Vehicle_Parts_Click(object sender, RoutedEventArgs e)
+        {
+            SecondWindow = new VehicleParts(cn);
+            ((VehicleParts)SecondWindow).ShowDialog();
+        }
     }
 }

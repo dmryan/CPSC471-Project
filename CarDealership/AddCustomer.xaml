@@ -11,10 +11,10 @@
         <TextBox Height="25" HorizontalAlignment="Left" Margin="10,160,0,0" Name="TypeText" VerticalAlignment="Top" Width="120" />
         <Label Content="ID Number" Height="25" HorizontalAlignment="Left" Margin="130,10,0,0" Name="label1" VerticalAlignment="Top" />
         <Label Content="Name" Height="25" HorizontalAlignment="Left" Margin="130,40,0,0" Name="label2" VerticalAlignment="Top" />
-        <Label Content="Phone Number" Height="25" HorizontalAlignment="Left" Margin="130,70,0,0" Name="label3" VerticalAlignment="Top" />
+        <Label Content="Phone# (Ex. 4032384602)" Height="25" HorizontalAlignment="Left" Margin="130,70,0,0" Name="label3" VerticalAlignment="Top" />
         <Label Content="Address" Height="25" HorizontalAlignment="Left" Margin="130,100,0,0" Name="label4" VerticalAlignment="Top" />
-        <Label Content="Sex" Height="25" HorizontalAlignment="Left" Margin="130,130,0,0" Name="label5" VerticalAlignment="Top" />
-        <Label Content="Type" Height="25" HorizontalAlignment="Left" Margin="130,160,0,0" Name="label6" VerticalAlignment="Top" />
+        <Label Content="Sex (Male/Female)" Height="25" HorizontalAlignment="Left" Margin="130,130,0,0" Name="label5" VerticalAlignment="Top" />
+        <Label Content="Type (Returning/Preffered/Etc.)" Height="25" HorizontalAlignment="Left" Margin="130,160,0,0" Name="label6" VerticalAlignment="Top" />
         <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="241,224,0,0" Name="AddEmployeeSubmit" VerticalAlignment="Top" Width="75" Click="AddCustomerSubmit_Click" />
     </Grid>
 </Window>

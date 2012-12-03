@@ -154,7 +154,11 @@ namespace CarDealership
             {
                 OleDbCommand deleteVehicle = cn.CreateCommand();
                 deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + VIN);
-                deleteVehicle.ExecuteNonQuery();
+                try
+                {
+                    deleteVehicle.ExecuteNonQuery();
+                }
+                catch (OleDbException ex2) { }
                 noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();

@@ -136,7 +136,11 @@ namespace CarDealership
             {
                 OleDbCommand deletePerson = cn.CreateCommand();
                 deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + CID);
-                deletePerson.ExecuteNonQuery();
+                try
+                {
+                    deletePerson.ExecuteNonQuery();
+                }
+                catch (OleDbException ex2) { }
                 noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();

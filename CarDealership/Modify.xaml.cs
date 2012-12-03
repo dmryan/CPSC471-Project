@@ -1091,8 +1091,8 @@ namespace CarDealership
             PersonOther2Label.Visibility = Visibility.Visible;
             PersonOther3Box.Visibility = Visibility.Visible;
             PersonOther3Label.Visibility = Visibility.Visible;
-            PersonOther1Label.Text = "Salary";
-            PersonOther2Label.Text = "Start Date";
+            PersonOther1Label.Text = "Salary (Ex. 50,000.00)";
+            PersonOther2Label.Text = "Start Date (Ex. 21/01/2012)";
             PersonOther3Label.Text = "Manager EID";
             Employee = true;
         }
@@ -1101,7 +1101,7 @@ namespace CarDealership
             EmployeeCheck.Visibility = Visibility.Collapsed;
             PersonOther1Box.Visibility = Visibility.Visible;
             PersonOther1Label.Visibility = Visibility.Visible;
-            PersonOther1Label.Text = "Type";
+            PersonOther1Label.Text = "Type (Returning/Preffered/Etc.)";
             Customer = true;
         }
         private void CarCheck_Checked(object sender, RoutedEventArgs e)
@@ -1109,7 +1109,7 @@ namespace CarDealership
             TruckCheck.Visibility = Visibility.Collapsed;
             VehicleOther1Box.Visibility = Visibility.Visible;
             VehicleOther1Label.Visibility = Visibility.Visible;
-            VehicleOther1Label.Text = "Type";
+            VehicleOther1Label.Text = "Type (Sedan/SUV/Etc.)";
             Car = true;
 
         }
@@ -1142,8 +1142,8 @@ namespace CarDealership
             PartOther2Box.Visibility = Visibility.Visible;
             PartOther2Label.Visibility = Visibility.Visible;
             Tires = true;
-            PartOther1Label.Text = "Size";
-            PartOther2Label.Text = "Type";
+            PartOther1Label.Text = "Size (cm)";
+            PartOther2Label.Text = "Type (Winter/Summer/Etc.)";
         }
         private void OtherPartCheck_Checked(object sender, RoutedEventArgs e)
         {

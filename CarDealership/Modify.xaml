@@ -10,9 +10,9 @@
                     <CheckBox Content="Customer" Height="16" HorizontalAlignment="Left" Margin="81,6,0,0" Name="CustomerCheck" VerticalAlignment="Top" Checked="CustomerCheck_Checked" Unchecked="CustomerCheck_Unchecked"/>
                     <Button Content="Submit" Height="25" HorizontalAlignment="Left" Margin="340,302,0,0" Name="SubmitPerson" VerticalAlignment="Top" Width="75" Click="SubmitPerson_Click" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,60,0,0" Name="PersonNameLabel" Text="Name" VerticalAlignment="Top" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="PersonPhoneLabel" Text="Phone#" VerticalAlignment="Top" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="PersonPhoneLabel" Text="Phone# (Ex. 4031234444)" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,120,0,0" Name="PersonAddressLabel" Text="Address" VerticalAlignment="Top" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,150,0,0" Name="PersonSexLabel" Text="Sex" VerticalAlignment="Top" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,150,0,0" Name="PersonSexLabel" Text="Sex (Male/Female)" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,180,0,0" Name="PersonOther1Label" Text="Other" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,210,0,0" Name="PersonOther2Label" Text="Other" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,240,0,0" Name="PersonOther3Label" Text="Other" VerticalAlignment="Top" />
@@ -25,7 +25,7 @@
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,180,0,0" Name="PersonOther1Box" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,210,0,0" Name="PersonOther2Box" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,240,0,0" Name="PersonOther3Box" VerticalAlignment="Top" Width="138" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock1" Text="*Required Section to identify Data" VerticalAlignment="Top" Width="309" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock1" Text="*Required Section to Identify Data" VerticalAlignment="Top" Width="309" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,300,0,0" Name="textBlock2" Text="Fill in any Field(s) you Wish to Modify" VerticalAlignment="Top" Width="309" />
                 </Grid>
             </TabItem>
@@ -38,7 +38,7 @@
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,90,0,0" Name="VehicleYearLabel" Text="Year" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,120,0,0" Name="VehicleMakerLabel" Text="Maker" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,150,0,0" Name="VehicleSeatsLabel" Text="Number of Seats" VerticalAlignment="Top" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,180,0,0" Name="VehiclePriceLabel" Text="Price" VerticalAlignment="Top" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,180,0,0" Name="VehiclePriceLabel" Text="Price (Ex. 5,000.00)" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,210,0,0" Name="VehicleOther1Label" Text="Other" VerticalAlignment="Top" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="150,30,0,0" Name="VINLabel" Text="VIN*" VerticalAlignment="Top" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,30,0,0" Name="VINBox" VerticalAlignment="Top" Width="138" />
@@ -48,7 +48,7 @@
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,150,0,0" Name="VehicleSeatsBox" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,180,0,0" Name="VehiclePriceBox" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,210,0,0" Name="VehicleOther1Box" VerticalAlignment="Top" Width="138" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock3" Text="*Required Section to identify Data" VerticalAlignment="Top" Width="309" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock3" Text="*Required Section to Identify Data" VerticalAlignment="Top" Width="309" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,300,0,0" Name="textBlock4" Text="Fill in any Field(s) you Wish to Modify" VerticalAlignment="Top" Width="309" />
                 </Grid>
             </TabItem>
@@ -64,7 +64,7 @@
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,60,0,0" Name="VHRPreviousOwnersBox" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,90,0,0" Name="VHRRatingBox" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,120,0,0" Name="VHRMileageBox" VerticalAlignment="Top" Width="138" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock5" Text="*Required Section to identify Data" VerticalAlignment="Top" Width="309" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock5" Text="*Required Section to Identify Data" VerticalAlignment="Top" Width="309" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,300,0,0" Name="textBlock6" Text="Fill in any Field(s) you Wish to Modify" VerticalAlignment="Top" Width="309" />
                 </Grid>
             </TabItem>
@@ -86,7 +86,7 @@
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,120,0,0" Name="PartManufacturerBox" VerticalAlignment="Top" Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,150,0,0" Name="PartOther1Box" VerticalAlignment="Top" Text=""  Width="138" />
                     <TextBox Height="23" HorizontalAlignment="Left" Margin="6,180,0,0" Name="PartOther2Box" VerticalAlignment="Top" Text="" Width="138" />
-                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock7" Text="*Required Section to identify Data" VerticalAlignment="Top" Width="309" />
+                    <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,285,0,0" Name="textBlock7" Text="*Required Section to Identify Data" VerticalAlignment="Top" Width="309" />
                     <TextBlock Height="23" HorizontalAlignment="Left" Margin="6,300,0,0" Name="textBlock8" Text="Fill in any Field(s) you Wish to Modify" VerticalAlignment="Top" Width="309" />
                 </Grid>
             </TabItem>

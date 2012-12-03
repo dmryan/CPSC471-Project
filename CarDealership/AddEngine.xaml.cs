@@ -136,9 +136,13 @@ namespace CarDealership
             }
             catch (OleDbException ex)
             {
-                OleDbCommand deleteVehicle = cn.CreateCommand();
-                deleteVehicle.CommandText = ("DELETE FROM PART WHERE SerialNumber =" + SerialNumber);
-                deleteVehicle.ExecuteNonQuery();
+                OleDbCommand deletePart = cn.CreateCommand();
+                deletePart.CommandText = ("DELETE FROM PART WHERE SerialNumber =" + SerialNumber);
+                try
+                {
+                    deletePart.ExecuteNonQuery();
+                }
+                catch (OleDbException ex2) { }
                 noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();

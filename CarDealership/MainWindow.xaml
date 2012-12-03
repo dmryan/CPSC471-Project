@@ -39,6 +39,7 @@
                 <Button Content="Monthly Sales" Height="25" HorizontalAlignment="Left" Margin="100,125,0,0" Name="MonthlySalesButton" VerticalAlignment="Top" Width="125" Click="MonthlySalesButton_Click" />
                 <Button Content="Employee Progress" Height="25" HorizontalAlignment="Left" Margin="265,125,0,0" Name="EmployeeProgress" VerticalAlignment="Top" Width="125" Click="EmployeeProgress_Click" />
                 <Button Content="Revenue" Height="25" HorizontalAlignment="Right" Margin="0,50,100,0" Name="Revenue" VerticalAlignment="Top" Width="125" Click="Revenue_Click" />
+                <Button Content="Vehicle Parts" Height="25" HorizontalAlignment="Left" Margin="100,200,0,0" Name="button1" VerticalAlignment="Top" Width="125" Click="Vehicle_Parts_Click" />
             </Grid>
         </TabItem>
         <TabItem Header="Remove/Modify" Name="tabItem1">
