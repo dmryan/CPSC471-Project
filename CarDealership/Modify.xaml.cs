@@ -1092,7 +1092,7 @@ namespace CarDealership
             PersonOther3Box.Visibility = Visibility.Visible;
             PersonOther3Label.Visibility = Visibility.Visible;
             PersonOther1Label.Text = "Salary (Ex. 50,000.00)";
-            PersonOther2Label.Text = "Start Date (Ex. 21/01/2012)";
+            PersonOther2Label.Text = "Start Date (mm/dd/yyyy)";
             PersonOther3Label.Text = "Manager EID";
             Employee = true;
         }

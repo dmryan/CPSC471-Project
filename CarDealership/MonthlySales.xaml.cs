@@ -29,20 +29,21 @@ namespace CarDealership
 
         private void CalculateMonthlySales_Click(object sender, RoutedEventArgs e)
         {
-            string MonthYear = MonthYearText.GetLineText(0);
+            string Month = MonthText.GetLineText(0);
+            string Year = YearText.GetLineText(0);
 
             //SQL Statement
             OleDbCommand calculateMonthlySales = cn.CreateCommand();
 
             calculateMonthlySales.CommandText = "SELECT SUM(SalePrice) FROM Sale WHERE SellDate LIKE @MonthYear";
 
-            calculateMonthlySales.Parameters.AddWithValue("@MonthYear", "%" + MonthYear);
+            calculateMonthlySales.Parameters.AddWithValue("@MonthYear", Month + "/" + "%" + "/" + Year);
 
             try 
             {
                 Object Total = new Object();
                 Total = calculateMonthlySales.ExecuteScalar();
-                if (Total is DBNull || Total == "" || MonthYear == "")
+                if (Total is DBNull || Total == "" || Month == "" || Year == "")
                     Total = "0";
                     
                 MonthlySalesText.Text= "$ " + Total.ToString();

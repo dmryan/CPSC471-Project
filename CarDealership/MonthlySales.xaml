@@ -3,10 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MonthlySales" Height="300" Width="350">
     <Grid>
-        <TextBox Height="25" HorizontalAlignment="Left" Margin="10,10,0,0" Name="MonthYearText" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="10,10,0,0" Name="MonthText" VerticalAlignment="Top" Width="120" />
+        <TextBox Height="25" HorizontalAlignment="Left" Margin="10,40,0,0" Name="YearText" VerticalAlignment="Top" Width="120" />
         <TextBox Height="25" HorizontalAlignment="Left" Margin="10,224,0,0" Name="MonthlySalesText" VerticalAlignment="Top" Width="120" />
         <Label Content="Monthly Sales" Height="25" HorizontalAlignment="Left" Margin="130,224,0,0" Name="label1" VerticalAlignment="Top" />
-        <Label Content="Month/Year" Height="25" HorizontalAlignment="Right" Margin="0,10,125,0" Name="label2" VerticalAlignment="Top" />
+        <Label Content="Month" Height="25" HorizontalAlignment="Left" Margin="130,10,125,0" Name="Month" VerticalAlignment="Top" />
+        <Label Content="Year" Height="25" HorizontalAlignment="Left" Margin="130,40,125,0" Name="Year" VerticalAlignment="Top" />
         <Button Content="Calculate" Height="25" HorizontalAlignment="Left" Margin="241,224,0,0" Name="CalculateMonthlySales" VerticalAlignment="Top" Width="75" Click="CalculateMonthlySales_Click" />
     </Grid>
 </Window>
