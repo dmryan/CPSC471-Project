@@ -64,8 +64,8 @@ namespace CarDealership
             }
             if (Name.CompareTo("") != 0)
             {
-                Part1 += ", Name";
-                Part2 += ", @Name";
+                Part1 += ", PartName";
+                Part2 += ", @PartName";
             }
             if (Manufacturer.CompareTo("") != 0)
             {
@@ -87,7 +87,7 @@ namespace CarDealership
             }
             if (Name.CompareTo("") != 0)
             {
-                insertPart.Parameters.AddWithValue("@Name", Name);
+                insertPart.Parameters.AddWithValue("@PartName", Name);
             }
             if (Manufacturer.CompareTo("") != 0)
             {
@@ -111,8 +111,8 @@ namespace CarDealership
             }
             if (Size.CompareTo("") != 0)
             {
-                tires1 += ", Size";
-                tires2 += ", @Size";
+                tires1 += ", TireSize";
+                tires2 += ", @TireSize";
             }
             insertTires.CommandText = tires1;
             insertTires.CommandText += ")";
@@ -128,7 +128,7 @@ namespace CarDealership
             }
             if (Size.CompareTo("") != 0)
             {
-                insertTires.Parameters.AddWithValue("@Size", Size);
+                insertTires.Parameters.AddWithValue("@TireSize", Size);
             }
             try
             {

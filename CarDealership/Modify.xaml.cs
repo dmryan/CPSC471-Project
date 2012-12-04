@@ -753,7 +753,7 @@ namespace CarDealership
                 selectTire.CommandText = "SELECT SerialNumber FROM Tire WHERE SerialNumber = @SerialNumber";
                 selectTire.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                if (VIN.CompareTo("") == 0 || selectTire.ExecuteScalar() == null)
+                if (SerialNumber.CompareTo("") == 0 || selectTire.ExecuteScalar() == null)
                 {
                     ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
                     Error.Title = "Serial# Field Error";
@@ -883,7 +883,7 @@ namespace CarDealership
                 selectEngine.CommandText = "SELECT SerialNumber FROM Engine WHERE SerialNumber = @SerialNumber";
                 selectEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                if (VIN.CompareTo("") == 0 || selectEngine.ExecuteScalar() == null)
+                if (SerialNumber.CompareTo("") == 0 || selectEngine.ExecuteScalar() == null)
                 {
                     ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
                     Error.Title = "Serial# Field Error";
@@ -1010,7 +1010,7 @@ namespace CarDealership
                 selectPart.CommandText = "SELECT SerialNumber FROM Part WHERE SerialNumber = @SerialNumber";
                 selectPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
 
-                if (VIN.CompareTo("") == 0 || selectPart.ExecuteScalar() == null)
+                if (SerialNumber.CompareTo("") == 0 || selectPart.ExecuteScalar() == null)
                 {
                     ErrorWindow Error = new ErrorWindow("Please enter a valid Serial Number");
                     Error.Title = "Serial# Field Error";
