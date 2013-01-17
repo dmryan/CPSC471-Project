@@ -40,7 +40,6 @@ namespace CarDealership
             insertSale.Parameters.AddWithValue("@EID", EID);
             insertSale.Parameters.AddWithValue("@SellDate", SellDate);
             insertSale.Parameters.AddWithValue("@SalePrice", SalePrice);
-
             
             markSale.Parameters.AddWithValue("@Sold", true);
             markSale.Parameters.AddWithValue("@VIN", VIN);
