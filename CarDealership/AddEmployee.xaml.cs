@@ -42,11 +42,13 @@ namespace CarDealership
             Data[2] = PhoneText.GetLineText(0);
             Data[3] = AddressText.GetLineText(0);
             Data[4] = SexText.GetLineText(0);
+            string EID = Data[0];
             string Salary = SalaryText.GetLineText(0);
             string StartDate = StartDateText.GetLineText(0);
             string ManagerID = ManagerText.GetLineText(0);
 
             MakePerson P = new MakePerson(Data, cn);
+            MakeEmployee E = new MakeEmployee(EID, Salary, StartDate, ManagerID, cn);
 
             try
             {
@@ -58,45 +60,9 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            ///////////////////////////////////////////////////////////////////////
-            if (Salary.CompareTo("") != 0)
-            {
-                employee1 += ", Salary";
-                employee2 += ", @Salary";
-            }
-            if (StartDate.CompareTo("") != 0)
-            {
-                employee1 += ", StartDate";
-                employee2 += ", @StartDate";
-            }
-            if (ManagerID.CompareTo("") != 0)
-            {
-                employee1 += ", ManagerID";
-                employee2 += ", @ManagerID";
-            }
-            insertEmployee.CommandText = employee1;
-            insertEmployee.CommandText += ")";
-            insertEmployee.CommandText += employee2;
-            insertEmployee.CommandText += ")";
-            if (EID.CompareTo("") != 0)
-            {
-                insertEmployee.Parameters.AddWithValue("@EID", EID);
-            }
-            if (Salary.CompareTo("") != 0)
-            {
-                insertEmployee.Parameters.AddWithValue("@Salary", Salary);
-            }
-            if (StartDate.CompareTo("") != 0)
-            {
-                insertEmployee.Parameters.AddWithValue("@StartDate", StartDate);
-            }
-            if (ManagerID.CompareTo("") != 0)
-            {
-                insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
-            }
             try
             {
-                insertEmployee.ExecuteNonQuery();
+                E.CreateEmployee();
             }
             catch (OleDbException ex)
             {
