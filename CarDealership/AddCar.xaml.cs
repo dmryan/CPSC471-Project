@@ -39,28 +39,24 @@ namespace CarDealership
         private void AddCarSubmit_Click(object sender, RoutedEventArgs e)
         {
             noError = true;
+            string[] Data = new string[6];
+            Data[0] = VINText.GetLineText(0);
+            Data[1] = ModelText.GetLineText(0);
+            Data[2] = YearText.GetLineText(0);
+            Data[3] = ManufacturerText.GetLineText(0);
+            Data[4] = SeatsText.GetLineText(0);
+            Data[5] = PriceText.GetLineText(0);
 
             string VIN = VINText.GetLineText(0);
-            string Model = ModelText.GetLineText(0);
-            string YearProd = YearText.GetLineText(0);
-            string Maker = ManufacturerText.GetLineText(0);
-            string NumberSeats = SeatsText.GetLineText(0);
-            string Price = PriceText.GetLineText(0);
             string Type = TypeText.GetLineText(0);
-            bool Sold = false;
-
-            //SQL Statement
+            /*
             OleDbCommand insertVehicle = cn.CreateCommand();
             OleDbCommand insertCar = cn.CreateCommand();
-
-            //insertVehical.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
-            //insertCar.CommandText = "INSERT INTO Car(VIN, Type) VALUES (@VIN, @Type)";
 
             string vehicle1 = "INSERT INTO Vehicle(VIN";
             string vehicle2 = " Values (@VIN";
             string car1 = "INSERT INTO Car(VIN";
             string car2 = " VALUES (@VIN";
-            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
 
             if (Model.CompareTo("") != 0)
             {
@@ -118,9 +114,12 @@ namespace CarDealership
                 insertVehicle.Parameters.AddWithValue("@Price", Price);
             }
             insertVehicle.Parameters.AddWithValue("@Sold", Sold);
+            */
+            MakeVehicle V = new MakeVehicle();
+            
             try
             {
-                insertVehicle.ExecuteNonQuery();
+                V.MakeQuery(V.MakeVehicleSQLString(Data), Data, cn).ExecuteNonQuery();
             }
             catch (OleDbException ex)
             {
@@ -128,7 +127,27 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
+            MakeCar C = new MakeCar();
+
+            try
+            {
+                C.MakeQuery(C.MakeCarSQLString(Type), VIN, Type, cn).ExecuteNonQuery();
+            }
+            catch (OleDbException ex)
+            {
+                OleDbCommand deleteVehicle = cn.CreateCommand();
+                deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + VIN);
+                try
+                {
+                    deleteVehicle.ExecuteNonQuery();
+                }
+                catch (OleDbException ex2) { }
+                noError = false;
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+            }
             ///////////////////////////////////////////////////////////////////////
+            /*
             if (Type.CompareTo("") != 0)
             {
                 car1 += ", Type";
@@ -150,6 +169,7 @@ namespace CarDealership
             {
                 insertCar.ExecuteNonQuery();
             }
+            
             catch (OleDbException ex)
             {
                 OleDbCommand deleteVehicle = cn.CreateCommand();
@@ -162,7 +182,7 @@ namespace CarDealership
                 noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
-            }
+            }*/
             if (noError)
             {
                 if (used)

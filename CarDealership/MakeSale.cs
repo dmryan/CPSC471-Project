@@ -44,7 +44,8 @@ namespace CarDealership
             markSale.Parameters.AddWithValue("@Sold", true);
             markSale.Parameters.AddWithValue("@VIN", VIN);
 
-            try {
+            try 
+            {
                 insertSale.ExecuteNonQuery();
                 markSale.ExecuteNonQuery();
             }

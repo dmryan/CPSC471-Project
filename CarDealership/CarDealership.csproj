@@ -75,7 +75,9 @@
     <Compile Include="Inventory.xaml.cs">
       <DependentUpon>Inventory.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MakeCar.cs" />
     <Compile Include="MakeSale.cs" />
+    <Compile Include="MakeVehicle.cs" />
     <Compile Include="Modify.xaml.cs">
       <DependentUpon>Modify.xaml</DependentUpon>
     </Compile>
