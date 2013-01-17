@@ -8,11 +8,18 @@ namespace CarDealership
 {
     class MakeVehicle
     {
-        public void MakeVehicle()
+        private string[] Data;
+        private OleDbConnection cn;
+        public MakeVehicle(string[] D, OleDbConnection cn)
         {
-
+            this.Data = D;
+            this.cn = cn;
         }
-        public OleDbCommand MakeQuery(string SQLString, string[] Data, OleDbConnection cn)
+        public void CreateVehicle()
+        {
+            MakeQuery(MakeVehicleSQLString()).ExecuteNonQuery();
+        }
+        private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertVehicle = cn.CreateCommand();
             insertVehicle.CommandText = SQLString;
@@ -45,7 +52,7 @@ namespace CarDealership
 
             return insertVehicle;
         }
-        public string MakeVehicleSQLString(string[] Data)
+        private string MakeVehicleSQLString()
         {
             string SQLString;
             string VehicleInsert = "INSERT INTO Vehicle(VIN";

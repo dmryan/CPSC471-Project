@@ -46,80 +46,15 @@ namespace CarDealership
             Data[3] = ManufacturerText.GetLineText(0);
             Data[4] = SeatsText.GetLineText(0);
             Data[5] = PriceText.GetLineText(0);
-
-            string VIN = VINText.GetLineText(0);
             string Type = TypeText.GetLineText(0);
-            /*
-            OleDbCommand insertVehicle = cn.CreateCommand();
-            OleDbCommand insertCar = cn.CreateCommand();
-
-            string vehicle1 = "INSERT INTO Vehicle(VIN";
-            string vehicle2 = " Values (@VIN";
-            string car1 = "INSERT INTO Car(VIN";
-            string car2 = " VALUES (@VIN";
-
-            if (Model.CompareTo("") != 0)
-            {
-                vehicle1 += ", Model";
-                vehicle2 += ", @Model";
-            }
-            if (YearProd.CompareTo("") != 0)
-            {
-                vehicle1 += ", YearProd";
-                vehicle2 += ", @YearProd";
-            }
-            if (Maker.CompareTo("") != 0)
-            {
-                vehicle1 += ", Maker";
-                vehicle2 += ", @Maker";
-            }
-            if (NumberSeats.CompareTo("") != 0)
-            {
-                vehicle1 += ", NumberSeats";
-                vehicle2 += ", @NumberSeats";
-            }
-            if (Price.CompareTo("") != 0)
-            {
-                vehicle1 += ", Price";
-                vehicle2 += ", @Price";
-            }
-            insertVehicle.CommandText = vehicle1;
-            insertVehicle.CommandText += ", Sold";
-            insertVehicle.CommandText += ")";
-            insertVehicle.CommandText += vehicle2;
-            insertVehicle.CommandText += ", @Sold";
-            insertVehicle.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (Model.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@Model", Model);
-            }
-            if (YearProd.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@YearProd", YearProd);
-            }
-            if (Maker.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@Maker", Maker);
-            }
-            if (NumberSeats.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@NumberSeats", NumberSeats);
-            }
-            if (Price.CompareTo("") != 0)
-            {
-                insertVehicle.Parameters.AddWithValue("@Price", Price);
-            }
-            insertVehicle.Parameters.AddWithValue("@Sold", Sold);
-            */
-            MakeVehicle V = new MakeVehicle();
+            string VIN = Data[0];
             
+            MakeVehicle V = new MakeVehicle(Data, cn);
+            MakeCar C = new MakeCar(VIN, Type, cn);
+
             try
             {
-                V.MakeQuery(V.MakeVehicleSQLString(Data), Data, cn).ExecuteNonQuery();
+                V.CreateVehicle();
             }
             catch (OleDbException ex)
             {
@@ -127,11 +62,9 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            MakeCar C = new MakeCar();
-
             try
             {
-                C.MakeQuery(C.MakeCarSQLString(Type), VIN, Type, cn).ExecuteNonQuery();
+                C.CreateCar();
             }
             catch (OleDbException ex)
             {
@@ -146,43 +79,6 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            ///////////////////////////////////////////////////////////////////////
-            /*
-            if (Type.CompareTo("") != 0)
-            {
-                car1 += ", Type";
-                car2 += ", @Type";
-            }
-            insertCar.CommandText = car1;
-            insertCar.CommandText += ")";
-            insertCar.CommandText += car2;
-            insertCar.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertCar.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (Type.CompareTo("") != 0)
-            {
-                insertCar.Parameters.AddWithValue("@Type", Type);
-            }
-            try
-            {
-                insertCar.ExecuteNonQuery();
-            }
-            
-            catch (OleDbException ex)
-            {
-                OleDbCommand deleteVehicle = cn.CreateCommand();
-                deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + VIN);
-                try
-                {
-                    deleteVehicle.ExecuteNonQuery();
-                }
-                catch (OleDbException ex2) { }
-                noError = false;
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-            }*/
             if (noError)
             {
                 if (used)
