@@ -28,11 +28,21 @@ namespace CarDealership
         }
 
         /**
-         * Creates a Vehicle
+         * Creates an instance of a Vehicle in the database
          */
         public void CreateVehicle()
         {
             MakeQuery(MakeVehicleSQLString()).ExecuteNonQuery();
+        }
+
+        /**
+         * Deletes an instance of a Vehicle from the database
+         */
+        public void DeleteVehicle()
+        {
+            OleDbCommand deleteVehicle = cn.CreateCommand();
+            deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + Data[0]);
+            deleteVehicle.ExecuteNonQuery();
         }
 
         /**

@@ -38,7 +38,6 @@ namespace CarDealership
 
         private void AddCarSubmit_Click(object sender, RoutedEventArgs e)
         {
-            noError = true;
             string[] Data = new string[6];
             Data[0] = VINText.GetLineText(0);
             Data[1] = ModelText.GetLineText(0);
@@ -58,36 +57,34 @@ namespace CarDealership
             }
             catch (OleDbException ex)
             {
-                noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
+                return;
             }
+
             try
             {
                 C.CreateCar();
             }
             catch (OleDbException ex)
             {
-                OleDbCommand deleteVehicle = cn.CreateCommand();
-                deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + VIN);
                 try
                 {
-                    deleteVehicle.ExecuteNonQuery();
+                    V.DeleteVehicle();
                 }
                 catch (OleDbException ex2) { }
-                noError = false;
+
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
+                return;
             }
-            if (noError)
+
+            if (used)
             {
-                if (used)
-                {
-                    R = new VehicleHistoryReport(Parent, cn);
-                    R.Show();
-                }
-                this.Close();
+                R = new VehicleHistoryReport(Parent, cn);
+                R.Show();
             }
+            this.Close();
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {
