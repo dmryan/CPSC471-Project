@@ -81,7 +81,7 @@ namespace CarDealership
             if (used)
             {
                 R = new VehicleHistoryReport(Parent, cn);
-                R.Show();
+                R.ShowDialog();
             }
             this.Close();
         }

@@ -36,57 +36,17 @@ namespace CarDealership
         private void AddVehicleHistoryReport_Click(object sender, RoutedEventArgs e)
         {
             noError = true;
+            string[] Data = new string[4];
+            Data[0] = VINText.GetLineText(0);
+            Data[0] = NumOwnersText.GetLineText(0);
+            Data[0] = RatingText.GetLineText(0);
+            Data[0] = MileageText.GetLineText(0);
 
-            string VIN = VINText.GetLineText(0);
-            string NumberOwners = NumOwnersText.GetLineText(0);
-            string Rating = RatingText.GetLineText(0);
-            string Mileage = MileageText.GetLineText(0);
+            MakeVHR VHR = new MakeVHR(Data, cn);
 
-            //SQL Statement
-            OleDbCommand insertVHR = cn.CreateCommand();
-
-            string VHR1 = "INSERT INTO VehicleHistoryReport(VIN";
-            string VHR2 = " VALUES (@VIN";
-
-            if (NumberOwners.CompareTo("") != 0)
-            {
-                VHR1 += ", NumberOwners";
-                VHR2 += ", @NumberOwners";
-            }
-            if (Rating.CompareTo("") != 0)
-            {
-                VHR1 += ", Rating";
-                VHR2 += ", @Rating";
-            }
-            if (Mileage.CompareTo("") != 0)
-            {
-                VHR1 += ", Mileage";
-                VHR2 += ", @Mileage";
-            }
-
-            insertVHR.CommandText = VHR1;
-            insertVHR.CommandText += ")";
-            insertVHR.CommandText += VHR2;
-            insertVHR.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertVHR.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (NumberOwners.CompareTo("") != 0)
-            {
-                insertVHR.Parameters.AddWithValue("@NumberOwners", NumberOwners);
-            }
-            if (Rating.CompareTo("") != 0)
-            {
-                insertVHR.Parameters.AddWithValue("@Rating", Rating);
-            }
-            if (Mileage.CompareTo("") != 0)
-            {
-                insertVHR.Parameters.AddWithValue("@Mileage", Mileage);
-            }
             try
             {
-                insertVHR.ExecuteNonQuery();
+                VHR.CreateVHR();
             }
             catch (OleDbException ex)
             {
