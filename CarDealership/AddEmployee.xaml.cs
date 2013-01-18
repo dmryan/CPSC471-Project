@@ -35,7 +35,6 @@ namespace CarDealership
 
         private void AddEmployeeSubmit_Click(object sender, RoutedEventArgs e)
         {
-            noError = true;
             string[] Data = new string[5];
             Data[0] = IDText.GetLineText(0);
             Data[1] = NameText.GetLineText(0);
@@ -56,29 +55,29 @@ namespace CarDealership
             }
             catch (OleDbException ex)
             {
-                noError = false;
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
+                return;
             }
+
             try
             {
                 E.CreateEmployee();
             }
             catch (OleDbException ex)
             {
-                OleDbCommand deletePerson = cn.CreateCommand();
-                deletePerson.CommandText = ("DELETE FROM PERSON WHERE ID =" + EID);
                 try
                 {
-                    deletePerson.ExecuteNonQuery();
+                    P.DeletePerson();
                 }
                 catch (OleDbException ex2) { }
-                noError = false;
+
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
+                return;
             }
-            if (noError)
-                this.Close();
+
+            this.Close();
         }
         protected override void OnClosing(System.ComponentModel.CancelEventArgs e)
         {

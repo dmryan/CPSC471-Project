@@ -41,7 +41,7 @@ namespace CarDealership
         public void DeleteVehicle()
         {
             OleDbCommand deleteVehicle = cn.CreateCommand();
-            deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE ID =" + Data[0]);
+            deleteVehicle.CommandText = ("DELETE FROM VEHICLE WHERE VIN =" + Data[0]);
             deleteVehicle.ExecuteNonQuery();
         }
 
