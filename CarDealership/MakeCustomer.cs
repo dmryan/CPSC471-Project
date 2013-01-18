@@ -40,6 +40,16 @@ namespace CarDealership
         }
 
         /**
+         * Deletes an instance of a Customer from the database
+         */
+        public void DeleteCustomer()
+        {
+            OleDbCommand deleteCustomer = cn.CreateCommand();
+            deleteCustomer.CommandText = ("DELETE FROM CUSTOMER WHERE CID =" + ID);
+            deleteCustomer.ExecuteNonQuery();
+        }
+
+        /**
          * Creates a command that when executed will add a Customer to the database 
          * 
          * @param SQLString     SQL statement for adding aCustomer to the database

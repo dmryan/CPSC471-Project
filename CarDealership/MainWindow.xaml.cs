@@ -118,6 +118,15 @@ namespace CarDealership
 
         private void SubmitSaleButton_Click(object sender, RoutedEventArgs e)
         {
+            string[] Data = new string[5];
+            Data[0] = VehicleText.GetLineText(0);
+            string CID = CustomerText.GetLineText(0);
+            string EID = EmployeeText.GetLineText(0);
+            string SellDate = DateText.GetLineText(0);
+            string SalePrice = PriceText.GetLineText(0);
+
+
+
             MakeSale Sale = new MakeSale(this, cn);
             Sale.AddSale();
         }
