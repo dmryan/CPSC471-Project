@@ -15,25 +15,25 @@ namespace CarDealership
             this.Data = D;
             this.cn = cn;
         }
-        public void CreatePerson()
+        public void CreateVHR()
         {
             MakeQuery(MakeVHRSQLString()).ExecuteNonQuery();
         }
         private OleDbCommand MakeQuery(string SQLString)
         {
-            OleDbCommand insertPerson = cn.CreateCommand();
-            insertPerson.CommandText = SQLString;
+            OleDbCommand insertVHR = cn.CreateCommand();
+            insertVHR.CommandText = SQLString;
 
             if (Data[0].CompareTo("") != 0)
-                insertPerson.Parameters.AddWithValue("@VIN", Data[0]);
+                insertVHR.Parameters.AddWithValue("@VIN", Data[0]);
             if (Data[1].CompareTo("") != 0)
-                insertPerson.Parameters.AddWithValue("@NumberOwners", Data[1]);
+                insertVHR.Parameters.AddWithValue("@NumberOwners", Data[1]);
             if (Data[2].CompareTo("") != 0)
-                insertPerson.Parameters.AddWithValue("@Rating", Data[2]);
+                insertVHR.Parameters.AddWithValue("@Rating", Data[2]);
             if (Data[3].CompareTo("") != 0)
-                insertPerson.Parameters.AddWithValue("@Mileage", Data[3]);
+                insertVHR.Parameters.AddWithValue("@Mileage", Data[3]);
 
-            return insertPerson;
+            return insertVHR;
         }
         private string MakeVHRSQLString()
         {
