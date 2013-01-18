@@ -8,19 +8,43 @@ namespace CarDealership
 {
     class MakeCustomer
     {
+        /**
+         * @param ID            ID of the Customer
+         * @param Tyoe          Type of Customer
+         * @param cn            Connection to the database
+         */
         private string ID;
         private string Type;
         private OleDbConnection cn;
+
+        /**
+         * Constructor that gets the connection to the database and Customer information
+         * 
+         * @param ID            ID of the Customer
+         * @param T             Type of Customer
+         * @param cn            Connection to the database
+         */
         public MakeCustomer(string ID, string T, OleDbConnection cn)
         {
             this.ID = ID;
             this.Type = T;
             this.cn = cn;
         }
+
+        /**
+         * Creates an instance of a Customer in the database
+         */
         public void CreateCustomer()
         {
             MakeQuery(MakeCustomerSQLString()).ExecuteNonQuery();
         }
+
+        /**
+         * Creates a command that when executed will add a Customer to the database 
+         * 
+         * @param SQLString     SQL statement for adding aCustomer to the database
+         * @return insertCustomer   Executable command for adding a Customer to the database
+         */
         private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertCustomer = cn.CreateCommand();
@@ -37,6 +61,12 @@ namespace CarDealership
 
             return insertCustomer;
         }
+
+        /**
+         * Creates a SQL statement for adding a Customere to the database 
+         * 
+         * @return SQLString    SQL statement for adding a Customer to the database
+         */
         private string MakeCustomerSQLString()
         {
             string SQLString;
