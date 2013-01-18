@@ -50,7 +50,7 @@ namespace CarDealership
 
             try
             {
-                P.CreatePart()
+                P.CreatePart();
             }
             catch (OleDbException ex)
             {

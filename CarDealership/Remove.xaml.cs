@@ -117,9 +117,7 @@ namespace CarDealership
                         return;
                     }
 
-                    if (selectSale.ExecuteScalar() == null && selectPart.ExecuteScalar() == null)
-                        ;
-                    else
+                    if (selectSale.ExecuteScalar() != null || selectPart.ExecuteScalar() != null)
                     {
                         ErrorWindow Error = new ErrorWindow("Cannot delete Vehicle because it is referenced in Sale and/or Part");
                         Error.ShowDialog();
