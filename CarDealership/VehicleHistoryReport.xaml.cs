@@ -38,9 +38,9 @@ namespace CarDealership
             noError = true;
             string[] Data = new string[4];
             Data[0] = VINText.GetLineText(0);
-            Data[0] = NumOwnersText.GetLineText(0);
-            Data[0] = RatingText.GetLineText(0);
-            Data[0] = MileageText.GetLineText(0);
+            Data[1] = NumOwnersText.GetLineText(0);
+            Data[2] = RatingText.GetLineText(0);
+            Data[3] = MileageText.GetLineText(0);
 
             MakeVHR VHR = new MakeVHR(Data, cn);
 

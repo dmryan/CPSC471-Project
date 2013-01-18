@@ -36,66 +36,21 @@ namespace CarDealership
         private void AddTire_Click(object sender, RoutedEventArgs e)
         {
             noError = true;
-
-            string SerialNumber = SerialNumberText.GetLineText(0);
-            string VIN = VINText.GetLineText(0);
-            string Name = NameText.GetLineText(0);
-            string Manufacturer = ManufacturerText.GetLineText(0);
+            string[] Data = new string[4];
+            Data[0] = SerialNumberText.GetLineText(0);
+            Data[1] = VINText.GetLineText(0);
+            Data[2] = NameText.GetLineText(0);
+            Data[3] = ManufacturerText.GetLineText(0);
+            string SerialNumber = Data[0];
             string Type = TypeText.GetLineText(0);
             string Size = SizeText.GetLineText(0);
 
-            //SQL Statement
-            OleDbCommand insertPart = cn.CreateCommand();
-            OleDbCommand insertTires = cn.CreateCommand();
+            MakePart P = new MakePart(Data, cn);
+            MakeTires T = new MakeTires(SerialNumber, Type, Size, cn);
 
-            // insertVehicle.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
-            //insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
-
-            string Part1 = "INSERT INTO Part(SerialNumber";
-            string Part2 = " Values (@SerialNumber";
-            string tires1 = "INSERT INTO Tire(SerialNumber";
-            string tires2 = " VALUES (@SerialNumber";
-            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
-
-            if (VIN.CompareTo("") != 0)
-            {
-                Part1 += ", VIN";
-                Part2 += ", @VIN";
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                Part1 += ", PartName";
-                Part2 += ", @PartName";
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                Part1 += ", Manufacturer";
-                Part2 += ", @Manufacturer";
-            }
-
-            insertPart.CommandText = Part1;
-            insertPart.CommandText += ")";
-            insertPart.CommandText += Part2;
-            insertPart.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            }
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@PartName", Name);
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-            }
             try
             {
-                insertPart.ExecuteNonQuery();
+                P.CreatePart()
             }
             catch (OleDbException ex)
             {
@@ -103,36 +58,9 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            ///////////////////////////////////////////////////////////////////////
-            if (Type.CompareTo("") != 0)
-            {
-                tires1 += ", Type";
-                tires2 += ", @Type";
-            }
-            if (Size.CompareTo("") != 0)
-            {
-                tires1 += ", TireSize";
-                tires2 += ", @TireSize";
-            }
-            insertTires.CommandText = tires1;
-            insertTires.CommandText += ")";
-            insertTires.CommandText += tires2;
-            insertTires.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertTires.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            }
-            if (Type.CompareTo("") != 0)
-            {
-                insertTires.Parameters.AddWithValue("@Type", Type);
-            }
-            if (Size.CompareTo("") != 0)
-            {
-                insertTires.Parameters.AddWithValue("@TireSize", Size);
-            }
             try
             {
-                insertTires.ExecuteNonQuery();
+                T.CreateTires();
             }
             catch (OleDbException ex)
             {

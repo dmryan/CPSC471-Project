@@ -36,57 +36,17 @@ namespace CarDealership
         private void AddPart_Click(object sender, RoutedEventArgs e)
         {
             noError = true;
+            string[] Data = new string[4];
+            Data[0] = SerialNumberText.GetLineText(0);
+            Data[1] = VINText.GetLineText(0);
+            Data[2] = NameText.GetLineText(0);
+            Data[3] = ManufacturerText.GetLineText(0);
 
-            string SerialNumber = SerialNumberText.GetLineText(0);
-            string VIN = VINText.GetLineText(0);
-            string Name = NameText.GetLineText(0);
-            string Manufacturer = ManufacturerText.GetLineText(0);
+            MakePart P = new MakePart(Data, cn);
 
-            //SQL Statement
-            OleDbCommand insertPart = cn.CreateCommand();
-
-            string Part1 = "INSERT INTO Part(SerialNumber";
-            string Part2 = " VALUES (@SerialNumber";
-
-            if (VIN.CompareTo("") != 0)
-            {
-                Part1 += ", VIN";
-                Part2 += ", @VIN";
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                Part1 += ", PartName";
-                Part2 += ", @PartName";
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                Part1 += ", Manufacturer";
-                Part2 += ", @Manufacturer";
-            }
-
-            insertPart.CommandText = Part1;
-            insertPart.CommandText += ")";
-            insertPart.CommandText += Part2;
-            insertPart.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            }
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@Name", Name);
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-            }
             try
             {
-                insertPart.ExecuteNonQuery();
+                P.CreatePart();
             }
             catch (OleDbException ex)
             {

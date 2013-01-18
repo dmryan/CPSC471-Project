@@ -36,66 +36,21 @@ namespace CarDealership
         private void AddEngine_Click(object sender, RoutedEventArgs e)
         {
             noError = true;
-
-            string SerialNumber = SerialNumberText.GetLineText(0);
-            string VIN = VINText.GetLineText(0);
-            string Name = NameText.GetLineText(0);
-            string Manufacturer = ManufacturerText.GetLineText(0);
+            string[] Data = new string[4];
+            Data[0] = SerialNumberText.GetLineText(0);
+            Data[1] = VINText.GetLineText(0);
+            Data[2] = NameText.GetLineText(0);
+            Data[3] = ManufacturerText.GetLineText(0);
+            string SerialNumber = Data[0];
             string HorsePower = HorsePowerText.GetLineText(0);
             string Cylinders = CylindersText.GetLineText(0);
 
-            //SQL Statement
-            OleDbCommand insertPart = cn.CreateCommand();
-            OleDbCommand insertEngine = cn.CreateCommand();
-
-            // insertVehicle.CommandText = "INSERT INTO Vehicle(VIN, Model, YearProd, Maker, NumberSeats, Price, Sold) VALUES (@VIN, @Model, @YearProd, @Maker, @NumberSeats, @Price, @Sold)";
-            //insertTruck.CommandText = "INSERT INTO Truck(VIN, TowingCapacity) VALUES (@VIN, @TowingCapacity)";
-
-            string Part1 = "INSERT INTO Part(SerialNumber";
-            string Part2 = " Values (@SerialNumber";
-            string engine1 = "INSERT INTO Engine(SerialNumber";
-            string engine2 = " VALUES (@SerialNumber";
-            //insertEmployee.CommandText = "INSERT INTO Employee(EID, Salary, StartDate, ManagerID) VALUES (@EID, @Salary, @StartDate, @ManagerID)";
-
-            if (VIN.CompareTo("") != 0)
-            {
-                Part1 += ", VIN";
-                Part2 += ", @VIN";
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                Part1 += ", PartName";
-                Part2 += ", @PartName";
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                Part1 += ", Manufacturer";
-                Part2 += ", @Manufacturer";
-            }
-
-            insertPart.CommandText = Part1;
-            insertPart.CommandText += ")";
-            insertPart.CommandText += Part2;
-            insertPart.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            }
-            if (VIN.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@VIN", VIN);
-            }
-            if (Name.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@PartName", Name);
-            }
-            if (Manufacturer.CompareTo("") != 0)
-            {
-                insertPart.Parameters.AddWithValue("@Manufacturer", Manufacturer);
-            }
+            MakePart P = new MakePart(Data, cn);
+            MakeEngine E = new MakeEngine(SerialNumber, HorsePower, Cylinders, cn);
+            
             try
             {
-                insertPart.ExecuteNonQuery();
+                P.CreatePart();
             }
             catch (OleDbException ex)
             {
@@ -103,36 +58,10 @@ namespace CarDealership
                 ErrorWindow Error = new ErrorWindow(ex.Message);
                 Error.ShowDialog();
             }
-            ///////////////////////////////////////////////////////////////////////
-            if (Cylinders.CompareTo("") != 0)
-            {
-                engine1 += ", Cylinders";
-                engine2 += ", @Cylinders";
-            }
-            if (HorsePower.CompareTo("") != 0)
-            {
-                engine1 += ", HorsePower";
-                engine2 += ", @HorsePower";
-            }
-            insertEngine.CommandText = engine1;
-            insertEngine.CommandText += ")";
-            insertEngine.CommandText += engine2;
-            insertEngine.CommandText += ")";
-            if (VIN.CompareTo("") != 0)
-            {
-                insertEngine.Parameters.AddWithValue("@SerialNumber", SerialNumber);
-            }
-            if (Cylinders.CompareTo("") != 0)
-            {
-                insertEngine.Parameters.AddWithValue("@Cylinders", Cylinders);
-            }
-            if (HorsePower.CompareTo("") != 0)
-            {
-                insertEngine.Parameters.AddWithValue("@HorsePower", HorsePower);
-            }
+           
             try
             {
-                insertEngine.ExecuteNonQuery();
+                E.CreateEngine();
             }
             catch (OleDbException ex)
             {
