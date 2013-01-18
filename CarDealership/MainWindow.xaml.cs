@@ -120,15 +120,29 @@ namespace CarDealership
         {
             string[] Data = new string[5];
             Data[0] = VehicleText.GetLineText(0);
-            string CID = CustomerText.GetLineText(0);
-            string EID = EmployeeText.GetLineText(0);
-            string SellDate = DateText.GetLineText(0);
-            string SalePrice = PriceText.GetLineText(0);
+            Data[1] = CustomerText.GetLineText(0);
+            Data[2] = EmployeeText.GetLineText(0);
+            Data[3] = DateText.GetLineText(0);
+            Data[4] = PriceText.GetLineText(0);
 
+            MakeSale S = new MakeSale(this, Data, cn);
 
+            try
+            {
+                S.CreateSale();
+            }
+            catch (OleDbException ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.ShowDialog();
+                return;
+            }
 
-            MakeSale Sale = new MakeSale(this, cn);
-            Sale.AddSale();
+            VehicleText.Clear();
+            CustomerText.Clear();
+            EmployeeText.Clear();
+            DateText.Clear();
+            PriceText.Clear();
         }
 
         private void AddTiresButton_Click(object sender, RoutedEventArgs e)
