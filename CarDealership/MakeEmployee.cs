@@ -48,6 +48,16 @@ namespace CarDealership
         }
 
         /**
+         * Deletes an instance of an Employee from the database
+         */
+        public void DeleteEmployee()
+        {
+            OleDbCommand deleteEmployee = cn.CreateCommand();
+            deleteEmployee.CommandText = ("DELETE FROM EMPLOYEE WHERE EID =" + ID);
+            deleteEmployee.ExecuteNonQuery();
+        }
+
+        /**
          * Creates a command that when executed will add an Employee to the database 
          * 
          * @param SQLString     SQL statement for adding an Employee to the database
