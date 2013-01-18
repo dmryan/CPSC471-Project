@@ -8,19 +8,43 @@ namespace CarDealership
 {
     class MakeCar
     {
+        /**
+         * @param VIN           VIN of the Car
+         * @param Type          Type of the Car
+         * @param cn            Connection to the database
+         */
         private string VIN;
         private string Type;
         private OleDbConnection cn;
+
+        /**
+         * Constructor that gets the connection to the database and Car information
+         * 
+         * @param V             VIN of the Car
+         * @param T             Type of the Car
+         * @param cn            Connection to the database
+         */
         public MakeCar(string V, string T, OleDbConnection cn)
         {
             this.VIN = V;
             this.Type = T;
             this.cn = cn;
         }
+
+        /**
+         * Creates a Car
+         */
         public void CreateCar()
         {
             MakeQuery(MakeCarSQLString()).ExecuteNonQuery();
         }
+
+        /**
+         * Creates a command that when executed will add a Car to the database 
+         * 
+         * @param SQLString     SQL statement for adding a Car to the database
+         * @return insertCar    Executable command for adding a Car to the database
+         */
         private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertCar = cn.CreateCommand();
@@ -37,6 +61,12 @@ namespace CarDealership
 
             return insertCar;
         }
+
+        /**
+         * Creates a SQL statement for adding a Car to the database 
+         * 
+         * @return SQLString    SQL statement for adding a Car to the database
+         */
         private string MakeCarSQLString()
         {
             string SQLString;
