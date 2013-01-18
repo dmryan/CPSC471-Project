@@ -8,62 +8,67 @@ namespace CarDealership
 {
     public class MakeSale
     {
+        /**
+         * @param Data          Array of data for the Sale
+         * @param cn            Connection to the database
+         */
+        private string[] Data;
         private OleDbConnection cn;
-        private MainWindow Parent;
-        private bool noError;
 
-        public MakeSale(MainWindow p, OleDbConnection c)
+        /**
+         * Constructor that gets the connection to the database and Sale information
+         * 
+         * @param D             Array of data for the Sale
+         * @param cn            Connection to the database
+         */
+        public MakeSale(string[] D, OleDbConnection cn)
         {
-            cn = c;
-            Parent = p;
+            this.Data = D;
+            this.cn = cn;
         }
 
-        public void AddSale()
+        /**
+         * Creates an instance of a Sale in the database and updates the Vehicle as sold
+         */
+        public void CreateSale()
         {
-            noError = true;
+            MakeQuery().ExecuteNonQuery();
+            UpdateQuery().ExecuteNonQuery();
+        }
 
-            string VIN = Parent.VehicleText.GetLineText(0);
-            string CID = Parent.CustomerText.GetLineText(0);
-            string EID = Parent.EmployeeText.GetLineText(0);
-            string SellDate = Parent.DateText.GetLineText(0);
-            string SalePrice = Parent.PriceText.GetLineText(0);
-
-            //SQL Statement
+        /**
+         * Creates a command that when executed will add a Sale to the database 
+         * 
+         * @return insertSale   Executable command for adding a Person to the database
+         */
+        private OleDbCommand MakeQuery()
+        {
             OleDbCommand insertSale = cn.CreateCommand();
-            OleDbCommand markSale = cn.CreateCommand();
-
             insertSale.CommandText = "INSERT INTO Sale(VIN, CID, EID, SellDate, SalePrice) VALUES (@VIN, @CID, @EID, @SellDate, @SalePrice)";
-            markSale.CommandText = "UPDATE Vehicle SET Sold = ? WHERE VIN = ?";
 
-            insertSale.Parameters.AddWithValue("@VIN", VIN);
-            insertSale.Parameters.AddWithValue("@CID", CID);
-            insertSale.Parameters.AddWithValue("@EID", EID);
-            insertSale.Parameters.AddWithValue("@SellDate", SellDate);
-            insertSale.Parameters.AddWithValue("@SalePrice", SalePrice);
-            
-            markSale.Parameters.AddWithValue("@Sold", true);
-            markSale.Parameters.AddWithValue("@VIN", VIN);
+            insertSale.Parameters.AddWithValue("@VIN", Data[0]);
+            insertSale.Parameters.AddWithValue("@CID", Data[1]);
+            insertSale.Parameters.AddWithValue("@EID", Data[2]);
+            insertSale.Parameters.AddWithValue("@SellDate", Data[3]);
+            insertSale.Parameters.AddWithValue("@SalePrice", Data[4]);
 
-            try 
-            {
-                insertSale.ExecuteNonQuery();
-                markSale.ExecuteNonQuery();
-            }
-            catch (OleDbException ex)
-            {
-                noError = false;
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-            }
+            return insertSale;
+        }
 
-            if (noError)
-            {
-                Parent.VehicleText.Clear();
-                Parent.CustomerText.Clear();
-                Parent.EmployeeText.Clear();
-                Parent.DateText.Clear();
-                Parent.PriceText.Clear();
-            }
+        /**
+         * Creates a command that when executed will update a Vehicle to the database to sold
+         * 
+         * @return updateSale   Executable command for adding a Person to the database
+         */
+        private OleDbCommand UpdateQuery()
+        {
+            OleDbCommand updateSale = cn.CreateCommand();
+            updateSale.CommandText = "UPDATE Vehicle SET Sold = ? WHERE VIN = ?";
+
+            updateSale.Parameters.AddWithValue("@Sold", true);
+            updateSale.Parameters.AddWithValue("@VIN", Data[0]);
+
+            return updateSale;
         }
     }
 }
