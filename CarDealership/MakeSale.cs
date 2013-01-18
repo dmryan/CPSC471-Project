@@ -8,23 +8,39 @@ namespace CarDealership
 {
     public class MakeSale
     {
-        private OleDbConnection cn;
-        private MainWindow Parent;
+        /**
+         * @param Data          Array of data for the Sale
+         * @param cn            Connection to the database
+         */
         private string[] Data;
+        private OleDbConnection cn;
 
-        public MakeSale(MainWindow p, string[] D, OleDbConnection cn)
+        /**
+         * Constructor that gets the connection to the database and Sale information
+         * 
+         * @param D             Array of data for the Sale
+         * @param cn            Connection to the database
+         */
+        public MakeSale(string[] D, OleDbConnection cn)
         {
-            this.Parent = p;
             this.Data = D;
             this.cn = cn;
         }
 
+        /**
+         * Creates an instance of a Sale in the database and updates the Vehicle as sold
+         */
         public void CreateSale()
         {
             MakeQuery().ExecuteNonQuery();
             UpdateQuery().ExecuteNonQuery();
         }
 
+        /**
+         * Creates a command that when executed will add a Sale to the database 
+         * 
+         * @return insertSale   Executable command for adding a Person to the database
+         */
         private OleDbCommand MakeQuery()
         {
             OleDbCommand insertSale = cn.CreateCommand();
@@ -39,15 +55,20 @@ namespace CarDealership
             return insertSale;
         }
 
+        /**
+         * Creates a command that when executed will update a Vehicle to the database to sold
+         * 
+         * @return updateSale   Executable command for adding a Person to the database
+         */
         private OleDbCommand UpdateQuery()
         {
-            OleDbCommand markSale = cn.CreateCommand();
-            markSale.CommandText = "UPDATE Vehicle SET Sold = ? WHERE VIN = ?";
+            OleDbCommand updateSale = cn.CreateCommand();
+            updateSale.CommandText = "UPDATE Vehicle SET Sold = ? WHERE VIN = ?";
 
-            markSale.Parameters.AddWithValue("@Sold", true);
-            markSale.Parameters.AddWithValue("@VIN", Data[0]);
+            updateSale.Parameters.AddWithValue("@Sold", true);
+            updateSale.Parameters.AddWithValue("@VIN", Data[0]);
 
-            return markSale;
+            return updateSale;
         }
     }
 }

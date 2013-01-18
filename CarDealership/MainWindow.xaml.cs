@@ -125,7 +125,7 @@ namespace CarDealership
             Data[3] = DateText.GetLineText(0);
             Data[4] = PriceText.GetLineText(0);
 
-            MakeSale S = new MakeSale(this, Data, cn);
+            MakeSale S = new MakeSale(Data, cn);
 
             try
             {
