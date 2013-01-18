@@ -8,19 +8,43 @@ namespace CarDealership
 {
     class MakeTruck
     {
+        /**
+         * @param VIN           VIN of the Truck
+         * @param TowingCapacity    Towing capacity of the Truck
+         * @param cn            Connection to the database
+         */
         private string VIN;
         private string TowingCapacity;
         private OleDbConnection cn;
+
+        /**
+         * Constructor that gets the connection to the database and Truck information
+         * 
+         * @param V             VIN of the Truck
+         * @param T             Towing capacity of the Truck
+         * @param cn            Connection to the database
+         */
         public MakeTruck(string V, string T, OleDbConnection cn)
         {
             this.VIN = V;
             this.TowingCapacity = T;
             this.cn = cn;
         }
+
+        /**
+         * Creates a Truck
+         */
         public void CreateTruck()
         {
             MakeQuery(MakeTruckSQLString()).ExecuteNonQuery();
         }
+
+        /**
+         * Creates a command that when executed will add a Truck to the database 
+         * 
+         * @param SQLString     SQL statement for adding a Truck to the database
+         * @return insertTruck  Executable command for adding a Truck to the database
+         */
         private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertTruck = cn.CreateCommand();
@@ -37,6 +61,12 @@ namespace CarDealership
 
             return insertTruck;
         }
+
+        /**
+         * Creates a SQL statement for adding a Truck to the database 
+         * 
+         * @return SQLString    SQL statement for adding a Truck to the database
+         */
         private string MakeTruckSQLString()
         {
             string SQLString;
