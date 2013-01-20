@@ -79,5 +79,33 @@ namespace CarDealership
             Revenue = "$ " + Total.ToString();
             return Revenue;
         }
+
+        public DataTable CarsInventory()
+        {
+            OleDbCommand viewInventory = cn.CreateCommand();
+            DataTable dt = new DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter();
+
+            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, Type FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Sold = @False";
+            viewInventory.Parameters.AddWithValue("@False", false);
+
+            da.SelectCommand = viewInventory;
+            da.Fill(dt);
+            return dt;
+        }
+
+        public DataTable TrucksInventory()
+        {
+            OleDbCommand viewInventory = cn.CreateCommand();
+            DataTable dt = new DataTable();
+            OleDbDataAdapter da = new OleDbDataAdapter();
+
+            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, TowingCapacity FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Sold = @False";
+            viewInventory.Parameters.AddWithValue("@False", false);
+
+            da.SelectCommand = viewInventory;
+            da.Fill(dt);
+            return dt;
+        }
     }
 }

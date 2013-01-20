@@ -30,20 +30,11 @@ namespace CarDealership
 
         private void ViewCars_Click(object sender, RoutedEventArgs e)
         {
-            OleDbCommand viewInventory = cn.CreateCommand();
-            DataTable dt = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter();
-
-            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, Type FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Sold = @False";
-            
-            viewInventory.Parameters.AddWithValue("@False", false);
+            StatsCalc SC = new StatsCalc(cn);
 
             try
             {
-                da.SelectCommand = viewInventory;
-                da.Fill(dt);
-                InventoryGrid.ItemsSource = dt.DefaultView;
-
+                InventoryGrid.ItemsSource = SC.CarsInventory().DefaultView;
             }
             catch (OleDbException ex)
             {
@@ -54,20 +45,11 @@ namespace CarDealership
 
         private void ViewTrucks_Click(object sender, RoutedEventArgs e)
         {
-            OleDbCommand viewInventory = cn.CreateCommand();
-            DataTable dt = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter();
-
-            viewInventory.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, TowingCapacity FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Sold = @False";
-
-            viewInventory.Parameters.AddWithValue("@False", false);
+            StatsCalc SC = new StatsCalc(cn);
 
             try
             {
-                da.SelectCommand = viewInventory;
-                da.Fill(dt);
-                InventoryGrid.ItemsSource = dt.DefaultView;
-
+                InventoryGrid.ItemsSource = SC.TrucksInventory().DefaultView;
             }
             catch (OleDbException ex)
             {
@@ -79,7 +61,5 @@ namespace CarDealership
         {
             base.OnClosing(e);
         }
-
-
     }
 }
