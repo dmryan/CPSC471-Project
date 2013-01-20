@@ -31,5 +31,24 @@ namespace CarDealership
             dt.Columns[2].ColumnName = "Sale Money Earned ($)";
             return dt;
         }
+
+        public string MonthlySales( string Month, string Year)
+        {
+            string Money;
+            OleDbCommand calculateMonthlySales = cn.CreateCommand();
+
+            calculateMonthlySales.CommandText = "SELECT SUM(SalePrice) FROM Sale WHERE SellDate LIKE @MonthYear";
+
+            calculateMonthlySales.Parameters.AddWithValue("@MonthYear", Month + "/" + "%" + "/" + Year);
+
+            Object Total = new Object();
+            Total = calculateMonthlySales.ExecuteScalar();
+            if (Total is DBNull || Total == "" || Month == "" || Year == "")
+                Total = "0";
+
+            Money = "$ " + Total.ToString();
+
+            return Money;
+        }
     }
 }

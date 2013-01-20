@@ -32,21 +32,11 @@ namespace CarDealership
             string Month = MonthText.GetLineText(0);
             string Year = YearText.GetLineText(0);
 
-            //SQL Statement
-            OleDbCommand calculateMonthlySales = cn.CreateCommand();
-
-            calculateMonthlySales.CommandText = "SELECT SUM(SalePrice) FROM Sale WHERE SellDate LIKE @MonthYear";
-
-            calculateMonthlySales.Parameters.AddWithValue("@MonthYear", Month + "/" + "%" + "/" + Year);
+            StatsCalc SC = new StatsCalc(cn);
 
             try 
             {
-                Object Total = new Object();
-                Total = calculateMonthlySales.ExecuteScalar();
-                if (Total is DBNull || Total == "" || Month == "" || Year == "")
-                    Total = "0";
-                    
-                MonthlySalesText.Text= "$ " + Total.ToString();
+                MonthlySalesText.Text = SC.MonthlySales( Month, Year); ;
             }
             catch (OleDbException ex)
             {
