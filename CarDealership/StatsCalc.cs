@@ -45,7 +45,6 @@ namespace CarDealership
                 Total = "0";
 
             Money = "$ " + Total.ToString();
-
             return Money;
         }
 
@@ -63,6 +62,22 @@ namespace CarDealership
             da.SelectCommand = viewPart;
             da.Fill(dt);
             return dt;
+        }
+
+        public string Revenue()
+        {
+            string Revenue;
+            OleDbCommand calculateRevenue = cn.CreateCommand();
+
+            calculateRevenue.CommandText = "SELECT SUM(SalePrice) FROM Sale";
+
+            Object Total = new Object();
+            Total = calculateRevenue.ExecuteScalar();
+            if (Total is DBNull || Total == "")
+                Total = "0";
+
+            Revenue = "$ " + Total.ToString();
+            return Revenue;
         }
     }
 }

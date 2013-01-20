@@ -29,19 +29,11 @@ namespace CarDealership
 
         private void CalculateRevenue_Click(object sender, RoutedEventArgs e)
         {
-            //SQL Statement
-            OleDbCommand calculateRevenue = cn.CreateCommand();
-
-            calculateRevenue.CommandText = "SELECT SUM(SalePrice) FROM Sale";
+            StatsCalc SC = new StatsCalc(cn);
 
             try
             {
-                Object Total = new Object();
-                Total = calculateRevenue.ExecuteScalar();
-                if (Total is DBNull || Total == "")
-                    Total = "0";
-
-                RevenueText.Text = "$ " + Total.ToString();
+                RevenueText.Text = SC.Revenue();
             }
             catch (OleDbException ex)
             {
