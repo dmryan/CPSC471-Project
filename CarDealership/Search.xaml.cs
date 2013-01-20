@@ -113,32 +113,13 @@ namespace CarDealership
             {
                 ResponseBlock.Visibility = Visibility.Visible;
                 ResponseBlock2.Visibility = Visibility.Visible;
-                //sql statement VIN is in Para3
-                OleDbCommand viewCar = cn.CreateCommand();
-                OleDbCommand viewTruck = cn.CreateCommand();
-                OleDbCommand viewVHR = cn.CreateCommand();
-                DataTable dt = new DataTable();
-                DataTable dt2 = new DataTable();
-                OleDbDataAdapter da = new OleDbDataAdapter();
 
-                viewCar.CommandText = "SELECT Vehicle.Vin, Model, YearProd, Maker, NumberSeats, Price, Sold, Type FROM Vehicle INNER JOIN Car ON Vehicle.VIN = Car.VIN WHERE Vehicle.VIN = @VIN";
-                viewTruck.CommandText = "SELECT Vehicle.VIN, Model, YearProd, Maker, NumberSeats, Price, Sold, TowingCapacity FROM Vehicle INNER JOIN Truck ON Vehicle.VIN = Truck.VIN WHERE Vehicle.VIN = @VIN";
-                viewVHR.CommandText = "SELECT VIN, NumberOwners, Rating, Mileage FROM VehicleHistoryReport WHERE VIN = @VIN";
-
-                viewCar.Parameters.AddWithValue("@VIN", Para3);
-                viewTruck.Parameters.AddWithValue("@VIN", Para3);
-                viewVHR.Parameters.AddWithValue("@VIN", Para3);
+                SearchFunction SF = new SearchFunction(cn);
 
                 try
                 {
-                    da.SelectCommand = viewCar;
-                    da.Fill(dt);
-                    da.SelectCommand = viewTruck;
-                    da.Fill(dt);
-                    ResponseBlock.ItemsSource = dt.DefaultView;
-                    da.SelectCommand = viewVHR;
-                    da.Fill(dt2);
-                    ResponseBlock2.ItemsSource = dt2.DefaultView;
+                    ResponseBlock.ItemsSource = SF.SearchVehicle(Para3).DefaultView;
+                    ResponseBlock2.ItemsSource = SF.SearchVHR(Para3).DefaultView;
                 }
                 catch (OleDbException ex)
                 {
@@ -149,35 +130,12 @@ namespace CarDealership
             else if (type.CompareTo("Part") == 0)
             {
                 ResponseBlock.Visibility = Visibility.Visible;
-                //sql statement VIN is in Para3
-                OleDbCommand viewPart = cn.CreateCommand();
-                OleDbCommand viewEngine = cn.CreateCommand();
-                OleDbCommand viewTire = cn.CreateCommand();
-                DataTable dt = new DataTable();
-                DataTable dt2 = new DataTable();
-                OleDbDataAdapter da = new OleDbDataAdapter();
 
-                viewPart.CommandText = "SELECT * FROM Part WHERE Part.SerialNumber = @SerialNumber";
-                viewEngine.CommandText = "SELECT Part.SerialNumber, VIN, PartName, Manufacturer, HorsePower, Cylinders FROM Part INNER JOIN Engine ON Part.SerialNumber = Engine.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
-                viewTire.CommandText = "SELECT Part.SerialNumber, VIN, PartName, Manufacturer, Type, TireSize FROM Part INNER JOIN Tire ON Part.SerialNumber = Tire.SerialNumber WHERE Part.SerialNumber = @SerialNumber";
-
-                viewPart.Parameters.AddWithValue("@SerialNumber", Para3);
-                viewEngine.Parameters.AddWithValue("@SerialNumber", Para3);
-                viewTire.Parameters.AddWithValue("@SerialNumber", Para3);
+                SearchFunction SF = new SearchFunction(cn);
 
                 try
                 {
-                    da.SelectCommand = viewEngine;
-                    da.Fill(dt);
-                    da.SelectCommand = viewTire;
-                    da.Fill(dt);
-                    ResponseBlock.ItemsSource = dt.DefaultView;
-                    if (ResponseBlock.Items.Count == 0)
-                    {
-                        da.SelectCommand = viewPart;
-                        da.Fill(dt2);
-                        ResponseBlock.ItemsSource = dt2.DefaultView;
-                    }
+                    ResponseBlock.ItemsSource = SF.SearchPart(Para3).DefaultView;
                 }
                 catch (OleDbException ex)
                 {
@@ -188,23 +146,12 @@ namespace CarDealership
             else
             {
                 ResponseBlock.Visibility = Visibility.Visible;
-                //sql statement EID is Para1, CustID is Para2, VIN is Para3
-                OleDbCommand viewSale = cn.CreateCommand();
-                DataTable dt = new DataTable();
-                OleDbDataAdapter da = new OleDbDataAdapter();
 
-                viewSale.CommandText = "SELECT * FROM Sale WHERE EID = @EID AND CID = @CID AND VIN = @VIN";
-
-                viewSale.Parameters.AddWithValue("@EID", Para1);
-                viewSale.Parameters.AddWithValue("@CID", Para2);
-                viewSale.Parameters.AddWithValue("@VIN", Para3);
+                SearchFunction SF = new SearchFunction(cn);
 
                 try
                 {
-                    da.SelectCommand = viewSale;
-                    da.Fill(dt);
-                    dt.Columns[4].ColumnName = "Sale Price ($)";
-                    ResponseBlock.ItemsSource = dt.DefaultView;
+                    ResponseBlock.ItemsSource = SF.SearchSale(Para1, Para2, Para3).DefaultView;
                 }
                 catch (OleDbException ex)
                 {
