@@ -36,7 +36,7 @@ namespace CarDealership
 
             try 
             {
-                MonthlySalesText.Text = SC.MonthlySales( Month, Year); ;
+                MonthlySalesText.Text = SC.MonthlySales(Month, Year);
             }
             catch (OleDbException ex)
             {

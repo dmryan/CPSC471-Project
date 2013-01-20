@@ -31,28 +31,14 @@ namespace CarDealership
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            string Para1 = Parameter1.GetLineText(0);
-            //sql statement VIN is in Para3
-            OleDbCommand viewPart = cn.CreateCommand();
-            OleDbCommand viewEngine = cn.CreateCommand();
-            OleDbCommand viewTire = cn.CreateCommand();
-            DataTable dt = new DataTable();
-            OleDbDataAdapter da = new OleDbDataAdapter();
+            string VIN = Parameter1.GetLineText(0);
             ResponseBlock1.Visibility = Visibility.Visible;
 
-            viewPart.CommandText = "SELECT * FROM Part WHERE Part.VIN = @VIN";            
-            viewPart.Parameters.AddWithValue("@VIN", Para1);
+            StatsCalc SC = new StatsCalc(cn);
+
             try
             {
-                da.SelectCommand = viewPart;
-                da.Fill(dt);
-                ResponseBlock1.ItemsSource = dt.DefaultView;
-                if (ResponseBlock1.Items.Count == 0)
-                {
-                    da.SelectCommand = viewPart;
-                    da.Fill(dt);
-                    ResponseBlock1.ItemsSource = dt.DefaultView;
-                }
+                ResponseBlock1.ItemsSource = SC.VehicleParts(VIN).DefaultView;
             }
             catch (OleDbException ex)
             {
