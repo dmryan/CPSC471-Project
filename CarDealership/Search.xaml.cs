@@ -38,6 +38,7 @@ namespace CarDealership
             InitializeComponent();
             ResponseBlock.Visibility = Visibility.Collapsed;
             ResponseBlock2.Visibility = Visibility.Collapsed;
+
             if (type.CompareTo("Person") == 0)
             {
                 StatementBlock.Text = "Enter ID# to Find a Specific Person";
@@ -66,6 +67,7 @@ namespace CarDealership
                 NameCheck.Visibility = Visibility.Collapsed; IDCheck.Visibility = Visibility.Collapsed; 
             }
         }
+
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             string Para1 = Parameter1.GetLineText(0);
@@ -77,25 +79,12 @@ namespace CarDealership
                 if (PersonID)
                 {
                     ResponseBlock.Visibility = Visibility.Visible;
-                    //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
-                    OleDbCommand viewCustomer = cn.CreateCommand();
-                    OleDbCommand viewEmployee = cn.CreateCommand();
-                    DataTable dt = new DataTable();
-                    OleDbDataAdapter da = new OleDbDataAdapter();
 
-                    viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE ID = @ID";
-                    viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE ID = @ID";
-
-                    viewCustomer.Parameters.AddWithValue("@ID", Para3);
-                    viewEmployee.Parameters.AddWithValue("@ID", Para3);
+                    SearchFunction SF = new SearchFunction(cn);
 
                     try
                     {
-                        da.SelectCommand = viewCustomer;
-                        da.Fill(dt);
-                        da.SelectCommand = viewEmployee;
-                        da.Fill(dt);
-                        ResponseBlock.ItemsSource = dt.DefaultView;
+                        ResponseBlock.ItemsSource = SF.SearchPersonID(Para3).DefaultView;
                     }
                     catch (OleDbException ex)
                     {
@@ -106,25 +95,12 @@ namespace CarDealership
                 if (PersonName)
                 {
                     ResponseBlock.Visibility = Visibility.Visible;
-                    //sql statement ID is in Para3 //  use ResponseBlcok.ApppendText(string); to add info
-                    OleDbCommand viewCustomer = cn.CreateCommand();
-                    OleDbCommand viewEmployee = cn.CreateCommand();
-                    DataTable dt = new DataTable();
-                    OleDbDataAdapter da = new OleDbDataAdapter();
 
-                    viewCustomer.CommandText = "SELECT * FROM Person INNER JOIN Customer ON Person.ID = Customer.CID WHERE PersonName = @Name";
-                    viewEmployee.CommandText = "SELECT * FROM Person INNER JOIN Employee ON Person.ID = Employee.EID WHERE PersonName = @Name";
-
-                    viewCustomer.Parameters.AddWithValue("@Name", Para3);
-                    viewEmployee.Parameters.AddWithValue("@Name", Para3);
+                    SearchFunction SF = new SearchFunction(cn);
 
                     try
                     {
-                        da.SelectCommand = viewCustomer;
-                        da.Fill(dt);
-                        da.SelectCommand = viewEmployee;
-                        da.Fill(dt);
-                        ResponseBlock.ItemsSource = dt.DefaultView;
+                        ResponseBlock.ItemsSource = SF.SearchPersonName(Para3).DefaultView;
                     }
                     catch (OleDbException ex)
                     {

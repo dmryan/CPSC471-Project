@@ -101,6 +101,7 @@
     <Compile Include="Search.xaml.cs">
       <DependentUpon>Search.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SearchFunction.cs" />
     <Compile Include="StatsCalc.cs" />
     <Compile Include="VehicleHistoryReport.xaml.cs">
       <DependentUpon>VehicleHistoryReport.xaml</DependentUpon>
