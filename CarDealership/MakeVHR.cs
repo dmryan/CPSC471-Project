@@ -8,17 +8,37 @@ namespace CarDealership
 {
     class MakeVHR
     {
+        /**
+         * @param Data          Array of data for the VHR
+         *                      VIN, # Owners, Rating, Mileage
+         * @param cn            Connection to the database
+         */
         private string[] Data;
         private OleDbConnection cn;
+        /**
+         * Constructor that gets the connection to the database and VHR information
+         * 
+         * @param Data          Array of data for the VHR
+         * @param cn            Connection to the database
+         */
         public MakeVHR(string[] D, OleDbConnection cn)
         {
             this.Data = D;
             this.cn = cn;
         }
+        /**
+         * Creates an instance of a VHR in the database
+         */
         public void CreateVHR()
         {
             MakeQuery(MakeVHRSQLString()).ExecuteNonQuery();
         }
+        /**
+         * Creates a command that when executed will add a Truck to the database 
+         * 
+         * @param SQLString     SQL statement for adding a Truck to the database
+         * @return insertVHR    Executable command for adding a Truck to the database
+         */
         private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertVHR = cn.CreateCommand();
@@ -35,6 +55,11 @@ namespace CarDealership
 
             return insertVHR;
         }
+        /**
+         * Creates a SQL statement for adding a History Report to the database 
+         * 
+         * @return SQLString    SQL statement for adding a VHR to the database
+         */
         private string MakeVHRSQLString()
         {
             string SQLString;

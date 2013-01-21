@@ -8,6 +8,12 @@ namespace CarDealership
 {
     class MakeTires
     {
+        /**
+         * @param SerialNumber          Tire's serial number
+         * @param Type                  Tire's type
+         * @param TireSize              Tire's radius
+         * @param cn                    Database connection
+       */
         private string SerialNumber;
         private string Type;
         private string TireSize;

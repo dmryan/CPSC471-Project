@@ -8,6 +8,12 @@ namespace CarDealership
 {
     class MakeEngine
     {
+        /**
+         * @param SerialNumber          Engine's serial number
+         * @param HorsePower            Engine's horsepower
+         * @param Cylinders             Number of cylinders
+         * @param cn                    Database connection
+       */
         private string SerialNumber;
         private string HorsePower;
         private string Cylinders;

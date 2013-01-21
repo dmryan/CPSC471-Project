@@ -8,18 +8,38 @@ namespace CarDealership
 {
     class MakePart
     {
+        /**
+       * @param Data          Array with Part's data
+       * @param cn            Connection to the database
+       */
         private string[] Data;
         private OleDbConnection cn;
 
+        /**
+       * Constructor that gets the connection to the database and Part information
+       * 
+       * @param D             Data array for the Part
+       * @param cn            Connection to the database
+       */
         public MakePart(string[] D, OleDbConnection cn)
         {
             this.Data = D;
             this.cn = cn;
         }
+        /**
+       * Constructor that makes a part instance in the database
+       */
         public void CreatePart()
         {
             MakeQuery(MakePartSQLString()).ExecuteNonQuery();
         }
+
+        /**
+         * Creates a command that when executed will add a Part to the database 
+         * 
+         * @param SQLString      SQL statement for adding a Part to the database
+         * @return insertPart    Executable command for adding a Part to the database
+         */
         private OleDbCommand MakeQuery(string SQLString)
         {
             OleDbCommand insertPart = cn.CreateCommand();
@@ -36,6 +56,12 @@ namespace CarDealership
 
             return insertPart;
         }
+
+        /**
+         * Creates a SQL statement for adding a Part to the database 
+         * 
+         * @return SQLString    SQL statement for adding a Part to the database
+         */
         private string MakePartSQLString()
         {
             string SQLString;

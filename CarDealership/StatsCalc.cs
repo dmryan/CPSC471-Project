@@ -9,13 +9,26 @@ namespace CarDealership
 {
     class StatsCalc
     {
+        /**
+         * @param cn            Connection to the database
+         */
         private OleDbConnection cn;
 
+        /**
+         * Constructor that gets the connection to the database
+         * 
+         * @param cn            Connection to the database
+         */
         public StatsCalc(OleDbConnection cn)
         {
             this.cn = cn;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of employees' total sales
+         * 
+         * @return dt           Table of employees' sales
+         */
         public DataTable CalculateProgress()
         {
             OleDbCommand viewEmployeeProgress = cn.CreateCommand();
@@ -31,6 +44,13 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of employees' sales for the given month
+         * 
+         * @param Month         Month to search in
+         * @param Year          Year to search in
+         * @return dt           Table of employees' sales
+         */
         public string MonthlySales( string Month, string Year)
         {
             string Money;
@@ -48,6 +68,12 @@ namespace CarDealership
             return Money;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of a certain vehicle's parts
+         * 
+         * @param VIN           VIN to search for
+         * @return dt           Table of Parts with matching VIN
+         */
         public DataTable VehicleParts( string VIN )
         {
             OleDbCommand viewPart = cn.CreateCommand();
@@ -64,6 +90,11 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and returns the gross revenue of the dealership
+         * 
+         * @return Revenue           Gross dealership revenue
+         */
         public string Revenue()
         {
             string Revenue;
@@ -80,6 +111,11 @@ namespace CarDealership
             return Revenue;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of cars in inventory
+         * 
+         * @return dt           Table of cars in inventory
+         */
         public DataTable CarsInventory()
         {
             OleDbCommand viewInventory = cn.CreateCommand();
@@ -94,6 +130,11 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of trucks in inventory
+         * 
+         * @return dt           Table of trucks in inventory
+         */
         public DataTable TrucksInventory()
         {
             OleDbCommand viewInventory = cn.CreateCommand();

@@ -9,13 +9,27 @@ namespace CarDealership
 {
     class SearchFunction
     {
+        /**
+         * @param cn            Connection to the database
+         */
         private OleDbConnection cn;
 
+        /**
+         * Constructor that gets the connection to the database
+         * 
+         * @param cn            Connection to the database
+         */
         public SearchFunction(OleDbConnection cn)
         {
             this.cn = cn;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of people with the matching ID
+         * 
+         * @param ID            ID to search for
+         * @return dt           Table of people with matching ID
+         */
         public DataTable SearchPersonID( string ID )
         {
             OleDbCommand viewCustomer = cn.CreateCommand();
@@ -35,6 +49,12 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of people with the matching ID
+         * 
+         * @param Name          Name to search for
+         * @return dt           Table of people with matching Name
+         */
         public DataTable SearchPersonName( string Name )
         {
             OleDbCommand viewCustomer = cn.CreateCommand();
@@ -54,6 +74,12 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of Vehicles with the matching VIN
+         * 
+         * @param VIN           VIN to search for
+         * @return dt           Table of vehicles with matching VIN
+         */
         public DataTable SearchVehicle( string VIN )
         {
             OleDbCommand viewCar = cn.CreateCommand();
@@ -74,6 +100,12 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of VHRs with the matching VIN
+         * 
+         * @param VIN           VIN to search for
+         * @return dt           Table of vehicles with matching VIN
+         */
         public DataTable SearchVHR( string VIN )
         {
             OleDbCommand viewVHR = cn.CreateCommand();
@@ -88,6 +120,12 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of Parts with the matching SN
+         * 
+         * @param SN           SN to search for
+         * @return dt           Table of vehicles with matching SN
+         */
         public DataTable SearchPart( string SN )
         {
             OleDbCommand viewPart = cn.CreateCommand();
@@ -116,6 +154,14 @@ namespace CarDealership
             return dt;
         }
 
+        /**
+         * Function that accesses the database and creates a DataTable of sales with matching parameters
+         * 
+         * @param VIN           VIN to search for
+         * @param EID           EID to search for
+         * @parma CID           CID to search for
+         * @return dt           Table of sales with matching parameters
+         */
         public DataTable SearchSale(string EID, string CID, string VIN)
         {
             OleDbCommand viewSale = cn.CreateCommand();
