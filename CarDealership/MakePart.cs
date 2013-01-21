@@ -56,6 +56,12 @@ namespace CarDealership
 
             return insertPart;
         }
+        public void DeletePart()
+        {
+            OleDbCommand deletePart = cn.CreateCommand();
+            deletePart.CommandText = ("DELETE FROM Part WHERE SerialNumber =" + Data[0]);
+            deletePart.ExecuteNonQuery();
+        }
 
         /**
          * Creates a SQL statement for adding a Part to the database 
