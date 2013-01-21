@@ -66,6 +66,7 @@
     <Compile Include="AddTires.xaml.cs">
       <DependentUpon>AddTires.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Delete.cs" />
     <Compile Include="EmployeeProgress.xaml.cs">
       <DependentUpon>EmployeeProgress.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,7 @@
     <Compile Include="MakeTruck.cs" />
     <Compile Include="MakeVehicle.cs" />
     <Compile Include="MakeVHR.cs" />
+    <Compile Include="ModClass.cs" />
     <Compile Include="Modify.xaml.cs">
       <DependentUpon>Modify.xaml</DependentUpon>
     </Compile>
