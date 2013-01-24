@@ -8,11 +8,26 @@ namespace CarDealership
 {
     class Delete
     {
+        /**
+         * @param cn        Database connection
+         */
         private OleDbConnection cn;
+
+        /*
+         * Constructor that use the database connection
+         * 
+         * @param cn        Database connection
+         */
         public Delete(OleDbConnection cn)
         {
             this.cn = cn;
         }
+
+        /*
+         * Deletes the person with the given ID
+         * 
+         * @param KeyNum
+         */
         public void DeletePerson(int KeyNum)
         {
                 OleDbCommand deletePerson = cn.CreateCommand();
@@ -47,6 +62,11 @@ namespace CarDealership
                 }
         }
 
+        /*
+         * Deletes vehicles with the given VIN
+         * 
+         * @param KeyNum
+         */
         public void DeleteVehicle(int KeyNum)
         {
             OleDbCommand deleteVehicle = cn.CreateCommand();
@@ -97,6 +117,11 @@ namespace CarDealership
             }
         }
 
+        /*
+         * Deletes parts with the given SN
+         * 
+         * @param KeyNum
+         */
         public void DeletePart(int KeyNum)
         {
                 OleDbCommand deletePart = cn.CreateCommand();
