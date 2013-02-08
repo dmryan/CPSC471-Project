@@ -1,8 +1,9 @@
 ﻿David
-	Modify
-	Remove
+	part test cases
+	Modify test cases
 Sean
-	Stats
-	Search
+	Finish person/sale
+	Stats test cases
+	Search/delete test cases
 Nolan
-	Documentation
+	Done for monday, tests for search/delete/stats/sale
