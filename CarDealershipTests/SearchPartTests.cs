@@ -3,63 +3,50 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CarDealership;
-using System.Data.OleDb;
 using System.Data;
-
+using System.Data.OleDb;
+using CarDealership;
 
 namespace CarDealershipTests
 {
     [TestClass]
-    public class SearchPersonIDTests
+    public class SearchPartTests
     {
         [TestMethod]
-        public void SearchID_NormalPath()
+        public void SearchPart_NormalPath()
         {
-            //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
-            //String[] p = new String[] {"1", "1", "1", "1", "1"};
 
 
-            /*
-            MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            person.DeletePerson();
-            person.CreatePerson();
-            */
+
             try
             {
-                dt = SF.SearchPersonID("3");
+                dt = SF.SearchPart("6");
             }
             catch (OleDbException ex)
             {
                 throw ex;
             }
+
+
+            
            
             Assert.IsTrue(dt.Rows.Count == 1);
 
-            //person.DeletePerson();
         }
 
         [TestMethod]
-        public void SearchID_NonExistent()
+        public void SearchPart_NonExistent()
         {
-            //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
-            //String[] p = new String[] { "1", "1", "1", "1", "1" };
-
-
-
-            //MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            //person.DeletePerson();
-            //person.CreatePerson();
 
             try
             {
-                dt = SF.SearchPersonID("2");
+                dt = SF.SearchPart("2");
             }
             catch (OleDbException ex)
             {
@@ -71,38 +58,27 @@ namespace CarDealershipTests
 
             Assert.IsTrue(dt.Rows.Count == 0);
 
-            //person.DeletePerson();
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void SearchID_EmptyID()
+        public void SearchPart_EmptySN()
         {
-            //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
-            //String[] p = new String[] { "1", "1", "1", "1", "1" };
 
-
-
-            //MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            //person.DeletePerson();
-            //person.CreatePerson();
 
             try
             {
-                dt = SF.SearchPersonID("");
+                dt = SF.SearchPart("");
             }
             catch (OleDbException ex)
             {
                 throw ex;
             }
 
-
-            
-
-            //person.DeletePerson();
         }
     }
+    
 }

@@ -36,7 +36,7 @@ namespace CarDealership
         }
 
         /**
-         * Deletes an instance of a Vehicle from the database
+         * Deletes an instance of the Person from the database
          */
         public void DeletePerson()
         {

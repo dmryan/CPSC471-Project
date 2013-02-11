@@ -3,34 +3,25 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CarDealership;
-using System.Data.OleDb;
 using System.Data;
-
+using System.Data.OleDb;
+using CarDealership;
 
 namespace CarDealershipTests
 {
     [TestClass]
-    public class SearchPersonIDTests
+    public class SearchPersonNameTests
     {
         [TestMethod]
-        public void SearchID_NormalPath()
+        public void SearchName_NormalPath()
         {
-            //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
-            //String[] p = new String[] {"1", "1", "1", "1", "1"};
 
-
-            /*
-            MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            person.DeletePerson();
-            person.CreatePerson();
-            */
             try
             {
-                dt = SF.SearchPersonID("3");
+                dt = SF.SearchPersonName("hi there");
             }
             catch (OleDbException ex)
             {
@@ -38,12 +29,10 @@ namespace CarDealershipTests
             }
            
             Assert.IsTrue(dt.Rows.Count == 1);
-
-            //person.DeletePerson();
         }
 
         [TestMethod]
-        public void SearchID_NonExistent()
+        public void SearchName_NonExistent()
         {
             //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
@@ -59,7 +48,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt = SF.SearchPersonID("2");
+                dt = SF.SearchPersonName("dyrone tonkson");
             }
             catch (OleDbException ex)
             {
@@ -75,8 +64,8 @@ namespace CarDealershipTests
         }
 
         [TestMethod]
-        [ExpectedException(typeof(OleDbException))]
-        public void SearchID_EmptyID()
+        
+        public void SearchName_EmptyName()
         {
             //person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
@@ -92,13 +81,14 @@ namespace CarDealershipTests
 
             try
             {
-                dt = SF.SearchPersonID("");
+                dt = SF.SearchPersonName("");
             }
             catch (OleDbException ex)
             {
                 throw ex;
             }
 
+            Assert.IsTrue(dt.Rows.Count == 0);
 
             
 
