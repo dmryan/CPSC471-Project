@@ -56,7 +56,9 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DeletePartTests.cs" />
     <Compile Include="DeletePersonTests.cs" />
+    <Compile Include="DeleteVehicleTests.cs" />
     <Compile Include="MonthlySalesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevenueTests.cs" />
