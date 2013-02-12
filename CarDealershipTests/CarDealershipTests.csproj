@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeletePersonTests.cs" />
+    <Compile Include="MonthlySalesTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevenueTests.cs" />
     <Compile Include="SearchPartTests.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="SearchVehicleTests.cs" />
     <Compile Include="CarInventoryTests.cs" />
     <Compile Include="TruckInventoryTests.cs" />
+    <Compile Include="VehiclePartsTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Shadow Include="Test References\CarDealership.accessor" />

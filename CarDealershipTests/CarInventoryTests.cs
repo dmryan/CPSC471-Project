@@ -23,7 +23,7 @@ namespace CarDealershipTests
             DataColumn[] dc = new DataColumn[] { dt.Columns[0] };
             dt.PrimaryKey = dc;
 
-            Assert.IsTrue(dt.Rows.Contains("3"));
+            Assert.IsTrue(dt.Rows.Contains("8"));
 
         }
 

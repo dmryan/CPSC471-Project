@@ -13,7 +13,7 @@ namespace CarDealership
         
         public DBConnection(){
 
-            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Nolan\database\CarDealershipDatabase.accdb";
+            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Nolan\database\CarDealership\bin\debug\CarDealershipDatabase.accdb";
 
             connection = new OleDbConnection(ConnectionString);
             try
