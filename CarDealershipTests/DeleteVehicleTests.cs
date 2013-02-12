@@ -3,17 +3,17 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using CarDealership;
 using System.Data;
 using System.Data.OleDb;
-using CarDealership;
 
 namespace CarDealershipTests
 {
     [TestClass]
-    public class DeletePersonTests
+    public class DeleteVehicleTests
     {
         [TestMethod]
-        public void DeletePerson_NormalPath()
+        public void DeleteVehicle_NormalPath()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
@@ -21,24 +21,23 @@ namespace CarDealershipTests
             Delete_Accessor d = new Delete_Accessor(connection.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeleteVehicle(1);
             }
             catch (Exception e)
             {
             }
-            String[] p = new String[] {"1", "1", "1", "1", "1"};
-            MakePerson_Accessor pers = new MakePerson_Accessor(p, connection.GetDB());
-            pers.CreatePerson();
-            MakeEmployee_Accessor person = new MakeEmployee_Accessor("1", "1234", "3/3/3", "", connection.GetDB());
+            String[] D = new String[] { "1" };
+            MakeCar_Accessor car = new MakeCar_Accessor("1", "smart car", connection.GetDB());
+            car.CreateCar();
+            MakeVehicle_Accessor veh = new MakeVehicle_Accessor(D, connection.GetDB());
+            veh.CreateVehicle();
 
-            person.CreateEmployee();
 
-
-            d.DeletePerson(1);
+            d.DeleteVehicle(1);
 
             try
             {
-                dt = SF.SearchPersonID("1");
+                dt = SF.SearchVehicle("1");
             }
             catch (OleDbException ex)
             {
@@ -46,22 +45,22 @@ namespace CarDealershipTests
             }
 
             Assert.IsTrue(dt.Rows.Count == 0);
-            
+
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void DeletePerson_NonExistent()
+        public void DeleteVehicle_NonExistent()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
-            
+
 
             Delete_Accessor d = new Delete_Accessor(connection.GetDB());
 
             try
             {
-                d.DeletePerson(2);
+                d.DeleteVehicle(1);
             }
             catch (OleDbException ex)
             {
@@ -71,7 +70,7 @@ namespace CarDealershipTests
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void DeletePerson_Empty()
+        public void DeleteVehicle_Empty()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
 
@@ -80,13 +79,12 @@ namespace CarDealershipTests
 
             try
             {
-                d.DeletePerson(int.Parse(""));
+                d.DeleteVehicle(int.Parse(""));
             }
             catch (OleDbException ex)
             {
                 throw ex;
             }
         }
-
     }
 }
