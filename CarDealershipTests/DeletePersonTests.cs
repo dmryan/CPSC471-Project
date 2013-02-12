@@ -45,7 +45,7 @@ namespace CarDealershipTests
 
         [TestMethod]
         public void DeletePerson_NonExistent()
-        {/*
+        {
             DBConnection_Accessor connection = new DBConnection_Accessor();
 
             Delete_Accessor d = new Delete_Accessor(connection.GetDB());
@@ -57,7 +57,7 @@ namespace CarDealershipTests
             catch (OleDbException ex)
             {
                 throw ex;
-            }*/
+            }
         }
 
     }
