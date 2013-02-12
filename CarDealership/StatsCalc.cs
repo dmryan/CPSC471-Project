@@ -64,7 +64,7 @@ namespace CarDealership
             if (Total is DBNull || Total == "" || Month == "" || Year == "")
                 Total = "0";
 
-            Money = "$ " + Total.ToString();
+            Money = Total.ToString();
             return Money;
         }
 

@@ -20,7 +20,8 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            //d.DeleteSale("3", "121", "9");
+            TestingFunctions tf = new TestingFunctions(db.GetDB());
+            tf.DeleteSale("3", "121", "9");
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
@@ -32,7 +33,7 @@ namespace CarDealershipTests
 
             
 
-            //d.DeleteSale("3", "121", "9");
+            tf.DeleteSale("3", "121", "9");
 
         }
 
@@ -53,9 +54,9 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-
-            //d.DeleteSale("3", "121", "9");
-            //d.DeleteSale("7", "121", "9");
+            TestingFunctions tf = new TestingFunctions(db.GetDB());
+            tf.DeleteSale("3", "121", "9");
+            tf.DeleteSale("7", "121", "9");
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
@@ -70,8 +71,8 @@ namespace CarDealershipTests
             Assert.IsTrue(int.Parse(s) == 2400);
 
 
-            //d.DeleteSale("3", "121", "9");
-            //d.DeleteSale("7", "121", "9");
+            tf.DeleteSale("3", "121", "9");
+            tf.DeleteSale("7", "121", "9");
         }
 
         [TestMethod]
@@ -80,8 +81,9 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            //d.DeleteSale("3", "121", "9");
-            //d.DeleteSale("7", "121", "9");
+            TestingFunctions tf = new TestingFunctions(db.GetDB());
+            tf.DeleteSale("3", "121", "9");
+            tf.DeleteSale("7", "121", "9");
 
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200.3" };
@@ -96,8 +98,8 @@ namespace CarDealershipTests
 
             Assert.IsTrue(double.Parse(s) == 2401.05);
             
-            //d.DeleteSale("3", "121", "9");
-            //d.DeleteSale("7", "121", "9");
+            tf.DeleteSale("3", "121", "9");
+            tf.DeleteSale("7", "121", "9");
         }
     }
 }
