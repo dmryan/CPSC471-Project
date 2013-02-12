@@ -60,18 +60,10 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-<<<<<<< HEAD
             TestingFunctions tf = new TestingFunctions(db.GetDB());
             tf.DeleteSale("3", "121", "9");
-=======
-            try
-            {
-                d.DeleteSale("3", "121", "9");
-            }
-            catch (Exception e)
-            {
-            }
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
+
+
 
             String[] sale = new String[] { "3", "121", "9", "4/10/2008", "34000" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
@@ -80,12 +72,7 @@ namespace CarDealershipTests
             String s = st.MonthlySales("10", "2008");
             Assert.IsTrue(int.Parse(s) == 34000);
 
-<<<<<<< HEAD
             tf.DeleteSale("3", "121", "9");
-=======
-            d.DeleteSale("3", "121", "9");
-
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
         }
 
         [TestMethod]
@@ -94,19 +81,9 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-<<<<<<< HEAD
             TestingFunctions tf = new TestingFunctions(db.GetDB());
             tf.DeleteSale("3", "121", "9");
 
-=======
-            try
-            {
-                d.DeleteSale("3", "121", "9");
-            }
-            catch (Exception e)
-            {
-            }
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
             String[] sale = new String[] { "3", "121", "9", "4/10/2008", "34000" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
             sa.CreateSale();
@@ -114,11 +91,7 @@ namespace CarDealershipTests
             String s = st.MonthlySales("11", "2003");
             Assert.IsTrue(int.Parse(s) == 0);
 
-<<<<<<< HEAD
             tf.DeleteSale("3", "121", "9");
-=======
-            d.DeleteSale("3", "121", "9");
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
         }
 
         [TestMethod]
@@ -127,21 +100,11 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-<<<<<<< HEAD
             TestingFunctions tf = new TestingFunctions(db.GetDB());
             tf.DeleteSale("3", "121", "9");
             tf.DeleteSale("5", "121", "9");
 
-=======
-            try
-            {
-                d.DeleteSale("3", "121", "9");
-                d.DeleteSale("5", "121", "9");
-            }
-            catch(Exception e)
-            {
-            }
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
+
             String[] sale = new String[] { "3", "121", "9", "4/10/2008", "34000" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
             sa.CreateSale();
@@ -153,13 +116,9 @@ namespace CarDealershipTests
             String s = st.MonthlySales("10", "2008");
             Assert.IsTrue(int.Parse(s) == 68000);
 
-<<<<<<< HEAD
             tf.DeleteSale("3", "121", "9");
             tf.DeleteSale("5", "121", "9");
-=======
-            d.DeleteSale("3", "121", "9");
-            d.DeleteSale("5", "121", "9");
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
+
         }
 
         [TestMethod]
@@ -168,21 +127,10 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-<<<<<<< HEAD
             TestingFunctions tf = new TestingFunctions(db.GetDB());
             tf.DeleteSale("3", "121", "9");
             tf.DeleteSale("5", "121", "9");
 
-=======
-            try
-            {
-                d.DeleteSale("3", "121", "9");
-                d.DeleteSale("5", "121", "9");
-            }
-            catch (Exception e)
-            {
-            }
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
             String[] sale = new String[] { "3", "121", "9", "4/10/2008", "34567" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
             sa.CreateSale();
@@ -194,13 +142,8 @@ namespace CarDealershipTests
             String s = st.MonthlySales("10", "2008");
             Assert.IsTrue(int.Parse(s) == 34567);
 
-<<<<<<< HEAD
             tf.DeleteSale("3", "121", "9");
             tf.DeleteSale("5", "121", "9");
-=======
-            d.DeleteSale("3", "121", "9");
-            d.DeleteSale("5", "121", "9");
->>>>>>> 475b3f6f797072a6f99b90e657fcfcad5de2bffc
         }
     }
 }
