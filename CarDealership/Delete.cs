@@ -42,24 +42,15 @@ namespace CarDealership
 
                 selectPerson.Parameters.AddWithValue("@ID", KeyNum);
 
-                try
+                if (selectPerson.ExecuteScalar() == null)
                 {
-                    if (selectPerson.ExecuteScalar() == null)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
+                    throw new System.ArgumentException("Person does not exist", "ID");
+                    return;
+                }
 
-                    deleteEmployee.ExecuteNonQuery();
-                    deleteCustomer.ExecuteNonQuery();
-                    deletePerson.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                deleteEmployee.ExecuteNonQuery();
+                deleteCustomer.ExecuteNonQuery();
+                deletePerson.ExecuteNonQuery();
         }
 
         /*
@@ -89,32 +80,23 @@ namespace CarDealership
             selectSale.Parameters.AddWithValue("@VIN", KeyNum);
             selectPart.Parameters.AddWithValue("@VIN", KeyNum);
 
-            try
-            {
-                if (selectVehicle.ExecuteScalar() == null)
-                {
-                    ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                    Error.ShowDialog();
-                    return;
-                }
 
-                if (selectSale.ExecuteScalar() != null || selectPart.ExecuteScalar() != null)
-                {
-                    ErrorWindow Error = new ErrorWindow("Cannot delete Vehicle because it is referenced in Sale and/or Part");
-                    Error.ShowDialog();
-                    return;
-                }
-
-                deleteCar.ExecuteNonQuery();
-                deleteTruck.ExecuteNonQuery();
-                deleteVHR.ExecuteNonQuery();
-                deleteVehicle.ExecuteNonQuery();
-            }
-            catch (OleDbException ex)
+            if (selectVehicle.ExecuteScalar() == null)
             {
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
+                throw new System.ArgumentException("Vehicle does not exist", "VIN");
+                return;
             }
+
+            if (selectSale.ExecuteScalar() != null || selectPart.ExecuteScalar() != null)
+            {
+                throw new System.ArgumentException("Vehicle exists in another entity", "VIN");
+                return;
+            }
+
+            deleteCar.ExecuteNonQuery();
+            deleteTruck.ExecuteNonQuery();
+            deleteVHR.ExecuteNonQuery();
+            deleteVehicle.ExecuteNonQuery();
         }
 
         /*
@@ -136,24 +118,15 @@ namespace CarDealership
 
                 selectPart.Parameters.AddWithValue("@SerialNumber", KeyNum);
 
-                try
+                if (selectPart.ExecuteScalar() == null)
                 {
-                    if (selectPart.ExecuteScalar() == null)
-                    {
-                        ErrorWindow Error = new ErrorWindow("Required field does not match any values within the database.");
-                        Error.ShowDialog();
-                        return;
-                    }
+                    throw new System.ArgumentException("Vehicle does not exist", "Serial Number");
+                    return;
+                }
 
-                    deleteEngine.ExecuteNonQuery();
-                    deleteTire.ExecuteNonQuery();
-                    deletePart.ExecuteNonQuery();
-                }
-                catch (OleDbException ex)
-                {
-                    ErrorWindow Error = new ErrorWindow(ex.Message);
-                    Error.ShowDialog();
-                }
+                deleteEngine.ExecuteNonQuery();
+                deleteTire.ExecuteNonQuery();
+                deletePart.ExecuteNonQuery();
             }
     }
 }

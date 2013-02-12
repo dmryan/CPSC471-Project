@@ -67,7 +67,25 @@ namespace CarDealership
                 data[6] = PersonOther2Box.GetLineText(0);
                 data[7] = PersonOther3Box.GetLineText(0);
 
-                MC.ModifyEmployee(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyEmployee(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 PersonIDBox.Clear();
                 PersonNameBox.Clear();
@@ -77,7 +95,7 @@ namespace CarDealership
                 PersonOther1Box.Clear();
                 PersonOther2Box.Clear();
                 PersonOther3Box.Clear();
-                
+
                 Employee = false;
                 EmployeeCheck.IsChecked = false;
                 CustomerCheck.Visibility = Visibility.Visible;
@@ -98,7 +116,25 @@ namespace CarDealership
                 data[4] = PersonSexBox.GetLineText(0);
                 data[5] = PersonOther1Box.GetLineText(0);
 
-                MC.ModifyCustomer(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyCustomer(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 PersonIDBox.Clear();
                 PersonNameBox.Clear();
@@ -127,7 +163,25 @@ namespace CarDealership
                 data[5] = VehiclePriceBox.GetLineText(0);
                 data[6] = VehicleOther1Box.GetLineText(0);
 
-                MC.ModifyCar(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyCar(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 VINBox.Clear();
                 VehicleModelBox.Clear();
@@ -154,7 +208,25 @@ namespace CarDealership
                 data[5] = VehiclePriceBox.GetLineText(0);
                 data[6] = VehicleOther1Box.GetLineText(0);
 
-                MC.ModifyTruck(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyTruck(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 VINBox.Clear();
                 VehicleModelBox.Clear();
@@ -179,7 +251,25 @@ namespace CarDealership
             data[2] = VHRRatingBox.GetLineText(0);
             data[3] = VHRMileageBox.GetLineText(0);
 
-            MC.ModifyVHR(data);
+            try
+            {
+                try
+                {
+                    MC.ModifyVHR(data);
+                }
+                catch (ArgumentException AE)
+                {
+                    ErrorWindow Error = new ErrorWindow(AE.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
+            }
+            catch (OleDbException ex)
+            {
+                ErrorWindow Error = new ErrorWindow(ex.Message);
+                Error.Title = "Data Field Error";
+                Error.ShowDialog();
+            }
 
             VHRVINBox.Clear();
             VHRPreviousOwnersBox.Clear();
@@ -198,7 +288,25 @@ namespace CarDealership
                 data[4] = PartOther2Box.GetLineText(0);
                 data[5] = PartOther1Box.GetLineText(0);
 
-                MC.ModifyTires(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyTires(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 PartSerialNumberBox.Clear();
                 PartVINBox.Clear();
@@ -226,7 +334,25 @@ namespace CarDealership
                 data[4] = PartOther2Box.GetLineText(0);
                 data[5] = PartOther1Box.GetLineText(0);
 
-                MC.ModifyEngine(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyEngine(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 PartSerialNumberBox.Clear();
                 PartVINBox.Clear();
@@ -252,7 +378,25 @@ namespace CarDealership
                 data[2] = PartNameBox.GetLineText(0);
                 data[3] = PartManufacturerBox.GetLineText(0);
 
-                MC.ModifyPart(data);
+                try
+                {
+                    try
+                    {
+                        MC.ModifyPart(data);
+                    }
+                    catch (ArgumentException AE)
+                    {
+                        ErrorWindow Error = new ErrorWindow(AE.Message);
+                        Error.Title = "Data Field Error";
+                        Error.ShowDialog();
+                    }
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.Title = "Data Field Error";
+                    Error.ShowDialog();
+                }
 
                 PartSerialNumberBox.Clear();
                 PartVINBox.Clear();

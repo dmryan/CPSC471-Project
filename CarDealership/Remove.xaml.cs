@@ -55,15 +55,53 @@ namespace CarDealership
 
             if (Person)
             {
-                D.DeletePart(KeyNum);
+                try
+                {
+                    D.DeletePerson(KeyNum);
+                }
+                catch (ArgumentException ae)
+                {
+                    ErrorWindow Error = new ErrorWindow(ae.Message);
+                    Error.ShowDialog();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else if (Vehicle)
             {
-                D.DeleteVehicle(KeyNum);
+                try
+                {
+                    D.DeleteVehicle(KeyNum);
+                }
+                catch (ArgumentException ae)
+                {
+                    ErrorWindow Error = new ErrorWindow(ae.Message);
+                    Error.ShowDialog();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }
             }
             else if (Part)
-            {
-                D.DeletePart(KeyNum);
+            {   try
+                {
+                    D.DeletePart(KeyNum);
+                }
+                catch (ArgumentException ae)
+                {
+                    ErrorWindow Error = new ErrorWindow(ae.Message);
+                    Error.ShowDialog();
+                }
+                catch (OleDbException ex)
+                {
+                    ErrorWindow Error = new ErrorWindow(ex.Message);
+                    Error.ShowDialog();
+                }  
             }
             PersonCheck.IsChecked = false;
             VehicleCheck.IsChecked = false;
