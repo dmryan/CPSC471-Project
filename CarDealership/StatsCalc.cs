@@ -107,7 +107,7 @@ namespace CarDealership
             if (Total is DBNull || Total == "")
                 Total = "0";
 
-            Revenue = "$ " + Total.ToString();
+            Revenue = Total.ToString();
             return Revenue;
         }
 
