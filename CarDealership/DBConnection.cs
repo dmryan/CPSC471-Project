@@ -13,7 +13,7 @@ namespace CarDealership
         
         public DBConnection(){
 
-            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\Sean\Documents\Git\CPSC471-Project\CarDealership\bin\Debug\CarDealershipDatabase.accdb";
+            string ConnectionString = @"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\nolan\database\cardealership\bin\debug\CarDealershipDatabase.accdb";
                 //@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\boydst\CPSC471-Project\cardealership\bin\debug\CarDealershipDatabase.accdb";
                 //@"Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\Users\nolan\database\cardealership\bin\debug\CarDealershipDatabase.accdb";
             connection = new OleDbConnection(ConnectionString);
