@@ -69,7 +69,7 @@ namespace CarDealershipTests
             MakeSale sa = new MakeSale(sale, db.GetDB());
             sa.CreateSale();
 
-            String s = st.MonthlySales("10", "2008");
+            String s = st.MonthlySales("4", "2008");
             Assert.IsTrue(int.Parse(s) == 34000);
 
             tf.DeleteSale("3", "121", "9");
@@ -113,7 +113,7 @@ namespace CarDealershipTests
             MakeSale sa2 = new MakeSale(sale2, db.GetDB());
             sa2.CreateSale();
 
-            String s = st.MonthlySales("10", "2008");
+            String s = st.MonthlySales("4", "2008");
             Assert.IsTrue(int.Parse(s) == 68000);
 
             tf.DeleteSale("3", "121", "9");
@@ -139,7 +139,7 @@ namespace CarDealershipTests
             MakeSale sa2 = new MakeSale(sale2, db.GetDB());
             sa2.CreateSale();
 
-            String s = st.MonthlySales("10", "2008");
+            String s = st.MonthlySales("4", "2008");
             Assert.IsTrue(int.Parse(s) == 34567);
 
             tf.DeleteSale("3", "121", "9");
