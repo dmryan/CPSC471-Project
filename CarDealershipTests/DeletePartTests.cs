@@ -13,7 +13,7 @@ namespace CarDealershipTests
     public class DeletePartTests
     {
         [TestMethod]
-        public void DeleteVehicle_NormalPath()
+        public void DeletePart_NormalPath()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
@@ -27,7 +27,7 @@ namespace CarDealershipTests
             {
             }
             
-            String[] D = new String[] {"10"};
+            String[] D = new String[] {"10", "3", "1", "1"};
             MakePart_Accessor part = new MakePart_Accessor(D, connection.GetDB());
             part.CreatePart();
 
@@ -78,7 +78,7 @@ namespace CarDealershipTests
 
             try
             {
-                d.DeletePart(int.Parse(""));
+                d.DeletePart(new int());
             }
             catch (OleDbException ex)
             {

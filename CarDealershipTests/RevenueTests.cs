@@ -21,7 +21,14 @@ namespace CarDealershipTests
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
             TestingFunctions tf = new TestingFunctions(db.GetDB());
-            tf.DeleteSale("3", "121", "9");
+            try
+            {
+                tf.DeleteSale("3", "121", "9");
+            }
+            catch (Exception)
+            {
+
+            }
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
@@ -55,8 +62,15 @@ namespace CarDealershipTests
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
             TestingFunctions tf = new TestingFunctions(db.GetDB());
-            tf.DeleteSale("3", "121", "9");
-            tf.DeleteSale("7", "121", "9");
+            try
+            {
+                tf.DeleteSale("3", "121", "9");
+                tf.DeleteSale("7", "121", "9");
+            }
+            catch (Exception)
+            {
+
+            }
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200" };
             MakeSale sa = new MakeSale(sale, db.GetDB());
@@ -82,8 +96,15 @@ namespace CarDealershipTests
             StatsCalc_Accessor st = new StatsCalc_Accessor(db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
             TestingFunctions tf = new TestingFunctions(db.GetDB());
-            tf.DeleteSale("3", "121", "9");
-            tf.DeleteSale("7", "121", "9");
+            try
+            {
+                tf.DeleteSale("3", "121", "9");
+                tf.DeleteSale("7", "121", "9");
+            }
+            catch (Exception)
+            {
+                
+            }
 
 
             String[] sale = new String[] { "3", "121", "9", "3/3/3", "1200.3" };

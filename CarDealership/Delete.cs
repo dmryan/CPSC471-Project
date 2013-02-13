@@ -120,8 +120,7 @@ namespace CarDealership
 
                 if (selectPart.ExecuteScalar() == null)
                 {
-                    throw new System.ArgumentException("Vehicle does not exist", "Serial Number");
-                    return;
+                    throw new System.ArgumentException("Part does not exist", "Serial Number");
                 }
 
                 deleteEngine.ExecuteNonQuery();

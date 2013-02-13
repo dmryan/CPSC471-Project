@@ -80,7 +80,7 @@ namespace CarDealershipTests
 
             try
             {
-                d.DeletePerson(int.Parse(""));
+                d.DeletePerson(new int());
             }
             catch (OleDbException ex)
             {

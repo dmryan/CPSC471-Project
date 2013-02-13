@@ -26,12 +26,12 @@ namespace CarDealershipTests
             catch (Exception e)
             {
             }
-            String[] D = new String[] { "1" };
-            MakeCar_Accessor car = new MakeCar_Accessor("1", "smart car", connection.GetDB());
-            car.CreateCar();
+            String[] D = new String[] { "1", "1", "1", "1", "1", "1" };
+            
             MakeVehicle_Accessor veh = new MakeVehicle_Accessor(D, connection.GetDB());
             veh.CreateVehicle();
-
+            MakeCar_Accessor car = new MakeCar_Accessor("1", "smart car", connection.GetDB());
+            car.CreateCar();
 
             d.DeleteVehicle(1);
 
@@ -79,7 +79,7 @@ namespace CarDealershipTests
 
             try
             {
-                d.DeleteVehicle(int.Parse(""));
+                d.DeleteVehicle(new int());
             }
             catch (OleDbException ex)
             {
