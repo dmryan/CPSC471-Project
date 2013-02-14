@@ -38,7 +38,7 @@ namespace CarDealershipTests
             DataColumn[] dc = new DataColumn[] { dt.Columns[0] };
             dt.PrimaryKey = dc;
 
-            Assert.IsFalse(dt.Rows.Contains("1"));
+            Assert.IsFalse(dt.Rows.Contains("133734"));
 
         }
 

@@ -10,7 +10,7 @@ using System.Data;
 namespace CarDealershipTests
 {
     [TestClass]
-    public class AddPartTests
+    public class AddVHRTests
     {
         [TestMethod]
         public void AddVHR_NormalPath()
