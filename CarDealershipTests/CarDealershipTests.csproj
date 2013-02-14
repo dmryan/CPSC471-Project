@@ -76,6 +76,7 @@
     <Compile Include="CarInventoryTests.cs" />
     <Compile Include="TestingFunctions.cs" />
     <Compile Include="TruckInventoryTests.cs" />
+    <Compile Include="InventorySpeed.cs" />
     <Compile Include="VehiclePartsTests.cs" />
   </ItemGroup>
   <ItemGroup>
