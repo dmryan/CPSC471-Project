@@ -60,7 +60,7 @@ namespace CarDealershipTests
 
             try
             {
-                d.DeleteVehicle(1);
+                d.DeleteVehicle(23452345);
             }
             catch (OleDbException ex)
             {

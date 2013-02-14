@@ -13,106 +13,105 @@ namespace CarDealershipTests
     public class AddPartTests
     {
         [TestMethod]
-        public void AddPart_NormalPath()
+        public void AddVHR_NormalPath()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
 
             String[] D = new String[] { "1", "22", "123", "123", "123", "123" };
-            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            MakeVHR_Accessor mc = new MakeVHR_Accessor(D, db.GetDB());
+            TestingFunctions t = new TestingFunctions(db.GetDB());
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePart(1);
+                t.DeleteVHR(1);
             }
             catch (Exception)
             {
 
             }
-            mc.CreatePart();
+            mc.CreateVHR();
 
         }
 
         [TestMethod]
-        public void AddPart_OnlyID()
+        public void AddVHR_OnlyID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
             String[] D = new String[] { "1", "22", "", "", "", "" };
-            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            MakeVHR_Accessor mc = new MakeVHR_Accessor(D, db.GetDB());
+            TestingFunctions t = new TestingFunctions(db.GetDB());
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePart(1);
+                t.DeleteVHR(1);
             }
             catch (Exception)
             {
 
             }
-            mc.CreatePart();
+            mc.CreateVHR();
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddPart_NullID()
+        public void AddVHR_NullID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
             String[] D = new String[] { "", "", "", "", "", "" };
-            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
-
+            MakeVHR_Accessor mc = new MakeVHR_Accessor(D, db.GetDB());
+            TestingFunctions t = new TestingFunctions(db.GetDB());
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
 
-            mc.CreatePart();
+            mc.CreateVHR();
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddPart_DuplicateID()
+        public void AddVHR_DuplicateID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
             String[] D = new String[] { "1", "22", "123", "123", "123", "123" };
-            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            MakeVHR_Accessor mc = new MakeVHR_Accessor(D, db.GetDB());
+            TestingFunctions t = new TestingFunctions(db.GetDB());
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePart(1);
+                t.DeleteVHR(1);
             }
             catch (Exception)
             {
 
             }
-            mc.CreatePart();
-            mc.CreatePart();
+            mc.CreateVHR();
+            mc.CreateVHR();
 
         }
 
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddPart_NegativeID()
+        public void AddVHR_NegativeID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
             String[] D = new String[] { "-5", "22", "", "", "", "" };
-            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            MakeVHR_Accessor mc = new MakeVHR_Accessor(D, db.GetDB());
+            TestingFunctions t = new TestingFunctions(db.GetDB());
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePart(-5);
+                t.DeleteVHR(-5);
             }
             catch (Exception)
             {
 
             }
-            mc.CreatePart();
+            mc.CreateVHR();
 
         }
     }
