@@ -26,10 +26,10 @@ namespace CarDealershipTests
             catch (Exception e)
             {
             }
-            String[] p = new String[] {"1", "1", "1", "1", "1"};
+            String[] p = new String[] {"1005", "1", "1", "1", "1"};
             MakePerson_Accessor pers = new MakePerson_Accessor(p, connection.GetDB());
             pers.CreatePerson();
-            MakeEmployee_Accessor person = new MakeEmployee_Accessor("1", "1234", "3/3/3", "", connection.GetDB());
+            MakeEmployee_Accessor person = new MakeEmployee_Accessor("1005", "1234", "3/3/3", "", connection.GetDB());
 
             person.CreateEmployee();
 

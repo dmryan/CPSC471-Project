@@ -16,7 +16,7 @@ namespace CarDealershipTests
         [TestMethod]
         public void SearchID_NormalPath()
         {
-            //person array = id, name, phone no, address, sex
+            //Person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
@@ -24,9 +24,9 @@ namespace CarDealershipTests
 
 
             /*
-            MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            person.DeletePerson();
-            person.CreatePerson();
+            MakePerson_Accessor Person = new MakePerson_Accessor(p, connection.GetDB());
+            Person.DeletePerson();
+            Person.CreatePerson();
             */
             try
             {
@@ -39,13 +39,13 @@ namespace CarDealershipTests
            
             Assert.IsTrue(dt.Rows.Count == 1);
 
-            //person.DeletePerson();
+            //Person.DeletePerson();
         }
 
         [TestMethod]
         public void SearchID_NonExistent()
         {
-            //person array = id, name, phone no, address, sex
+            //Person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
@@ -53,9 +53,9 @@ namespace CarDealershipTests
 
 
 
-            //MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            //person.DeletePerson();
-            //person.CreatePerson();
+            //MakePerson_Accessor Person = new MakePerson_Accessor(p, connection.GetDB());
+            //Person.DeletePerson();
+            //Person.CreatePerson();
 
             try
             {
@@ -71,14 +71,14 @@ namespace CarDealershipTests
 
             Assert.IsTrue(dt.Rows.Count == 0);
 
-            //person.DeletePerson();
+            //Person.DeletePerson();
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
         public void SearchID_EmptyID()
         {
-            //person array = id, name, phone no, address, sex
+            //Person array = id, name, phone no, address, sex
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
@@ -86,9 +86,9 @@ namespace CarDealershipTests
 
 
 
-            //MakePerson_Accessor person = new MakePerson_Accessor(p, connection.GetDB());
-            //person.DeletePerson();
-            //person.CreatePerson();
+            //MakePerson_Accessor Person = new MakePerson_Accessor(p, connection.GetDB());
+            //Person.DeletePerson();
+            //Person.CreatePerson();
 
             try
             {
@@ -102,7 +102,7 @@ namespace CarDealershipTests
 
             
 
-            //person.DeletePerson();
+            //Person.DeletePerson();
         }
     }
 }
