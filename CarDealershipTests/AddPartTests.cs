@@ -10,37 +10,16 @@ using System.Data;
 namespace CarDealershipTests
 {
     [TestClass]
-    public class AddTruckTests
+    public class AddPartTests
     {
         [TestMethod]
-        public void AddTruck_NormalPath()
+        public void AddPart_NormalPath()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeTruck_Accessor mc = new MakeTruck_Accessor("44", "1", db.GetDB());
+
+            String[] D = new String[] { "1", "1", "123", "123", "123", "123" };
+            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "44", "123", "123", "123", "123", "123" };
-
-            MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
-            try
-            {
-                d.DeleteVehicle(44);
-            }
-            catch (Exception)
-            {
-
-            }
-            mp.CreateVehicle();
-            mc.CreateTruck();
-
-        }
-
-        [TestMethod]
-        public void AddTruck_OnlyID()
-        {
-            DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeTruck_Accessor mc = new MakeTruck_Accessor("1", "", db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "", "" };
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
@@ -52,34 +31,56 @@ namespace CarDealershipTests
 
             }
             mp.CreateVehicle();
-            mc.CreateTruck();
+            mc.CreatePart();
+
+        }
+
+        [TestMethod]
+        public void AddPart_OnlyID()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            String[] D = new String[] { "1", "1", "", "", "", "" };
+            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+
+            MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeleteVehicle(1);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreateVehicle();
+            mc.CreatePart();
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddTruck_NullID()
+        public void AddPart_NullID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeTruck_Accessor mc = new MakeTruck_Accessor("", "", db.GetDB());
-            Delete_Accessor d = new Delete_Accessor(db.GetDB());
             String[] D = new String[] { "", "", "", "", "", "" };
+            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
 
             mp.CreateVehicle();
-            mc.CreateTruck();
+            mc.CreatePart();
 
         }
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddTruck_DuplicateID()
+        public void AddPart_DuplicateID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeTruck_Accessor mc = new MakeTruck_Accessor("1", "1", db.GetDB());
+            String[] D = new String[] { "1", "1", "123", "123", "123", "123" };
+            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "123", "123", "123", "123", "123" };
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
@@ -91,21 +92,21 @@ namespace CarDealershipTests
 
             }
             mp.CreateVehicle();
-            mc.CreateTruck();
+            mc.CreatePart();
             mp.CreateVehicle();
-            mc.CreateTruck();
+            mc.CreatePart();
 
         }
 
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void AddTruck_NegativeID()
+        public void AddPart_NegativeID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeTruck_Accessor mc = new MakeTruck_Accessor("-5", "1", db.GetDB());
+            String[] D = new String[] { "-5", "1", "", "", "", "" };
+            MakePart_Accessor mc = new MakePart_Accessor(D, db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "-5", "", "", "", "", "" };
 
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
@@ -117,8 +118,9 @@ namespace CarDealershipTests
 
             }
             mp.CreateVehicle();
-            mc.CreateTruck();
+            mc.CreatePart();
 
         }
     }
 }
+
