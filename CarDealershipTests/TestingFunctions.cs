@@ -36,6 +36,7 @@ namespace CarDealershipTests
 
             updateSale.Parameters.AddWithValue("@Sold", false);
             updateSale.Parameters.AddWithValue("@VIN", VIN2);
+            updateSale.ExecuteNonQuery();
         }
     }
 }
