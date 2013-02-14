@@ -21,7 +21,7 @@ namespace CarDealershipTests
             Delete_Accessor d = new Delete_Accessor(connection.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1005);
             }
             catch (Exception e)
             {

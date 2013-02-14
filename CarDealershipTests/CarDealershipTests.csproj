@@ -59,6 +59,7 @@
     <Compile Include="AddCarTest.cs" />
     <Compile Include="AddCustomerTests.cs" />
     <Compile Include="AddEmployeeTests.cs" />
+    <Compile Include="AddTruckTests.cs" />
     <Compile Include="DeletePartTests.cs" />
     <Compile Include="DeletePersonTests.cs" />
     <Compile Include="DeleteVehicleTests.cs" />
