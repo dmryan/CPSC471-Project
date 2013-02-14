@@ -38,5 +38,14 @@ namespace CarDealershipTests
             updateSale.Parameters.AddWithValue("@VIN", VIN2);
             updateSale.ExecuteNonQuery();
         }
+
+        public void DeleteVHR(int VIN)
+        {
+            OleDbCommand deleteVHR = cn.CreateCommand();
+
+            deleteVHR.CommandText = ("DELETE FROM VehicleHistoryReport WHERE VIN =" + VIN);
+
+            deleteVHR.ExecuteNonQuery();
+        }
     }
 }
