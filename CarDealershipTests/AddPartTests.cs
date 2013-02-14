@@ -24,7 +24,7 @@ namespace CarDealershipTests
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeleteVehicle(1);
+                d.DeletePart(1);
             }
             catch (Exception)
             {
@@ -46,7 +46,7 @@ namespace CarDealershipTests
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeleteVehicle(1);
+                d.DeletePart(1);
             }
             catch (Exception)
             {
@@ -85,7 +85,7 @@ namespace CarDealershipTests
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeleteVehicle(1);
+                d.DeletePart(1);
             }
             catch (Exception)
             {
@@ -111,7 +111,7 @@ namespace CarDealershipTests
             MakeVehicle_Accessor mp = new MakeVehicle_Accessor(D, db.GetDB());
             try
             {
-                d.DeleteVehicle(-5);
+                d.DeletePart(-5);
             }
             catch (Exception)
             {
