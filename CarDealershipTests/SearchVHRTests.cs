@@ -7,22 +7,21 @@ using System.Data;
 using System.Data.OleDb;
 using CarDealership;
 
-namespace CarDealershipTests
+namespace CarDealershipTests.Test_References
 {
     [TestClass]
-    public class SearchVehicleTests
+    public class SearchVHRTests
     {
         [TestMethod]
-        public void SearchVehicle_NormalPath()
+        public void SearchVHR_NormalPath()
         {
-            
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
             DataTable dt = new DataTable();
-            
+
             try
             {
-                dt = SF.SearchVehicle("3");
+                dt = SF.SearchVHR("121");
             }
             catch (OleDbException ex)
             {
@@ -32,7 +31,7 @@ namespace CarDealershipTests
         }
 
         [TestMethod]
-        public void SearchVehicle_NonExistent()
+        public void SearchVHR_NonExistent()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
@@ -40,7 +39,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt = SF.SearchVehicle("2");
+                dt = SF.SearchVHR("123456");
             }
             catch (OleDbException ex)
             {
@@ -53,7 +52,7 @@ namespace CarDealershipTests
 
         [TestMethod]
         [ExpectedException(typeof(OleDbException))]
-        public void SearchVehicle_EmptyID()
+        public void SearchVHR_EmptyID()
         {
             DBConnection_Accessor connection = new DBConnection_Accessor();
             SearchFunction_Accessor SF = new SearchFunction_Accessor(connection.GetDB());
@@ -61,7 +60,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt = SF.SearchVehicle("");
+                dt = SF.SearchVHR("");
             }
             catch (OleDbException ex)
             {

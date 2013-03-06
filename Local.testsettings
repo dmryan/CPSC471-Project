@@ -25,8 +25,8 @@
           <Configuration>
             <CodeCoverage xmlns="">
               <Regular>
-                <CodeCoverageItem binaryFile="CarDealershipTests\bin\Debug\CarDealershipTests.dll" pdbFile="CarDealershipTests\bin\Debug\CarDealershipTests.pdb" instrumentInPlace="true" />
                 <CodeCoverageItem binaryFile="CarDealership\bin\Debug\CarDealership.exe" pdbFile="CarDealership\bin\Debug\CarDealership.pdb" instrumentInPlace="true" />
+                <CodeCoverageItem binaryFile="CarDealershipTests\bin\Debug\CarDealershipTests.dll" pdbFile="CarDealershipTests\bin\Debug\CarDealershipTests.pdb" instrumentInPlace="true" />
               </Regular>
             </CodeCoverage>
           </Configuration>

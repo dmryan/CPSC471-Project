@@ -13,7 +13,7 @@ namespace CarDealershipTests
     [TestClass]
     public class InventorySpeed
     {
-        [TestMethod]
+     /*   [TestMethod]
         public void THETEST()
         {
 
@@ -66,6 +66,6 @@ namespace CarDealershipTests
             sw.Close();
 
 
-        }
+        }*/
     }
 }

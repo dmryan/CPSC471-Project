@@ -75,6 +75,7 @@
     <Compile Include="SearchSaleTests.cs" />
     <Compile Include="SearchVehicleTests.cs" />
     <Compile Include="CarInventoryTests.cs" />
+    <Compile Include="SearchVHRTests.cs" />
     <Compile Include="TestingFunctions.cs" />
     <Compile Include="TruckInventoryTests.cs" />
     <Compile Include="InventorySpeed.cs" />
