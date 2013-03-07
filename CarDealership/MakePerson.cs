@@ -58,6 +58,16 @@ namespace CarDealership
 
             if (Data[0].CompareTo("") != 0)
             {
+                int temp;
+                try
+                {
+                    temp = Convert.ToInt32(Data[0]);
+                }
+                catch (FormatException f) { throw new System.ArgumentException("CaughtFormatException"); }
+                if (temp < 0)
+                {
+                    throw new System.ArgumentException("");
+                }
                 insertPerson.Parameters.AddWithValue("@ID", Data[0]);
             }
             if (Data[1].CompareTo("") != 0)
@@ -66,6 +76,18 @@ namespace CarDealership
             }
             if (Data[2].CompareTo("") != 0)
             {
+                string temp = Data[2];
+                if (temp.Length != 10)
+                {
+                    throw new System.ArgumentException("phone number wrong length");
+                }
+                for (int i = 0; i < 10; i++)
+                {
+                    if (temp[i] < '0' || temp[i] > '9')
+                    {
+                        throw new System.ArgumentException("phone number bad chars");
+                    }
+                }
                 insertPerson.Parameters.AddWithValue("@PhoneNumber", Data[2]);
             }
             if (Data[3].CompareTo("") != 0)
@@ -74,11 +96,17 @@ namespace CarDealership
             }
             if (Data[4].CompareTo("") != 0)
             {
+                string temp = Data[4];
+                if (temp.CompareTo("M") != 0 && temp.CompareTo("F") != 0)
+                {
+                    throw new System.ArgumentException("Bad Sex Format");
+                }
                 insertPerson.Parameters.AddWithValue("@Sex", Data[4]);
             }
 
             return insertPerson;
         }
+
 
         /**
          * Creates a SQL statement for adding a Person to the database 

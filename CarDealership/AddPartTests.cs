@@ -287,7 +287,7 @@ namespace CarDealershipTests
                 throw ex;
             }
 
-            mc.DeleteCar();
+            mc.DeleteTires();
             mp.DeletePart();
 
             try

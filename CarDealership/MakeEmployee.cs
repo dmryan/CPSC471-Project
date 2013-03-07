@@ -70,11 +70,34 @@ namespace CarDealership
 
             if (ID.CompareTo("") != 0)
             {
+                long temp;
+                try
+                {
+                    temp = Convert.ToInt64(ID);
+                }
+                catch (FormatException f) { throw new System.ArgumentException(""); }
+                if (temp < 0)
+                {
+                    throw new System.ArgumentException("");
+                }
                 insertEmployee.Parameters.AddWithValue("@EID", ID);
             }
             if (Salary.CompareTo("") != 0)
             {
-                insertEmployee.Parameters.AddWithValue("@Salary", Salary);
+                int temp;
+                try
+                {
+                    temp = Convert.ToInt32(Salary);
+                }
+                catch (FormatException f) { throw new System.ArgumentException(""); }
+                if (temp >= 0 && temp < 1000000)
+                {
+                    insertEmployee.Parameters.AddWithValue("@Salary", Salary);
+                }
+                else
+                {
+                    throw new System.ArgumentException("");
+                }
             }
             if (StartDate.CompareTo("") != 0)
             {
@@ -82,11 +105,22 @@ namespace CarDealership
             }
             if (ManagerID.CompareTo("") != 0)
             {
+                long temp;
+                try
+                {
+                    temp = Convert.ToInt64(ManagerID);
+                }
+                catch (FormatException f) { throw new System.ArgumentException(""); }
+                if (temp < 0)
+                {
+                    throw new System.ArgumentException("");
+                }
                 insertEmployee.Parameters.AddWithValue("@ManagerID", ManagerID);
             }
 
             return insertEmployee;
         }
+
 
         /**
          * Creates a SQL statement for adding an Employee to the database 

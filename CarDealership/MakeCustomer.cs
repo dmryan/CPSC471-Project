@@ -62,6 +62,16 @@ namespace CarDealership
 
             if (ID.CompareTo("") != 0)
             {
+                long temp;
+                try
+                {
+                    temp = Convert.ToInt64(ID);
+                }
+                catch (FormatException f) { throw new System.ArgumentException(""); }
+                if (temp < 0)
+                {
+                    throw new System.ArgumentException("");
+                }
                 insertCustomer.Parameters.AddWithValue("@CID", ID);
             }
             if (Type.CompareTo("") != 0)
@@ -71,6 +81,7 @@ namespace CarDealership
 
             return insertCustomer;
         }
+
 
         /**
          * Creates a SQL statement for adding a Customere to the database 
