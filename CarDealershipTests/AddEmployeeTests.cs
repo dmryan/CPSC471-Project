@@ -337,7 +337,49 @@ namespace CarDealershipTests
             mc.CreateEmployee();
 
         }
-        
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddEmployee_NullEID()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("", "", "", "", db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            String[] D = new String[] { "1", "", "", "", "" };
+
+            MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeletePerson(1);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreatePerson();
+            mc.CreateEmployee();
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddEmployee_OverFlowSalary()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "10000000", "", "", db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            String[] D = new String[] { "1", "", "", "", "" };
+
+            MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeletePerson(1);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreatePerson();
+            mc.CreateEmployee();
+        }
+
         [TestMethod]
         public void AddEmployee_DeleteInstance()
         {

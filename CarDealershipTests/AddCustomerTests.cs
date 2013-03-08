@@ -18,7 +18,7 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             MakeCustomer_Accessor mc = new MakeCustomer_Accessor("1", "test", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] {"1", "Sean", "5555555555", "calgary", "M"};
+            String[] D = new String[] {"1", "Sean", "5555555555", "calgary", "F"};
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
@@ -255,7 +255,28 @@ namespace CarDealershipTests
             mc.CreateCustomer();
 
         }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddCustomer_NullCIDValue()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            MakeCustomer_Accessor mc = new MakeCustomer_Accessor("", "", db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            String[] D = new String[] { "10", "", "", "", "" };
 
+            MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeletePerson(10);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreatePerson();
+            mc.CreateCustomer();
+
+        }
 
         [TestMethod]
         public void AddCustomer_DeleteInstance()
