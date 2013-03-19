@@ -26,7 +26,7 @@ namespace CarDealershipTests
             catch (Exception e)
             {
             }
-            String[] p = new String[] {"1005", "1", "1", "1", "1"};
+            String[] p = new String[] {"1005", "1", "1123123123", "1", "M"};
             MakePerson_Accessor pers = new MakePerson_Accessor(p, connection.GetDB());
             pers.CreatePerson();
             MakeEmployee_Accessor person = new MakeEmployee_Accessor("1005", "1234", "3/3/3", "", connection.GetDB());
@@ -34,11 +34,11 @@ namespace CarDealershipTests
             person.CreateEmployee();
 
 
-            d.DeletePerson(1);
+            d.DeletePerson(1005);
 
             try
             {
-                dt = SF.SearchPersonID("1");
+                dt = SF.SearchPersonID("1005");
             }
             catch (OleDbException ex)
             {

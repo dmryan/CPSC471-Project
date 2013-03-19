@@ -384,14 +384,14 @@ namespace CarDealershipTests
         public void AddEmployee_DeleteInstance()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("21113", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1113", "", "", "", "", "" };
+            String[] D = new String[] { "21113", "", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1113);
+                d.DeletePerson(21113);
             }
             catch (Exception)
             {
@@ -406,7 +406,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt2 = SF.SearchPersonID("1113");
+                dt2 = SF.SearchPersonID("21113");
             }
             catch (OleDbException ex)
             {
@@ -418,7 +418,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt1 = SF.SearchPersonID("1113");
+                dt1 = SF.SearchPersonID("21113");
             }
             catch (OleDbException ex)
             {
