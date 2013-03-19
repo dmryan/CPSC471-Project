@@ -46,15 +46,12 @@ namespace CarDealershipTests
 
             try
             {
-                dt = SF.SearchPart("2");
+                dt = SF.SearchPart("56456452");
             }
             catch (OleDbException ex)
             {
                 throw ex;
             }
-
-
-
 
             Assert.IsTrue(dt.Rows.Count == 0);
 
