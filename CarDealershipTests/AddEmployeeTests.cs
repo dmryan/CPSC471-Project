@@ -74,14 +74,14 @@ namespace CarDealershipTests
         public void AddEmployee_DuplicateID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "123", "1/1/1", "1", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "123", "1/1/1", "1", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "Sean", "5555555555", "calgary", "M" };
+            String[] D = new String[] { "1113", "Sean", "5555555555", "calgary", "M" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -120,14 +120,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadPhoneLength()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "555555555", "", "" };
+            String[] D = new String[] { "1113", "", "555555555", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -142,14 +142,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadPhoneChars()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "123456789b", "", "" };
+            String[] D = new String[] { "1113", "", "123456789b", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -164,14 +164,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadSex()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "male" };
+            String[] D = new String[] { "1113", "", "", "", "male" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -193,7 +193,7 @@ namespace CarDealershipTests
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -212,12 +212,12 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             MakeEmployee_Accessor mc = new MakeEmployee_Accessor("abc", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "11", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(11);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -234,12 +234,12 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             MakeEmployee_Accessor mc = new MakeEmployee_Accessor("-5", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -254,14 +254,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadSalaryValue()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "-5", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "-5", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -276,14 +276,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadSalaryFormat()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("2", "abc", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "abc", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "2", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(2);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -298,14 +298,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadManIDValue()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "", "", "-5", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "-5", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -320,14 +320,14 @@ namespace CarDealershipTests
         public void AddEmployee_BadManIDFormat()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1", "", "", "abc", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1114", "", "", "abc", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1", "", "", "", "" };
+            String[] D = new String[] { "1114", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(1);
+                d.DeletePerson(1114);
             }
             catch (Exception)
             {
@@ -337,19 +337,61 @@ namespace CarDealershipTests
             mc.CreateEmployee();
 
         }
-        
         [TestMethod]
-        public void AddEmployee_DeleteInstance()
+        [ExpectedException(typeof(OleDbException))]
+        public void AddEmployee_NullEID()
         {
             DBConnection_Accessor db = new DBConnection_Accessor();
-            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("3", "", "", "", db.GetDB());
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("", "", "", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "3", "", "", "", "", "" };
+            String[] D = new String[] { "1113", "", "", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try
             {
-                d.DeletePerson(3);
+                d.DeletePerson(1113);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreatePerson();
+            mc.CreateEmployee();
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void AddEmployee_OverFlowSalary()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "10000000", "", "", db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            String[] D = new String[] { "1113", "", "", "", "" };
+
+            MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeletePerson(1113);
+            }
+            catch (Exception)
+            {
+
+            }
+            mp.CreatePerson();
+            mc.CreateEmployee();
+        }
+
+        [TestMethod]
+        public void AddEmployee_DeleteInstance()
+        {
+            DBConnection_Accessor db = new DBConnection_Accessor();
+            MakeEmployee_Accessor mc = new MakeEmployee_Accessor("1113", "", "", "", db.GetDB());
+            Delete_Accessor d = new Delete_Accessor(db.GetDB());
+            String[] D = new String[] { "1113", "", "", "", "", "" };
+
+            MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
+            try
+            {
+                d.DeletePerson(1113);
             }
             catch (Exception)
             {
@@ -364,7 +406,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt2 = SF.SearchPersonID("3");
+                dt2 = SF.SearchPersonID("1113");
             }
             catch (OleDbException ex)
             {
@@ -376,7 +418,7 @@ namespace CarDealershipTests
 
             try
             {
-                dt1 = SF.SearchPersonID("3");
+                dt1 = SF.SearchPersonID("1113");
             }
             catch (OleDbException ex)
             {
