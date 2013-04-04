@@ -150,7 +150,7 @@ namespace CarDealershipTests
             DBConnection_Accessor db = new DBConnection_Accessor();
             MakeCustomer_Accessor mc = new MakeCustomer_Accessor("1113", "", db.GetDB());
             Delete_Accessor d = new Delete_Accessor(db.GetDB());
-            String[] D = new String[] { "1113", "", ".23456780", "", "" };
+            String[] D = new String[] { "1113", "", ".234567890", "", "" };
 
             MakePerson_Accessor mp = new MakePerson_Accessor(D, db.GetDB());
             try

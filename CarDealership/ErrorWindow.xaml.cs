@@ -24,6 +24,11 @@ namespace CarDealership
             InitializeComponent();
             errorBox.Text = msg;
         }
+        public void CloseWindow()
+        {
+            System.ComponentModel.CancelEventArgs e = new System.ComponentModel.CancelEventArgs();
+            OnClosing(e);
+        }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {

@@ -57,6 +57,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddCustomerControl.cs" />
+    <Compile Include="AddEmployeeControl.cs" />
     <Compile Include="AddEngine.xaml.cs">
       <DependentUpon>AddEngine.xaml</DependentUpon>
     </Compile>

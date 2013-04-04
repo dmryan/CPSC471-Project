@@ -25,55 +25,28 @@ namespace CarDealership
         private MainWindow Parent;
         private OleDbConnection cn;
         private bool noError = true;
+        private AddCustomerControl acc;
 
         public AddCustomer(MainWindow p, OleDbConnection c)
         {
             cn = c;
             Parent = p;
             InitializeComponent();
+            acc = new AddCustomerControl(cn);
         }
 
         private void AddCustomerSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string[] Data = new string[5];
+            string[] Data = new string[7];
             Data[0] = IDText.GetLineText(0);
             Data[1] = NameText.GetLineText(0);
             Data[2] = PhoneText.GetLineText(0);
             Data[3] = AddressText.GetLineText(0);
             Data[4] = SexText.GetLineText(0);
-            string EID = Data[0];
-            string Type = TypeText.GetLineText(0);
+            Data[5] = Data[0];
+            Data[6] = TypeText.GetLineText(0);
 
-            MakePerson P = new MakePerson(Data, cn);
-            MakeCustomer E = new MakeCustomer(EID, Type, cn);
-
-            try
-            {
-                P.CreatePerson();
-            }
-            catch (OleDbException ex)
-            {
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-                return;
-            }
-
-            try
-            {
-                E.CreateCustomer();
-            }
-            catch (OleDbException ex)
-            {
-                try
-                {
-                    P.DeletePerson();
-                }
-                catch (OleDbException ex2) { }
-
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-                return;
-            }
+            acc.createCustomer(Data).ShowDialog();
 
             this.Close();
         }

@@ -25,57 +25,30 @@ namespace CarDealership
         private OleDbConnection cn;
         private MainWindow Parent;
         private bool noError;
+        private AddEmployeeControl aec;
 
         public AddEmployee(MainWindow p, OleDbConnection c)
         {
             cn = c;
             Parent = p;
             InitializeComponent();
+            aec = new AddEmployeeControl(cn);
         }
 
         private void AddEmployeeSubmit_Click(object sender, RoutedEventArgs e)
         {
-            string[] Data = new string[5];
+            string[] Data = new string[9];
             Data[0] = IDText.GetLineText(0);
             Data[1] = NameText.GetLineText(0);
             Data[2] = PhoneText.GetLineText(0);
             Data[3] = AddressText.GetLineText(0);
             Data[4] = SexText.GetLineText(0);
-            string EID = Data[0];
-            string Salary = SalaryText.GetLineText(0);
-            string StartDate = StartDateText.GetLineText(0);
-            string ManagerID = ManagerText.GetLineText(0);
+            Data[5] = Data[0];
+            Data[6] = SalaryText.GetLineText(0);
+            Data[7] = StartDateText.GetLineText(0);
+            Data[8] = ManagerText.GetLineText(0);
 
-            MakePerson P = new MakePerson(Data, cn);
-            MakeEmployee E = new MakeEmployee(EID, Salary, StartDate, ManagerID, cn);
-
-            try
-            {
-                P.CreatePerson();
-            }
-            catch (OleDbException ex)
-            {
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-                return;
-            }
-
-            try
-            {
-                E.CreateEmployee();
-            }
-            catch (OleDbException ex)
-            {
-                try
-                {
-                    P.DeletePerson();
-                }
-                catch (OleDbException ex2) { }
-
-                ErrorWindow Error = new ErrorWindow(ex.Message);
-                Error.ShowDialog();
-                return;
-            }
+            aec.createEmployee(Data).ShowDialog();
 
             this.Close();
         }
